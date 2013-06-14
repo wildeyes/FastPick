@@ -7,8 +7,15 @@ you can even choose to open in the same tab (x) or in a new one! (c).
 
 Shucts uses [KeyboardJS](http://robertwhurst.github.io/KeyboardJS/) and the template was created using [Extensionizr](http://extensionizr.com)
 
+Install
+====
+- Download Crx from here.
+- Disable Google Instant Feature (I hate it. JK. Not really JK, JK).
+- Follow [instructions](https://support.google.com/chrome_webstore/answer/2664769?p=crx_warning&rd=1) here to install crx.
+
 TODO
 ====
+- Be compatible with instant.
 - Customizable shortcuts through options page. 
 - Work on all google-search domains (not just .com)
     - RTL google-search support (e.g. doesn't work right now on RTL googles)
