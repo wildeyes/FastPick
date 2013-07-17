@@ -1,6 +1,5 @@
+//Snippet to receive urls and open them as tabs
 var runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
-
-// Bind event:
 chrome[runtimeOrExtension].onMessage.addListener(
   function(message, sender, sendResponse) {
     ntab = message.createProperties;

@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "~/code/chrome/qlist/"
+		}
+	],
+   "settings":
+   {
+      "tab_size": 4,
+      "translate_tabs_to_spaces": false
+   },
+   "build_systems":
+    [
+        {
+          "name": "Chrome Reload!",
+          "cmd":  ["/home/wie/code/chrome/qlist/reload-chrome.sh"]
+        }
+    ]
+}

@@ -1,10 +1,10 @@
 {
-  "name": "Shucts",
-  "version": "0.0.1",
+  "name": "qList",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "Add keyboard-shortcuts to google-search!",
-  "homepage_url": "https://github.com/wildeyes/shucts",
-  "options_page": "src/options.html",
+  "homepage_url": "https://github.com/wildeyes/qList",
+  /*"options_page": "src/options.html",*/
   "background": {
     "scripts":["src/eventpage.js"],
     "persistent":false
@@ -15,12 +15,12 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.google.com/*"
+        "*://www.google.com/*",
+        "*://www.google.co.il/*"
       ],
       "js": [
-        "lib/jquery.js",
-        "lib/keyboard.js",
-        "src/inject.js"
+        "lib/mousetrap.js",
+        "src/script.js"
       ]
     }
   ]
