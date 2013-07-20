@@ -2,9 +2,8 @@
   "name": "qList",
   "version": "0.0.2",
   "manifest_version": 2,
-  "description": "Add keyboard-shortcuts to google-search!",
+  "description": "Add keyboard shortcuts to google-search and youtube!",
   "homepage_url": "https://github.com/wildeyes/qList",
-  /*"options_page": "src/options.html",*/
   "background": {
     "scripts":["src/eventpage.js"],
     "persistent":false
@@ -15,8 +14,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.google.com/*",
-        "*://www.google.co.il/*"
+        "*://www.google.*",
+        "*://www.youtube.com/results?*"
       ],
       "js": [
         "lib/mousetrap.js",

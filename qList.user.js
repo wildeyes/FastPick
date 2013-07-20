@@ -1,8 +1,19 @@
+// ==UserScript==
+// @name       qList
+// @namespace  https://github.com/wildeyes/qList
+// @version    0.0.2
+// @description  Add keyboard shortcuts to google-search and youtube!
+// @require http://cdn.craig.is/js/mousetrap/mousetrap.min.js
+// @include      http*://www.google.*
+// @include      http*://www.youtube.com/results?*
+// @copyright  2012+, You
+// ==/UserScript==
+
 function open_tab(url, mode) {
-    action = {"createProperties":{"url":url},"mode":mode};
     if(mode == "newtab")
-        action.createProperties.active = false;
-    chrome[runtimeOrExtension].sendMessage(action);
+        GM_openInTab(url);
+    else
+        window.location = url;
 }
 function get_url(linknum) {
     return links[linknum - 1].href;
@@ -41,6 +52,5 @@ var sources = [{"name":"google","source":"h3.r a"},{"name":"youtube","source":"l
   , _keys = {inline:_default.inline,newtab:_default.newtab}
   , shiftsymbols = '!@#$%^&*()' //workaround Holding shift when pressing numbers
   , links = domainlinks()
-  , runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
 
 init();

@@ -1,0 +1,10 @@
+[
+	{
+		"name":  "google",
+		"source":"h3.r a"
+	},
+	{
+		"name":  "youtube",
+		"source":"li.yt-uix-tile h3 a"
+	},
+]
