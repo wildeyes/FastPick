@@ -14,7 +14,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.google.*",
+        "*://www.google.com/*",
+        "*://www.google.co.il/*",
         "*://www.youtube.com/results?*"
       ],
       "js": [

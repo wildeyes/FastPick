@@ -13,11 +13,9 @@ AND NO ONE HAS KEYBOARD SHORTCUTS for christ sake.
 
 How to Use
 ==========
-Disable Instant. It sucks.
-press f key and pick a number from 1-9.
-press F key (with Shift) and pick a number for a new tab.
-
-Try it out!
+ - f opens in current tab.
+ - F opens in new tab.
+![Instructions](/screenshot.png "Instructions")
 
 Install Methods
 ===============
@@ -47,6 +45,13 @@ TODO
 - Sublime Text 2 JS-Extension Build System
 	- YUI JS Minify Build System (someday)
 	- Script building from different files like described in [Fluent 2013](http://www.youtube.com/watch?v=bqfoYaKCYUI)
+- Holding F and pressing numbers opens lots of tabs
+- Enumeration after 9 (Hexdecimal or something like that)
+- Options page.
+- J,K keys for up and down.
+- U,D for down\up past the last result seen BUT including that last result.
+- I'm feeling lucky right froom the Omnibar!
+- Support for every keyboard-scheme (e.g clicking the f while typing in russian\korean\arabic) 
 
 Thanks
 ======

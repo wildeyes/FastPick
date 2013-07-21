@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name       qList
-// @namespace  https://github.com/wildeyes/qList
-// @version    0.0.2
+// @name         qList
+// @namespace    https://github.com/wildeyes/qList
+// @version      0.0.3
 // @description  Add keyboard shortcuts to google-search and youtube!
-// @require http://cdn.craig.is/js/mousetrap/mousetrap.min.js
+// @require      http://cdn.craig.is/js/mousetrap/mousetrap.min.js
 // @include      http*://www.google.*
 // @include      http*://www.youtube.com/results?*
-// @copyright  2012+, You
+// @copyright    2013+, wildeyes
 // ==/UserScript==
 
 function open_tab(url, mode) {
