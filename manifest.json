@@ -1,30 +1,35 @@
 {
-  "name": "qList",
-  "version": "1.0.0",
+  "name"            : "qList",
+  "version"         : "1.1.0",
   "manifest_version": 2,
-  "description": "Unified keyboard shortcuts to search-results (google,youtube,cheatography and much more)!",
-  "homepage_url": "https://github.com/wildeyes/qList",
+  "description"     : "Keyboard Shortcuts for search-results and lists (and much more)!",
+  "homepage_url"    : "https://github.com/wildeyes/qList",
+  "update_url"      : "https://github.com/wildeyes/qList/raw/master/updates.xml",
   "background": {
-    "scripts":["src/eventpage.js"],
+    "scripts"   :["src/eventpage.js"],
     "persistent":false
   },
-  "icons": { "16": "icon16.png",
-           "48": "icon48.png",
-          "128": "icon128.png" },
+  "icons": {
+           "16" : "icon16.png",
+           "48" : "icon48.png",
+           "128": "icon128.png"
+          },
   "content_scripts": [
     {
       "matches": [
         "*://www.google.com/*"
+      , "*://thepiratebay.sx/search/*"
       , "*://www.google.co.il/*"
       , "*://israblog.nana10.co.il/*"
       , "*://www.youtube.com/results?*"
       , "*://www.cheatography.com/*"
+      , "*://readthedocs.org/*"
       ],
       "js": [
         "lib/mousetrap.js",
         "lib/jquery.js",
         "lib/json-data.js",
-        "src/script.js"
+        "src/script.min.js"
       ]
     }
   ]
