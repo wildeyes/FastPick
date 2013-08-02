@@ -1,8 +1,8 @@
 {
   "name": "qList",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "manifest_version": 2,
-  "description": "Add keyboard shortcuts to google-search and youtube!",
+  "description": "Unified keyboard shortcuts to search-results (google,youtube,cheatography and much more)!",
   "homepage_url": "https://github.com/wildeyes/qList",
   "background": {
     "scripts":["src/eventpage.js"],
@@ -14,12 +14,16 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.google.com/*",
-        "*://www.google.co.il/*",
-        "*://www.youtube.com/results?*"
+        "*://www.google.com/*"
+      , "*://www.google.co.il/*"
+      , "*://israblog.nana10.co.il/*"
+      , "*://www.youtube.com/results?*"
+      , "*://www.cheatography.com/*"
       ],
       "js": [
         "lib/mousetrap.js",
+        "lib/jquery.js",
+        "lib/json-data.js",
         "src/script.js"
       ]
     }
