@@ -29,7 +29,7 @@ function buildElementList(type, page) {
         elelist = $(page.anchorsel)
         
         if(page.anchorsel == "special")
-            elelist = $('iframe').contents().find('a').filter(function () {return this.href.match(/blogread\.asp\?blog=\d{6}$/); })     
+            elelist = $('iframe').contents().find('a.list').filter(function () {return this.href.match(/blogread\.asp\?blog=\d{6}$/); })     
         __ancele = elelist
     }   
     return elelist;
@@ -63,7 +63,7 @@ function init_anchors() {
         data = {}
 
     data.anchor_ele_list = buildElementList("anchor", page) //buildElementList('anchor') before text (__ancele)
-    data.text_ele_list = buildElementList("text", page)
+    data.text_ele_list   = buildElementList("text"  , page)
 
     return data;
 }
@@ -88,7 +88,6 @@ function init() {
         anchor_ele = page.anchor_ele_list[i - 1];
         text_ele = page.text_ele_list[i - 1];
         text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
-
 
         openLink = buildLinkOpener(anchor_ele.href, "inline");
         openLinkNewTab = buildLinkOpener(anchor_ele.href, "newtab");

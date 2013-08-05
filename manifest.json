@@ -4,7 +4,6 @@
   "manifest_version": 2,
   "description"     : "Keyboard Shortcuts for search-results and lists (and much more)!",
   "homepage_url"    : "https://github.com/wildeyes/qList",
-  "update_url"      : "https://github.com/wildeyes/qList/raw/master/updates.xml",
   "background": {
     "scripts"   :["src/eventpage.js"],
     "persistent":false
@@ -28,8 +27,8 @@
       "js": [
         "lib/mousetrap.js",
         "lib/jquery.js",
-        "lib/json-data.js",
-        "src/script.min.js"
+        "lib/data.js",
+        "src/script.js"
       ]
     }
   ]

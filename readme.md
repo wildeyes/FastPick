@@ -33,7 +33,7 @@ NO ONE SUPPORTS KEYBOARD SHORTCUTS for christ sake.
  - Keys j,k : scroll down and up.
  - New site support : ThePirateBay.
  - New site support : ReadTheDocs.
- - u : Open Extensions page.
+ - u : Open Extensions page ( I use it all the time!)
 ### v1
  - New site support : Cheatography.
  - New site support : Israblog.
