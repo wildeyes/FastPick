@@ -74,7 +74,10 @@ function init() {
 
     Mousetrap.bind('r', function(e) {
         e.preventDefault()
-        $('input').focus()
+        if(location.href.indexOf('youtube') != -1)
+            $('input#masthead-search-term').focus()
+        else
+            $('input').focus()
     });
     Mousetrap.bind('j', function(e) {
         scrollBy(0, 100);

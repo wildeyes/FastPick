@@ -1,11 +1,12 @@
 {
   "name"            : "qList",
-  "version"         : "1.1.0",
+  "version"         : "1.12.0",
   "manifest_version": 2,
-  "description"     : "Keyboard Shortcuts for search-results and lists (and much more)!",
+  "description"     : "Awesome Search Keyboard Shortcuts Inc. v1.12",
   "homepage_url"    : "https://github.com/wildeyes/qList",
+  "update_url"      : "https://github.com/wildeyes/qList",
   "background": {
-    "scripts"   :["src/eventpage.js"],
+    "scripts"   :["eventpage.js"],
     "persistent":false
   },
   "icons": {
@@ -23,12 +24,11 @@
       , "*://www.youtube.com/results?*"
       , "*://www.cheatography.com/*"
       , "*://readthedocs.org/*"
-      ],
-      "js": [
-        "lib/mousetrap.js",
-        "lib/jquery.js",
-        "lib/data.js",
-        "src/script.js"
+      ],"js": [
+        "mousetrap.js",
+        "jquery.js",
+        "data.js",
+        "script.js"
       ]
     }
   ]
