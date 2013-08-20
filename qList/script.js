@@ -95,17 +95,23 @@ function init() {
         openLink = buildLinkOpener(anchor_ele.href, "inline");
         openLinkNewTab = buildLinkOpener(anchor_ele.href, "newtab");
 
-        if (i == 1)
-            Mousetrap.bind('d', openLink);
-        Mousetrap.bind('f ' + numbers[i - 1], openLink);
-        Mousetrap.bind('F ' + numbers[i - 1], openLinkNewTab);
-        if (i < shiftsymbols.length)
-            Mousetrap.bind('F ' + shiftsymbols[i - 1], openLinkNewTab); //workaround for holding shift when pressing numbers
+        if(keymode == 'supermode') {
+            Mousetrap.bind(numbers[i - 1], openLink);
+            Mousetrap.bind(shiftsymbols[i - 1], openLinkNewTab);
+        } else {
+            if (i == 1)
+                Mousetrap.bind('d', openLink);
+            Mousetrap.bind('f ' + numbers[i - 1], openLink);
+            Mousetrap.bind('F ' + numbers[i - 1], openLinkNewTab);
+            if (i < shiftsymbols.length)
+                Mousetrap.bind('F ' + shiftsymbols[i - 1], openLinkNewTab); //workaround for holding shift when pressing numbers
+        }  
         i += 1
     } while (page.anchor_ele_list.length > (i - 1) && page.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
 }
 
-var numbers = '123456789qwertyuiop',
+var keymode = "supermode"
+  , numbers = '123456789qwe'//rtyuiop',
     shiftsymbols = '!@#$%^&*()',
     page = init_anchors(),
     runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
