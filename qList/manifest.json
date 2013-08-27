@@ -1,7 +1,7 @@
 
 {
   "name"            : "qList",
-  "version"         : "1.12.0",
+  "version"         : "2",
   "manifest_version": 2,
   "description"     : "Awesome Search Keyboard Shortcuts Inc. v1.12",
   "homepage_url"    : "https://github.com/wildeyes/qList",

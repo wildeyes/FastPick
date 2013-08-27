@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+crx pack ./qList -f qList.crx -p ../pems/qList.pem

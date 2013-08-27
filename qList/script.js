@@ -67,53 +67,39 @@ function init_anchors() {
 
     return data;
 }
-//@todo r focuses input not only on gse
-
 function init() {
     var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
 
-    Mousetrap.bind('r', function(e) {
-        e.preventDefault()
-        if(location.href.indexOf('youtube') != -1)
-            $('input#masthead-search-term').focus()
-        else
-            $('input').focus()
-    });
-    Mousetrap.bind('j', function(e) {
-        scrollBy(0, 100);
-    });
-    Mousetrap.bind('k', function(e) {
-        scrollBy(0, -100);
-    });
-    //Mousetrap.bind('u', buildLinkOpener('chrome://extensions', 'newtab'));
-
-    do { // We count from 1 for presentation, but store in page/arr from 0.
+    Mousetrap.bind('e', buildENav(true));
+    Mousetrap.bind('E', buildENav(false));
+    Mousetrap.bind('j', function(e) { scrollBy(0, 100); });
+    Mousetrap.bind('k', function(e) { scrollBy(0, -100); });
+    do { // We count from 1 for pr esentation, but store in page/arr from 0.
         anchor_ele = page.anchor_ele_list[i - 1];
         text_ele = page.text_ele_list[i - 1];
         text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
-
-        openLink = buildLinkOpener(anchor_ele.href, "inline");
-        openLinkNewTab = buildLinkOpener(anchor_ele.href, "newtab");
-
-        if(keymode == 'supermode') {
-            Mousetrap.bind(numbers[i - 1], openLink);
-            Mousetrap.bind(shiftsymbols[i - 1], openLinkNewTab);
-        } else {
-            if (i == 1)
-                Mousetrap.bind('d', openLink);
-            Mousetrap.bind('f ' + numbers[i - 1], openLink);
-            Mousetrap.bind('F ' + numbers[i - 1], openLinkNewTab);
-            if (i < shiftsymbols.length)
-                Mousetrap.bind('F ' + shiftsymbols[i - 1], openLinkNewTab); //workaround for holding shift when pressing numbers
-        }  
+        Mousetrap.bind(numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline"));
+        Mousetrap.bind(shiftsymbols[i - 1], buildLinkOpener(anchor_ele.href, "newtab"));
         i += 1
     } while (page.anchor_ele_list.length > (i - 1) && page.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
 }
-
-var keymode = "supermode"
-  , numbers = '123456789qwe'//rtyuiop',
-    shiftsymbols = '!@#$%^&*()',
-    page = init_anchors(),
-    runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
+function buildENav(type) {
+    $f = $('input');
+    if(location.href.indexOf('youtube') != -1)
+        $f = $('input#masthead-search-term')
+    return function(e) {
+        e.preventDefault()
+        $f.focus();
+        if(type) {
+            tmpval = $f.val();
+            $f.val('');
+            $f.val(tmpval);
+        }
+    }
+}
+var numbers = '123456789'
+   ,shiftsymbols = '!@#$%^&*('
+   ,page = init_anchors()
+   ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
 if (page)
     init();
