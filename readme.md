@@ -1,4 +1,4 @@
-## qList - Awesome Search Shortcuts v1.12
+## qList - Awesome Search Shortcuts 2.0.2
 Add keyboard-shortcuts to search pages and lists on pages.
 
 ### Supports (A whole lot more planned):

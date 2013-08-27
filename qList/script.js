@@ -29,15 +29,17 @@ function buildElementList(type, page) {
         elelist = $(page.anchorsel)
         
         if(page.anchorsel == "special") {
-            elelist = $('iframe').contents().find('a.list').filter(function () {return this.href.match(/\?blog=\d{6}$/); })   
+            elelist = $('iframe').contents().find('a.list').filter(iFilter)   
             if(elelist.length == 0)
-                elelist = $('body').find('a.list').filter(function () {return this.href.match(/\?blog=\d{6}$/); })
+                elelist = $('body').find('a.list').filter(iFilter)
         }
         __ancele = elelist
     }   
     return elelist;
 }
-
+function iFilter() {
+    return $(this).find('img[width=32]').length != 0
+}
 function get_page() {
     var url = location.href,
         data = null,
