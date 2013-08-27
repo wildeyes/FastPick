@@ -7,26 +7,19 @@ Add keyboard-shortcuts to search pages and lists on pages.
  - Cheatography Search
  - ThePirateBay Search
  - ReadTheDocs Search
- - Israblog Main page and Sideblogs-menu
 
 ## How to Use
-Super Mode
-Vi Mode
- - f opens in current tab.
- - F opens in new tab.
- - Extra:d opens first option in current tab.
- - Extra:r return focus to the searchbox (only:google,youtube).
-
-![Instructions](/screenshot.png "Instructions")
-
+ - 1-9 opens in current tab.
+ - Shift + 1-9 opens in new tab.
 
 ## Install
 - [Download Crx from here](https://github.com/wildeyes/qList/raw/master/qList.crx).
 - Go to this address : [chrome://extensions](chrome://extensions), and "drag" the crx file into that page (like it says in [Steps on adding extension from other websites at the bottom of the page](https://support.google.com/chrome_webstore/answer/2664769?p=crx_warning&rd=1)). That should make a install-dialog pop up.
 
 ## Changelist
-### v1.3
- - Following a recommendation from a friend, I made the shortcuts to be easy piesy (is that the way it's written?). 1-9 for opening a link in the current tab, Shift + 1-9 for opening in a new tab. I call this keyset supermode, and I'll make the previous one available through an options page.
+### v1.2
+ - New shortcuts.
+
 ### v1.12
  - Working CRX file (That stuff is important you know).
  - Youtube: r focuses on input. 
@@ -44,16 +37,6 @@ Vi Mode
  - Key d : select first option.
  - seperated data from system.
  - Enumeration after 9, until p (1-9, then q until p on the second row of the keyboard)
-
-## TODO
-- Customizable shortcuts through options page.
-- Sublime Text 2 JS-Extension Build System
-    - https://github.com/cgutierrez/JsMinifier
-    - Script building from different files like described in [Fluent 2013](http://www.youtube.com/watch?v=bqfoYaKCYUI)
-- Selection status for F like / in Vimium.
-- Support for every keyboard-scheme (e.g clicking the f while typing in russian\korean\arabic) 
-- I'm feeling lucky right from the Omnibar! -> Actually can't be done in Chrome, considering switching to FF.
-
 
 ## Thanks
 Mom you're great.

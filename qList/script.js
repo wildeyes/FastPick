@@ -28,8 +28,11 @@ function buildElementList(type, page) {
     if (type == "anchor") {
         elelist = $(page.anchorsel)
         
-        if(page.anchorsel == "special")
-            elelist = $('iframe').contents().find('a.list').filter(function () {return this.href.match(/blogread\.asp\?blog=\d{6}$/); })     
+        if(page.anchorsel == "special") {
+            elelist = $('iframe').contents().find('a.list').filter(function () {return this.href.match(/\?blog=\d{6}$/); })   
+            if(elelist.length == 0)
+                elelist = $('body').find('a.list').filter(function () {return this.href.match(/\?blog=\d{6}$/); })
+        }
         __ancele = elelist
     }   
     return elelist;
