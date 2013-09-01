@@ -1,4 +1,36 @@
-var __ancele = null;
+var __ancele = null
+   ,rocket = [{
+   "dom": "google",
+   "anchorsel": "h3.r a"
+}, {
+   "dom": "nana10",
+   "pages": [{
+      "dom": /^http:\/\/israblog.nana10.co.il\/$/,
+      "textsel": "b",
+      "anchorsel": "a.GenenalHompageLinkNoBold"
+   },{
+      "dom": /\?blog=\d{3,8}/,
+      "anchorsel": "special"
+   }]
+}, {
+   "dom": "youtube",
+   "pages": [{
+    "dom" : /watch\?/,
+    "anchorsel": 'li.video-list-item.related-list-item a'
+   },{
+    "dom": /results\?/,
+    "anchorsel": "li.yt-uix-tile h3 a"
+   }]
+}, {
+   "dom": "thepiratebay",
+   "anchorsel": ".detLink"
+}, {
+   "dom": "cheatography",
+   "anchorsel": "#body_shadow strong a"
+}, {
+   "dom": "readthedocs",
+   "anchorsel": "#id_search_result a"
+}]
 
 function open_tab(url, mode) {
     action = {
@@ -20,33 +52,32 @@ function buildLinkOpener(link, mode) {
 
 function buildElementList(type, page) {
     elelist = null;
-    if (type == "text")
-        if (page.hasOwnProperty("textsel"))
-            elelist = $(page.textsel);
-        else
-            elelist = __ancele;
     if (type == "anchor") {
         elelist = $(page.anchorsel)
-        
+
         if(page.anchorsel == "special") {
-            elelist = $('iframe').contents().find('a.list').filter(iFilter)   
+            elelist = $('iframe').contents().find('a.list').filter(iFilter)
             if(elelist.length == 0)
                 elelist = $('body').find('a.list').filter(iFilter)
         }
         __ancele = elelist
-    }   
+    } else if (type == "text")
+        if (page.hasOwnProperty("textsel"))
+            elelist = $(page.textsel);
+        else
+            elelist = __ancele;
     return elelist;
 }
 function iFilter() {
-    return $(this).find('img[width=32]').length != 0
+    return $(this).find('img[width=32]').length != 0;
 }
 function get_page() {
     var url = location.href,
         data = null,
         page = null
-    for (var i = 0; i < qlist.length; i += 1) {
-        page = qlist[i];
-        if (url.indexOf(qlist[i].dom) != -1)
+    for (var i = 0; i < rocket.length; i += 1) {
+        page = rocket[i];
+        if (url.indexOf(rocket[i].dom) != -1)
             break;
     }
     data = page.pages;
