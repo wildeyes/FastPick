@@ -1,38 +1,38 @@
 var __ancele = null
    ,rocket = [{
-   "dom": "google",
-   "anchorsel": "h3.r a"
+    "dom": "google",
+    "anchorsel": "h3.r a"
 }, {
-   "dom": "nana10",
-   "pages": [{
-      "dom": /^http:\/\/israblog.nana10.co.il\/$/,
-      "textsel": "b",
-      "anchorsel": "a.GenenalHompageLinkNoBold"
-   },{
-      "dom": /\?blog=\d{3,8}/,
-      "anchorsel": "special"
-   }]
+    "dom": "nana10",
+    "pages": [{
+        "dom": /^http:\/\/israblog.nana10.co.il\/$/,
+        "textsel": "b",
+        "anchorsel": "a.GenenalHompageLinkNoBold"
+    }, {
+        "dom": /\?blog=\d{3,8}/,
+        "anchorsel": "special"
+    }]
 }, {
-   "dom": "youtube",
-   "pages": [{
-    "dom" : /watch\?/,
-    "anchorsel": 'li.video-list-item.related-list-item a'
-   },{
-    "dom": /results\?/,
-    "anchorsel": "li.yt-uix-tile h3 a"
-   }]
+    "dom": "youtube",
+    "pages": [{
+        "dom": /watch\?/,
+        "anchorsel": 'li.video-list-item.related-list-item a'
+    }, {
+        "dom": /results\?/,
+        "anchorsel": "li.yt-uix-tile h3 a"
+    }]
 }, {
-   "dom": "thepiratebay",
-   "anchorsel": ".detLink"
+    "dom": "thepiratebay",
+    "anchorsel": ".detLink"
 }, {
-   "dom": "quora",
-   "anchorsel": ".question_link"
+    "dom": "quora",
+    "anchorsel": ".question_link"
 }, {
-   "dom": "cheatography",
-   "anchorsel": "#body_shadow strong a"
+    "dom": "cheatography",
+    "anchorsel": "#body_shadow strong a"
 }, {
-   "dom": "readthedocs",
-   "anchorsel": "#id_search_result a"
+    "dom": "readthedocs",
+    "anchorsel": "#id_search_result a"
 }]
 
 function open_tab(url, mode) {
@@ -59,7 +59,7 @@ function buildElementList(type, page) {
         elelist = $(page.anchorsel)
 
         if(page.anchorsel == "special")
-            elelist = $('body').find('a.list:has(img)').add($('iframe').contents().find('a.list:has(img)'));
+            elelist = $('body').find('a.list:has(img[width="32"])').add($('iframe').contents().find('a.list:has(img[width="32"])'));
         __ancele = elelist
     } else if (type == "text")
         if (page.hasOwnProperty("textsel"))
@@ -93,10 +93,13 @@ function get_page() {
 
 function init_anchors() {
     var page = get_page(),
-        data = {}
+        data = {'anchor_ele_list':[],'text_ele_list':[]}
 
-    data.anchor_ele_list = buildElementList("anchor", page) //buildElementList('anchor') before text (__ancele)
+    data.anchor_ele_list = buildElementList("anchor", page)
     data.text_ele_list   = buildElementList("text"  , page)
+
+    if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
+        throw "Seems as if Pi6 haven't been able to start on this page\n. $(" + page.anchorsel + ").length === 0 and it shouldn't be. Post an issue on https://github.com/wildeyes/Pi6/issues !"
 
     return data;
 }
@@ -132,13 +135,11 @@ function buildENav(type) {
         // This is a very weird solution, but who gives a flying whale.. it works!
     }
 }
-/*
-$f = $('input:first');
-$f.select()
-*/
-var numbers = '123456789qw'
-   ,shiftsymbols = '!@#$%^&*(QW'
-   ,page = init_anchors()
-   ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
-if (page)
-    init();
+jQuery(document).ready(function( $ ) {
+    numbers = '123456789qw'
+    shiftsymbols = '!@#$%^&*(QW'
+    page = init_anchors()
+    runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
+    if (page)
+        init();
+});

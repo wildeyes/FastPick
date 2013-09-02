@@ -1,4 +1,4 @@
-## Pi6 - Search and lists keyboard shortcuts for the ADHD
+## Pi6 2.1.0 - Search and lists keyboard shortcuts for the ADHD
 Empower yourself with absolutely timesaving keyboard-shortcuts for search and lists with Pi6.
 `
 Pi6, P6, Pie 6 is an Extension for Chrome \ Chromium, soon for FireFox aswell.
@@ -19,13 +19,18 @@ Promise I don't save any of your precious data.
  - Shift+E does a "Select All" focus on the searchbox.
  - Keys j to go down, k to go up.
 
-## Install
+## Install (Very important! Follow carefully or won't work)
 - [Download Crx from here](https://github.com/wildeyes/Pi6/raw/master/pi6.crx)
 - [Disable Instant](https://www.google.com/search?q=disable+google+instant), which basically sums to click on the preferences on the top right\left (cog icon). (it's crap anyway)
 - On windows, you may need to enable "Developers Mode" in the extensions page.
 - Drag and drop the crx file to the Extensions page ([Guide to installing chrome extensions manually (not from chrome webstore)](https://www.google.com/search?q=how+to+install+chrome+extensions+manually))
+- **Important ProTip**: If an update requires addtional permissions, you will have to re-enable the extension manually. To do that, Click on the "bars" Icon and at the bottom click on "Pi6 Requires new permissions..." and re-enable.
 
 ## Changelist
+### v2.1.0
+- Error message in console if Pi6 doesn't work properly.
+- Use .ready().
+- Development Tools: Compiling functions.
 
 ### v2.0.4
 - Added q,w as keys.

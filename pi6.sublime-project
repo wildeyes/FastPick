@@ -1,14 +1,7 @@
 {
-	"folders":
-	[
-		{
-			"path": "~/Dropbox/code/Pi6"
-		}
-	],
-   "settings":
-   {
+	"folders": [{"path": "~/Dropbox/code/Pi6"} ],
+    "settings": {
       "tab_size": 4
-   },
-   "build_systems":
-    []
+     ,"detect_indentation": true
+   }, "build_systems": []
 }
