@@ -1,6 +1,6 @@
 {
   "name"            : "Pi6",
-  "version"         : "2.0.3",
+  "version"         : "2.0.4",
   "manifest_version": 2,
   "description"     : "Search and lists keyboard shortcuts for the ADHD",
   "homepage_url"    : "https://github.com/wildeyes/Pi6",
@@ -12,13 +12,14 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.google.com/*"
+        "*://*.google.com/*"
       , "*://thepiratebay.sx/search/*"
-      , "*://www.google.co.il/*"
+      , "*://*.google.co.il/*"
       , "*://israblog.nana10.co.il/*"
-      , "*://www.youtube.com/*"
-      , "*://www.cheatography.com/*"
-      , "*://readthedocs.org/*"
+      , "*://*.youtube.com/*"
+      , "*://*.cheatography.com/*"
+      , "*://*.readthedocs.org/*"
+      , "*://*.quora.com/*"
       ],"js": [
         "jquery.js",
         "mousetrap.js",

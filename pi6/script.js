@@ -25,6 +25,9 @@ var __ancele = null
    "dom": "thepiratebay",
    "anchorsel": ".detLink"
 }, {
+   "dom": "quora",
+   "anchorsel": ".question_link"
+}, {
    "dom": "cheatography",
    "anchorsel": "#body_shadow strong a"
 }, {
@@ -49,17 +52,14 @@ function buildLinkOpener(link, mode) {
         open_tab(link, mode);
     }
 }
-
+// $.fn.iFilter = function() { return this.each(function() { return $(this).find('a.list:has(img)').length !== 0 }); };
 function buildElementList(type, page) {
     elelist = null;
     if (type == "anchor") {
         elelist = $(page.anchorsel)
 
-        if(page.anchorsel == "special") {
-            elelist = $('iframe').contents().find('a.list').filter(iFilter)
-            if(elelist.length == 0)
-                elelist = $('body').find('a.list').filter(iFilter)
-        }
+        if(page.anchorsel == "special")
+            elelist = $('body').find('a.list:has(img)').add($('iframe').contents().find('a.list:has(img)'));
         __ancele = elelist
     } else if (type == "text")
         if (page.hasOwnProperty("textsel"))
@@ -67,9 +67,6 @@ function buildElementList(type, page) {
         else
             elelist = __ancele;
     return elelist;
-}
-function iFilter() {
-    return $(this).find('img[width=32]').length != 0;
 }
 function get_page() {
     var url = location.href,
@@ -120,21 +117,27 @@ function init() {
     } while (page.anchor_ele_list.length > (i - 1) && page.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
 }
 function buildENav(type) {
-    $f = $('input');
-    if(location.href.indexOf('youtube') != -1)
-        $f = $('input#masthead-search-term')
+    $f = $('input:first');
+    if(location.href.indexOf('youtube') !== -1)
+        $f = $('input#masthead-search-term:first')
     return function(e) {
         e.preventDefault()
-        $f.focus();
+        $f.focus()
         if(type) {
             tmpval = $f.val();
             $f.val('');
             $f.val(tmpval);
-        }
+        } else
+            $f.select()
+        // This is a very weird solution, but who gives a flying whale.. it works!
     }
 }
-var numbers = '123456789'
-   ,shiftsymbols = '!@#$%^&*('
+/*
+$f = $('input:first');
+$f.select()
+*/
+var numbers = '123456789qw'
+   ,shiftsymbols = '!@#$%^&*(QW'
    ,page = init_anchors()
    ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
 if (page)
