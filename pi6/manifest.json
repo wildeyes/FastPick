@@ -1,30 +1,19 @@
 {
-  "name"            : "Pi6",
-  "version"         : "2.1.0",
-  "manifest_version": 2,
-  "description"     : "Search and lists keyboard shortcuts for the ADHD",
-  "homepage_url"    : "https://github.com/wildeyes/Pi6",
-  "update_url"      : "https://raw.github.com/wildeyes/Pi6/master/updates.xml",
-  "background": {
-    "scripts"   :["eventpage.js"],
-    "persistent":false
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.google.com/*"
-      , "*://thepiratebay.sx/search/*"
-      , "*://*.google.co.il/*"
-      , "*://israblog.nana10.co.il/*"
-      , "*://*.youtube.com/*"
-      , "*://*.cheatography.com/*"
-      , "*://*.readthedocs.org/*"
-      , "*://*.quora.com/*"
-      ],"js": [
-        "jquery.js",
-        "mousetrap.js",
-        "script.js"
-      ]
-    }
-  ]
+    "name": "Pi6",
+    "version": "2.11.1",
+    "manifest_version": 2,
+    "description": "Search and lists keyboard shortcuts for the ADHD",
+    "homepage_url": "https://github.com/wildeyes/Pi6",
+    "update_url": "https://raw.github.com/wildeyes/Pi6/master/updates.xml",
+    "background": {
+        "scripts": ["eventpage.js"],
+        "persistent": false
+    },
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["jquery.js", "mousetrap.js", "script.js"]
+    }]
+   ,"permissions": [
+        "storage"
+    ]
 }

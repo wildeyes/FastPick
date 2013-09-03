@@ -1,4 +1,4 @@
-## Pi6 2.1.0 - Search and lists keyboard shortcuts for the ADHD
+## Pi6 2.11.1 - Search and lists keyboard shortcuts for the ADHD
 Empower yourself with absolutely timesaving keyboard-shortcuts for search and lists with Pi6.
 `
 Pi6, P6, Pie 6 is an Extension for Chrome \ Chromium, soon for FireFox aswell.
@@ -26,11 +26,21 @@ Promise I don't save any of your precious data.
 - Drag and drop the crx file to the Extensions page ([Guide to installing chrome extensions manually (not from chrome webstore)](https://www.google.com/search?q=how+to+install+chrome+extensions+manually))
 - **Important ProTip**: If an update requires addtional permissions, you will have to re-enable the extension manually. To do that, Click on the "bars" Icon and at the bottom click on "Pi6 Requires new permissions..." and re-enable.
 
+## Thanks
+Mom you're great.
+
+## I love making Pi6 using;
+- [Chromix](https://github.com/smblott-github/chromix) gives me a CLI interface to Chrome (I refresh chrome tabs, and **the extenstion** directly from my text editor).
+- [Mousetrap](http://craig.is/killing/mice) For dead easy keyboard binging.
+- [Extensionizr](http://extensionizr.com) created Pi6 extension's template!
+
 ## Changelist
+
+v2.11.1: fix #1 and close #2. Generalized input sys.
+
 ### v2.1.0
 - Error message in console if Pi6 doesn't work properly.
 - Use .ready().
-- Development Tools: Compiling functions.
 
 ### v2.0.4
 - Added q,w as keys.
@@ -61,11 +71,3 @@ Promise I don't save any of your precious data.
  - Key d : select first option.
  - seperated data from system.
  - Enumeration after 9, until p (1-9, then q until p on the second row of the keyboard)
-
-## Thanks
-Mom you're great.
-
-## I love making Pi6 using;
-- [Chromix](https://github.com/smblott-github/chromix) gives me a CLI interface to Chrome (I refresh chrome tabs, and **the extenstion** directly from my text editor).
-- [Mousetrap](http://craig.is/killing/mice) For dead easy keyboard binging.
-- [Extensionizr](http://extensionizr.com) created Pi6 extension's template!

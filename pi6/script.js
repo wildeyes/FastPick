@@ -1,20 +1,23 @@
 var __ancele = null
+   ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension'
    ,rocket = [{
-    "dom": "google",
-    "anchorsel": "h3.r a"
+    "dom": "google"
+   ,"anchorsel": "h3.r a"
+   ,"input": "input[name='q'][type='text']:first"
 }, {
     "dom": "nana10",
     "pages": [{
-        "dom": /^http:\/\/israblog.nana10.co.il\/$/,
-        "textsel": "b",
-        "anchorsel": "a.GenenalHompageLinkNoBold"
+        "dom": /^http:\/\/israblog.nana10.co.il\/$/
+       ,"textsel": "b"
+       ,"anchorsel": "a.GenenalHompageLinkNoBold"
     }, {
         "dom": /\?blog=\d{3,8}/,
         "anchorsel": "special"
     }]
 }, {
-    "dom": "youtube",
-    "pages": [{
+    "dom":   "youtube"
+   ,"input": "input#masthead-search-term:first"
+   ,"pages": [{
         "dom": /watch\?/,
         "anchorsel": 'li.video-list-item.related-list-item a'
     }, {
@@ -34,7 +37,38 @@ var __ancele = null
     "dom": "readthedocs",
     "anchorsel": "#id_search_result a"
 }]
+jQuery(document).ready(function($) {
+    var numbers = '123456789qw'
+       ,shiftsymbols = '!@#$%^&*(QW'
+       ,page = get_page()
+       ,data = {'anchor_ele_list':[],'text_ele_list':[]}
 
+    if(page === null)
+        return;
+
+    data.anchor_ele_list = buildElementList("anchor", page)
+    data.text_ele_list   = buildElementList("text"  , page)
+    data.input = $(page.input);
+
+    Mousetrap.bind('e', buildENav(data.input,true));
+    Mousetrap.bind('E', buildENav(data.input,false));
+    Mousetrap.bind('j', function(e) { scrollBy(0, 100); });
+    Mousetrap.bind('k', function(e) { scrollBy(0, -100); });
+
+    if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
+        throw "Seems as if Pi6 haven't been able to start on this page\n. $(" + page.anchorsel + ").length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
+
+    var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
+
+    do {
+        anchor_ele = data.anchor_ele_list[i - 1];
+        text_ele = data.text_ele_list[i - 1];
+        text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
+        Mousetrap.bind(numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline"));
+        Mousetrap.bind(shiftsymbols[i - 1], buildLinkOpener(anchor_ele.href, "newtab"));
+        i += 1
+} while (data.anchor_ele_list.length > (i - 1) && data.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
+});
 function open_tab(url, mode) {
     action = {
         "createProperties": {
@@ -77,6 +111,9 @@ function get_page() {
         if (url.indexOf(rocket[i].dom) != -1)
             break;
     }
+    if(page === null && page.pages === null)
+        return null;
+
     data = page.pages;
     if (data == undefined)
         data = page;
@@ -90,39 +127,7 @@ function get_page() {
         }
     return data;
 }
-
-function init_anchors() {
-    var page = get_page(),
-        data = {'anchor_ele_list':[],'text_ele_list':[]}
-
-    data.anchor_ele_list = buildElementList("anchor", page)
-    data.text_ele_list   = buildElementList("text"  , page)
-
-    if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
-        throw "Seems as if Pi6 haven't been able to start on this page\n. $(" + page.anchorsel + ").length === 0 and it shouldn't be. Post an issue on https://github.com/wildeyes/Pi6/issues !"
-
-    return data;
-}
-function init() {
-    var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
-
-    Mousetrap.bind('e', buildENav(true));
-    Mousetrap.bind('E', buildENav(false));
-    Mousetrap.bind('j', function(e) { scrollBy(0, 100); });
-    Mousetrap.bind('k', function(e) { scrollBy(0, -100); });
-    do { // We count from 1 for pr esentation, but store in page/arr from 0.
-        anchor_ele = page.anchor_ele_list[i - 1];
-        text_ele = page.text_ele_list[i - 1];
-        text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
-        Mousetrap.bind(numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline"));
-        Mousetrap.bind(shiftsymbols[i - 1], buildLinkOpener(anchor_ele.href, "newtab"));
-        i += 1
-    } while (page.anchor_ele_list.length > (i - 1) && page.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
-}
-function buildENav(type) {
-    $f = $('input:first');
-    if(location.href.indexOf('youtube') !== -1)
-        $f = $('input#masthead-search-term:first')
+function buildENav($f, type) {
     return function(e) {
         e.preventDefault()
         $f.focus()
@@ -135,11 +140,3 @@ function buildENav(type) {
         // This is a very weird solution, but who gives a flying whale.. it works!
     }
 }
-jQuery(document).ready(function( $ ) {
-    numbers = '123456789qw'
-    shiftsymbols = '!@#$%^&*(QW'
-    page = init_anchors()
-    runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
-    if (page)
-        init();
-});

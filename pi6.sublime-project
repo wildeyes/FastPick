@@ -3,5 +3,12 @@
     "settings": {
       "tab_size": 4
      ,"detect_indentation": true
-   }, "build_systems": []
+   },"build_systems": [{
+        "name":"Build Unpacked"
+       ,"cmd":["$project_path/reload.sh"]
+       ,"variants": [{
+            "name":"Build CRX"
+           ,"cmd":["pack-pi6"]
+        }]
+    }]
 }
