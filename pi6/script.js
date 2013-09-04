@@ -36,6 +36,9 @@ var __ancele = null
 }, {
     "dom": "readthedocs",
     "anchorsel": "#id_search_result a"
+}, {
+    "dom": "ynet",
+    "anchorsel": ".smallheader , #mStrips div div .text12, .whtbigheader:nth-child(2), .blkbigheader span"
 }]
 jQuery(document).ready(function($) {
     var numbers = '123456789qw'
