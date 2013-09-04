@@ -1,7 +1,7 @@
-## Pi6 2.12.0 - Search and lists keyboard shortcuts for the ADHD
+## Pi6 v2.2 - Search and lists keyboard shortcuts for the ADHD
 Empower yourself with absolutely timesaving keyboard-shortcuts for search and lists with Pi6.
-`
-Pi6, P6, Pie 6 is an Extension for Chrome \ Chromium, soon for FireFox aswell.
+
+Pi 6, P6, Pie 6 is an Extension for Chrome \ Chromium, soon for FireFox aswell.
 
 Searching and navigating lists has never been this easy. Really. This is not just Apple-speak.
 I knew I had to share this extension the moment I tried to use shortcuts for a site I haven't made shortcuts for, a site I never seen before and *got angry my extension didn't work*.
@@ -30,42 +30,36 @@ Promise I don't save any of your precious data.
 Mom you're great.
 
 ## I love making Pi6 using;
+- [jQuery](http://jquery.com/) which is so popular and needed, should be loaded automatically in browsers.
 - [Chromix](https://github.com/smblott-github/chromix) gives me a CLI interface to Chrome (I refresh chrome tabs, and **the extenstion** directly from my text editor).
 - [Mousetrap](http://craig.is/killing/mice) For dead easy keyboard binging.
 - [Extensionizr](http://extensionizr.com) created Pi6 extension's template!
 
 ## Changelist
-
-v2.12.0: Add Ynet.
-v2.11.0: fix #1 and close #2. Generalized input sys.
-
-### v2.1.0
+v2.2.0 : Decouple data and framework. Fetch data from repo, store locally, check periodically for updates.
+v2.12.0: Add Ynet
+.v2.11.1: fix #1 and close #2. Generalized input sys.
+v2.1.0
 - Error message in console if Pi6 doesn't work properly.
 - Use .ready().
-
-### v2.0.4
+v2.0.4
 - Added q,w as keys.
 - fix israblog side-iframes bind.
 - Added Quora.
 - fix bug search box focus issues.
-
-### v2.0.3
+v2.0.3
  - Changed name, facilitated things.
-
-### v2
+v2
  - New shortcuts.
-
-### v1.12
+v1.12
  - Working CRX file (That stuff is important you know).
  - Youtube: r focuses on input.
  - Extra keys.
-
-### v1.1
+v1.1
  - Keys j,k : scroll down and up.
  - New site support : ThePirateBay.
  - New site support : ReadTheDocs.
-
-### v1
+v1
  - New site support : Cheatography.
  - New site support : Israblog.
  - New site support : Youtube.
