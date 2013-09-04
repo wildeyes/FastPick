@@ -1,4 +1,4 @@
-## Pi6 2.11.1 - Search and lists keyboard shortcuts for the ADHD
+## Pi6 2.12.0 - Search and lists keyboard shortcuts for the ADHD
 Empower yourself with absolutely timesaving keyboard-shortcuts for search and lists with Pi6.
 `
 Pi6, P6, Pie 6 is an Extension for Chrome \ Chromium, soon for FireFox aswell.
@@ -36,7 +36,8 @@ Mom you're great.
 
 ## Changelist
 
-v2.11.1: fix #1 and close #2. Generalized input sys.
+v2.12.0: Add Ynet.
+v2.11.0: fix #1 and close #2. Generalized input sys.
 
 ### v2.1.0
 - Error message in console if Pi6 doesn't work properly.
