@@ -1,9 +1,12 @@
 //Initialize Extension
 var root = "https://raw.github.com/wildeyes/Pi6/master"
-   ,url  =  root + "/data/rocket.min.js"
+   ,url  =  root + "/data/rocket.min.json"
    ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
 
 chrome.runtime.onInstalled.addListener(update)
+// chrome.app.runtime.onLaunched.addListener(function() {
+//     update()
+// }); //-> Doesn't actually work!
 function update () {
     $.getJSON(url, function(data) {
         chrome.storage.local.set({"rocket":data});

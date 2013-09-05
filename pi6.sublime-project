@@ -8,7 +8,7 @@
        ,"cmd":["$project_path/reload.sh"]
        ,"variants": [{
             "name":"Build CRX"
-           ,"cmd":["pack-pi6"]
+           ,"cmd":["$project_path/build.sh"]
         }]
     }]
 }

@@ -1,7 +1,7 @@
-## Pi6 v2.2 - Search and lists keyboard shortcuts for the ADHD
+## Pi6 : Search and lists keyboard shortcuts for the ADHD
 Empower yourself with absolutely timesaving keyboard-shortcuts for search and lists with Pi6.
 
-Pi 6, P6, Pie 6 is an Extension for Chrome \ Chromium, soon for FireFox aswell.
+Pi6, or by its other names such as P6 \ Pie 6 \ Pi 6 is an Extension for Chrome \ Chromium (soon for FireFox aswell) that extends your search pages and lists with a unified keyboard shortcut set. That means **no more typing something** into google and then **using the mouse**. It can all be done from the keyboard now.
 
 Searching and navigating lists has never been this easy. Really. This is not just Apple-speak.
 I knew I had to share this extension the moment I tried to use shortcuts for a site I haven't made shortcuts for, a site I never seen before and *got angry my extension didn't work*.
@@ -13,11 +13,11 @@ Also, Pi6 acts as a framework and enables adding new sites and shortcuts REALLY 
 Promise I don't save any of your precious data.
 
 ## How to Use
- - Keys 1-9 opens in current tab.
- - Shift + 1-9 opens in new tab.
- - Key e focuses on the searchbox.
- - Shift+E does a "Select All" focus on the searchbox.
- - Keys j to go down, k to go up.
+Keys 1-9 opens in current tab.
+Shift + 1-9 opens in new tab.
+Key e focuses on the searchbox.
+Shift+E does a "Select All" focus on the searchbox.
+Keys j to go down, k to go up.
 
 ## Install (Very important! Follow carefully or won't work)
 - [Download Crx from here](https://github.com/wildeyes/Pi6/raw/master/pi6.crx)
@@ -38,31 +38,31 @@ Mom you're great.
 ## Changelist
 v2.2.0 : Decouple data and framework. Fetch data from repo, store locally, check periodically for updates.
 v2.12.0: Add Ynet
-.v2.11.1: fix #1 and close #2. Generalized input sys.
-v2.1.0
-- Error message in console if Pi6 doesn't work properly.
-- Use .ready().
-v2.0.4
-- Added q,w as keys.
-- fix israblog side-iframes bind.
-- Added Quora.
-- fix bug search box focus issues.
-v2.0.3
- - Changed name, facilitated things.
-v2
- - New shortcuts.
-v1.12
- - Working CRX file (That stuff is important you know).
- - Youtube: r focuses on input.
- - Extra keys.
-v1.1
- - Keys j,k : scroll down and up.
- - New site support : ThePirateBay.
- - New site support : ReadTheDocs.
-v1
- - New site support : Cheatography.
- - New site support : Israblog.
- - New site support : Youtube.
- - Key d : select first option.
- - seperated data from system.
- - Enumeration after 9, until p (1-9, then q until p on the second row of the keyboard)
+v2.11.1: fix #1 and close #2. Generalized input sys.
+v2.1.0:
+Error message in console if Pi6 doesn't work properly.
+Use .ready().
+v2.0.4:
+Added q,w as keys.
+fix israblog side-iframes bind.
+Added Quora.
+fix bug search box focus issues.
+v2.0.3:
+Changed name, facilitated things.
+v2:
+New shortcuts.
+v1.12:
+Working CRX file (That stuff is important you know).
+Youtube: r focuses on input.
+Extra keys.
+v1.1:
+Keys j,k : scroll down and up.
+New site support : ThePirateBay.
+New site support : ReadTheDocs.
+v1:
+New site support : Cheatography.
+New site support : Israblog.
+New site support : Youtube.
+Key d : select first option.
+seperated data from system.
+Enumeration after 9, until p (1-9, then q until p on the second row of the keyboard)
