@@ -17,7 +17,7 @@
     function general_init () {
         if(rocket !== null && domloaded === true) {
             var page = process_page_object()
-               ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":page.input}
+               ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":''}
 
 
             if(page === null)
@@ -25,6 +25,7 @@
 
             data.anchor_ele_list = buildElementList("anchor", page)
             data.text_ele_list   = buildElementList("text"  , page)
+            data.input           = page.input
 
             bindkeys_navigation(data.input);
 
@@ -104,7 +105,7 @@
         return function (page) {
             pageurl = page.dom
             if(pageurl.indexOf('|') !== -1) {
-                pageurls = pageurl.split('|')
+                pageurls = _.map(pageurl.split('|'),function(dom){ return {"dom":dom}})
                 isthis = _.find(pageurls,buildIsThisPage(url))
                 return isthis !== undefined
             }
