@@ -84,7 +84,7 @@
             chrome[runtimeOrExtension].sendMessage({"url":url,"mode":mode});
     } }
     function buildElementList(type, page) {
-        elelist = null;
+    elelist = null;
         if (type == "anchor") {
             elelist = $(page.anchorsel)
 
@@ -98,40 +98,31 @@
                 elelist = __ancele;
         return elelist;
     }
+    function buildIsThisPage (url) {
+        return function (page) {
+            pageurl = page.dom
+            if(pageurl.indexOf('|') !== -1) {
+                pageurls = pageurl.split('|')
+                isthis = _.find(pageurls,buildIsThisPage(url))
+                return isthis !== undefined
+            }
+            isthis = url.indexOf(pageurl) !== -1
+            return isthis
+        }
+    }
     function get_page() {
         var url = location.href,
             data = null,
             page = null
-        for (var i = 0; i < rocket.length; i += 1) {
-            page = rocket[i];
-            if (url.indexOf(rocket[i].dom) != -1)
-                break;
-        }
-        if(page === null && page.pages === null)
-            return null;
 
-        data = page.pages;
-        if(url.match(/israblog\.nana/)) {
-            if(url.match(/\?blog=\d{3,8}/))
-                data.anchorsel = data.textsel = 'special';
-            else
-                data = {"textsel": "b","anchorsel": "a.GenenalHompageLinkNoBold"}
-            return data;
+        isThisPage = buildIsThisPage(url)
+        page = _.find(rocket,isThisPage)
+        if(page !== undefined) {
+            if(page.pages !== undefined)
+                return _.find(pages,isThisPage)
+            return page
         }
-        if (data == undefined)
-            data = page;
-        else if (data.length == 1)
-            data = page.pages[0];
-        else
-            for (var i = 0; i < page.pages.length; i += 1) {
-                data = page.pages[i]
-                regex = new RegExp(data.dom)
-                if (url.match(regex))
-                    break;
-                else
-                    data = null;
-            }
-        return data;
+        return undefined;
     }
     function buildENav($f, type) {
         return function(e) {

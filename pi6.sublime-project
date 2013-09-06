@@ -5,13 +5,16 @@
      ,"detect_indentation": true
    },"build_systems": [{
         "name":"Build Unpacked"
-       ,"cmd":["$project_path/reload.sh"]
+       ,"cmd":["$project_path/scripts/reload.sh"]
        ,"variants": [{
-            "name":"Build CRX"
-           ,"cmd":["$project_path/build.sh"]
+            "name":"Compile CRX"
+           ,"cmd":["$project_path/scripts/build.sh"]
         },{
             "name":"Compile Rocket.JSON"
-            ,"cmd":["$project_path/flyrocket.js"]
+            ,"cmd":["$project_path/scripts/flyrocket.js"]
+         },{
+            "name":"New version"
+            ,"cmd":["$project_path/scripts/bumpv.sh"]
          }]
     }]
 }
