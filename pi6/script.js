@@ -74,15 +74,17 @@
             anchor_ele = data.anchor_ele_list[i - 1];
             text_ele = data.text_ele_list[i - 1];
             text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
-            Mousetrap.bind(numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline"));
-            Mousetrap.bind(shiftsymbols[i - 1], buildLinkOpener(anchor_ele.href, "newtab"));
+            Mousetrap.bind(numbers[i - 1]              , buildLinkOpener(anchor_ele.href, "inline"));
+            Mousetrap.bind(shiftsymbols[i - 1]         , buildLinkOpener(anchor_ele.href, "newtab"));
+            Mousetrap.bind("ctrl+shift+"+ numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline+newtab"));
             i += 1
         } while (data.anchor_ele_list.length > (i - 1) && data.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
     }
     function buildLinkOpener(url, mode) {
         return function() {
             chrome[runtimeOrExtension].sendMessage({"url":url,"mode":mode});
-    } }
+        }
+    }
     function buildElementList(type, page) {
     elelist = null;
         if (type == "anchor") {

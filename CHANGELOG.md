@@ -4,7 +4,7 @@ v2.22.0
 - Rocket: ADD some stackexchange sites (ones that have their own domain.
 - Rocket-framework: ADD support multiple domains -> one selector
 - Using underscore.js for more functional goodness
-
+- Ctrl+Shift+[1-9] Opens in a new tab AND switches to it.
 v2.21.0
 - expose a function pi6process ( page_object ) to dev console.
 

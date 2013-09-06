@@ -18,17 +18,17 @@ function update () {
 update();
 
 chrome[runtimeOrExtension].onMessage.addListener(function(message, sender, sendResponse) {
-    // if(arrcmp(['url','mode'],message.hasOwnProperty)) {
-        ntab = {"url": message.url}
-        if(message.mode == "inline")
-            chrome.tabs.update(ntab);
-        else if (message.mode == "newtab") {
-            ntab.active = false;
-            chrome.tabs.create(ntab);
-        }
-    // }
+    ntab = {"url": message.url}
+    isNewtab = message.mode.indexOf("newtab") !== -1
+    isInline = message.mode.indexOf("inline") !== -1
+    if( isNewtab && isInline){
+        ntab.active = true;
+        chrome.tabs.create(ntab);
+    } else if(isInline) {
+        ntab.active = true;
+        chrome.tabs.update(ntab);
+    } else if (isNewtab) {
+        ntab.active = false;
+        chrome.tabs.create(ntab);
+    }
 });
-function arrcmp (arr,cmpfun) {
-    arr.forEach(function (ele) {if(cmpfun(ele) === false) return false; })
-    return true;
-}

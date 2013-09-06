@@ -15,6 +15,7 @@ Promise I don't save any of your precious data.
 ## How to Use
 - Keys 1-9 opens in current tab.
 - Shift + 1-9 opens in new tab.
+- Ctrl+Shift + 1-9 opens in new tab and **switches to it**.
 - Key e focuses on the searchbox.
 - Shift+E does a "Select All" focus on the searchbox.
 - Keys j to go down, k to go up.
