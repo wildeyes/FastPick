@@ -38,8 +38,9 @@ Mom you're great.
 ## Changelist
 v2.21.0:
 Add package.json for quick devDependency management via nodejs.
-expose a function pi6process ( anchor_selector ) to dev console.
+expose a function pi6process ( page_object ) to dev console.
 using $.getJSON more reliably (I think).
+
 v2.2.0 : Decouple data and framework. Fetch data from repo, store locally, check periodically for updates.
 v2.12.0: Add Ynet
 v2.11.1: fix #1 and close #2. Generalized input sys.

@@ -16,7 +16,7 @@
     });
     function general_init () {
         if(rocket !== null && domloaded === true) {
-            var page = page || get_page()
+            var page = process_page_object()
                ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":page.input}
 
 
@@ -36,9 +36,9 @@
             pi6process(data);
         }
     }
-    function special_init (anchorsel) {
+    function special_init (page_object) {
         if(domloaded === true) {
-            var page = {"anchorsel":anchorsel}
+            var page = process_page_object(page_object)
                ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":page.input}
 
             data.anchor_ele_list = buildElementList("anchor", page)
@@ -49,6 +49,14 @@
 
             pi6process(data);
         }
+    }
+    function process_page_object (page) {
+        if(typeof page === 'string')
+            return {"anchorsel":page}
+        else if(typeof page === 'object')
+            return page
+        else
+            return get_page()
     }
     function bindkeys_general () {
         Mousetrap.bind('j', function(e) { scrollBy(0, 100); });
