@@ -29,8 +29,8 @@
     },
     {
         "dom"      : "askubuntu"
-        "anchorsel": ".result-link a"
-        "input"    : "[name='q']:last"
+       ,"anchorsel": ".result-link a"
+       ,"input"    : "[name='q']:last"
     },
     {
         "dom": "youtube",

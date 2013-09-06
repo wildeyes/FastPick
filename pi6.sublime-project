@@ -11,7 +11,7 @@
            ,"cmd":["$project_path/build.sh"]
         },{
             "name":"Compile Rocket.JSON"
-            ,"cmd":["$project_path/build.sh"]
+            ,"cmd":["$project_path/flyrocket.js"]
          }]
     }]
 }
