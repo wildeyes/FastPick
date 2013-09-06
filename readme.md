@@ -1,4 +1,4 @@
-## Pi6 : Search and lists keyboard shortcuts for the ADHD
+## Pi6 : Search and lists keyboard shortcuts for the ADHD (Chrome Extension)
 Empower yourself with absolutely timesaving keyboard-shortcuts for search and lists with Pi6.
 
 Pi6, or by its other names such as P6 \ Pie 6 \ Pi 6 is an Extension for Chrome \ Chromium (soon for FireFox aswell) that extends your search pages and lists with a unified keyboard shortcut set. That means **no more typing something** into google and then **using the mouse**. It can all be done from the keyboard now.
@@ -36,6 +36,10 @@ Mom you're great.
 - [Extensionizr](http://extensionizr.com) created Pi6 extension's template!
 
 ## Changelist
+v2.21.0:
+Add package.json for quick devDependency management via nodejs.
+expose a function pi6process ( anchor_selector ) to dev console.
+using $.getJSON more reliably (I think).
 v2.2.0 : Decouple data and framework. Fetch data from repo, store locally, check periodically for updates.
 v2.12.0: Add Ynet
 v2.11.1: fix #1 and close #2. Generalized input sys.

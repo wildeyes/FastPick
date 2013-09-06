@@ -9,6 +9,9 @@
        ,"variants": [{
             "name":"Build CRX"
            ,"cmd":["$project_path/build.sh"]
-        }]
+        },{
+            "name":"Compile Rocket.JSON"
+            ,"cmd":["$project_path/build.sh"]
+         }]
     }]
 }

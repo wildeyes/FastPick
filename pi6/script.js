@@ -3,47 +3,73 @@
        ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension'
        ,rocket=null
        ,domloaded = null
+       ,numbers = '1234567890qw'
+       ,shiftsymbols = '!@#$%^&*()QW'
+
     chrome.storage.local.get("rocket",function (data) {
         rocket = data.rocket
-        init()
+        general_init()
     })
     $(document).ready(function() {
         domloaded = true;
-        init()
+        general_init()
     });
-    function init () {
+    function general_init () {
         if(rocket !== null && domloaded === true) {
-            var numbers = '1234567890qw'
-               ,shiftsymbols = '!@#$%^&*()QW'
-               ,page = get_page()
-               ,data = {'anchor_ele_list':[],'text_ele_list':[]}
+            var page = page || get_page()
+               ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":page.input}
+
 
             if(page === null)
                 return;
 
             data.anchor_ele_list = buildElementList("anchor", page)
             data.text_ele_list   = buildElementList("text"  , page)
-            data.input = $(page.input);
 
-            Mousetrap.bind('e', buildENav(data.input,true));
-            Mousetrap.bind('E', buildENav(data.input,false));
-            Mousetrap.bind('j', function(e) { scrollBy(0, 100); });
-            Mousetrap.bind('k', function(e) { scrollBy(0, -100); });
+            bindkeys_navigation(data.input);
+
+            bindkeys_general();
 
             if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
                 throw "Seems as if Pi6 haven't been able to start on this page\n. $(" + page.anchorsel + ").length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
 
-            var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
-
-            do {
-                anchor_ele = data.anchor_ele_list[i - 1];
-                text_ele = data.text_ele_list[i - 1];
-                text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
-                Mousetrap.bind(numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline"));
-                Mousetrap.bind(shiftsymbols[i - 1], buildLinkOpener(anchor_ele.href, "newtab"));
-                i += 1
-            } while (data.anchor_ele_list.length > (i - 1) && data.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
+            pi6process(data);
         }
+    }
+    function special_init (anchorsel) {
+        if(domloaded === true) {
+            var page = {"anchorsel":anchorsel}
+               ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":page.input}
+
+            data.anchor_ele_list = buildElementList("anchor", page)
+            data.text_ele_list   = buildElementList("text"  , page)
+
+            if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
+                throw "Pi6 got $(" + page.anchorsel + ").length === 0.\n Check your selectors. Master wildeyes has spoken!"
+
+            pi6process(data);
+        }
+    }
+    function bindkeys_general () {
+        Mousetrap.bind('j', function(e) { scrollBy(0, 100); });
+        Mousetrap.bind('k', function(e) { scrollBy(0, -100); });
+    }
+    function bindkeys_navigation (inputsel) {
+        $input = $(inputsel);
+        Mousetrap.bind('e', buildENav($input,true));
+        Mousetrap.bind('E', buildENav($input,false));
+    }
+    function pi6process (data) {
+        var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
+
+        do {
+            anchor_ele = data.anchor_ele_list[i - 1];
+            text_ele = data.text_ele_list[i - 1];
+            text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
+            Mousetrap.bind(numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline"));
+            Mousetrap.bind(shiftsymbols[i - 1], buildLinkOpener(anchor_ele.href, "newtab"));
+            i += 1
+        } while (data.anchor_ele_list.length > (i - 1) && data.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
     }
     function buildLinkOpener(url, mode) {
         return function() {
@@ -112,4 +138,5 @@
             // This is a very weird solution, but who gives a flying whale.. it works!
         }
     }
+    window.pi6process = special_init;
 })()

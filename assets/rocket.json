@@ -28,8 +28,13 @@
         "dom": "nana10"
     },
     {
+        "dom"      : "askubuntu"
+        "anchorsel": ".result-link a"
+        "input"    : "[name='q']:last"
+    },
+    {
         "dom": "youtube",
-        "input": "input#masthead-search-term:first",
+        "input": "#masthead-search-term",
         "pages": [
             {
                 "dom": "watch",

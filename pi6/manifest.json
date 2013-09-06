@@ -2,12 +2,12 @@
     "name": "Pi6"
    ,"version": "2.2.0"
    ,"manifest_version": 2
-   ,"description": "Search and lists keyboard shortcuts for the ADHD"
+   ,"description": "Search and lists keyboard shortcuts for the ADHD (Chrome Extension)"
    ,"homepage_url": "https://github.com/wildeyes/Pi6"
    ,"update_url": "https://raw.github.com/wildeyes/Pi6/master/data/updates.xml"
    ,"background": {
         "scripts": ["jquery.js","eventpage.js"]
-       ,"persistent": false
+       ,"persistent": true
     }
    ,"content_scripts": [{
         "matches": [
