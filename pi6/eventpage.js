@@ -1,7 +1,5 @@
 //Initialize Extension
-var DEV  = true
-   ,branch = DEV ? "dev" : "master"
-   ,root   = "https://raw.github.com/wildeyes/Pi6/" + branch
+var root   = "https://raw.github.com/wildeyes/Pi6/master"
    ,url    = root + "/data/rocket.min.json"
    ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
 
