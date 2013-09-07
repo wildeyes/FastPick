@@ -8,9 +8,17 @@ I knew I had to share this extension the moment I tried to use shortcuts for a s
 
 Curious to findout what I mean by that? install the extension and search something in google/youtube/many-more.
 
-Also, Pi6 acts as a fgit ramework and enables adding new sites and shortcuts REALLY easy. If you want to add\suggest something, **dont'** hesitate to [contact me](364saga@gmail.com).
+Pi6 is also a framework that enables adding shortcuts to new sites SUPER easy.
+Open the dev-console, switch to eag... context (Pi6 publickey) and do the following:
+1. Find the $(your_selector) of what you will add shortcuts to.
+2. Execute the function pi6process(your_selector).
+3. See if it works. If it did, [open an issue](https://github.com/wildeyes/Pi6/issues/new) with the selector + url it worked on, asking me to add it to the repository!
+
+If you want to add\suggest something, **dont'** hesitate to [contact me](364saga@gmail.com).
 
 Promise I don't save any of your precious data.
+
+View the [CHANGELOG here](https://raw.github.com/wildeyes/Pi6/master/CHANGELOG.md).
 
 ## How to Use
 - Keys 1-9 opens in current tab.

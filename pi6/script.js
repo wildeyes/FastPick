@@ -51,6 +51,8 @@
             if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
                 throw "Pi6 got $(" + page.anchorsel + ").length === 0.\n Check your selectors. Master wildeyes has spoken!"
 
+            Mousetrap.unbind();
+
             pi6process(data);
         }
     }
@@ -78,17 +80,42 @@
                 data = {}
                 elelist = $('body').find('a.list:has(img[width="32"])').add($('iframe').contents().find('a.list:has(img[width="32"])'));*/
     function pi6process (data) {
-        var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
+        var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1, binds = [];
 
         do {
-            anchor_ele = data.anchor_ele_list[i - 1];
-            text_ele = data.text_ele_list[i - 1];
+            anchor_ele         = data.anchor_ele_list[i - 1];
+            text_ele           = data.text_ele_list[i - 1];
+
             text_ele.innerHTML = "[" + numbers[i - 1] + "] " + text_ele.innerHTML;
-            Mousetrap.bind(numbers[i - 1]              , buildLinkOpener(anchor_ele.href, "inline"));
-            Mousetrap.bind(shiftsymbols[i - 1]         , buildLinkOpener(anchor_ele.href, "newtab"));
-            Mousetrap.bind("ctrl+shift+"+ numbers[i - 1], buildLinkOpener(anchor_ele.href, "inline+newtab"));
+
+            j      = numbers[i - 1]
+            shiftj = shiftsymbols[i - 1]
+
+            binds.push({
+                "inline":j
+               ,"newtab":shiftj
+               ,"inline+newtab":"ctrl+shift+"+ j
+            })
+
+            Mousetrap.bind(j                , buildLinkOpener(anchor_ele.href, "inline"));
+            Mousetrap.bind(shiftj           , buildLinkOpener(anchor_ele.href, "newtab"));
+            Mousetrap.bind("ctrl+shift+"+ j , buildLinkOpener(anchor_ele.href, "inline+newtab"));
             i += 1
         } while (data.anchor_ele_list.length > (i - 1) && data.text_ele_list.length > (i - 1) && numbers.length > (i - 1))
+
+        window.unpi6 = build_unpi6process(data, binds)
+    }
+    function build_unpi6process (data, bindlist) {
+        return function() {
+            i = 1
+            for(var binds in bindlist) {
+                for(var bind in binds)
+                    Mousetrap.unbind(binds[bind])
+                $t = data.text_ele_list[i - 1].innerHTML;
+                $t = $t.substring(4,$t.length);
+                i++
+            }
+        }
     }
     function buildLinkOpener(url, mode) {
         return function() {
@@ -138,7 +165,7 @@
         page = _.find(rocket,isThisPage)
         if(page !== undefined) {
             if(page.pages !== undefined)
-                return _.find(pages,isThisPage)
+                return _.find(page.pages,isThisPage)
             return page
         }
         return undefined;
