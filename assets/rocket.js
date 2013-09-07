@@ -39,5 +39,18 @@
                 "anchorsel": "li.yt-uix-tile h3 a"
             }
         ]
+    },{
+        "dom"      : "reddit"
+       ,"input"    : "input[name='q']"
+       ,"anchorsel": "#siteTable p.title a.title"
+    },{
+        "dom"   : "diigo"
+       ,"pages" : [{
+            "dom":"buzz"
+           ,"anchorsel":".Titleinner a"
+        },{
+           "dom":"user|tag"
+          ,"anchorsel":".titleLink"
+        }]
     }
 ]
