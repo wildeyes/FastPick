@@ -14,13 +14,12 @@
         domloaded = true;
         general_init()
     });
-    function general_init () {
+    function general_init (page_object) {
         if(rocket !== null && domloaded === true) {
-            var page = process_page_object()
+            var page = process_page_object(page_object)
                ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":''}
 
-
-            if(page === null)
+            if(page === undefined)
                 return;
 
             data.anchor_ele_list = buildElementList("anchor", page)
@@ -40,10 +39,14 @@
     function special_init (page_object) {
         if(domloaded === true) {
             var page = process_page_object(page_object)
-               ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":page.input}
+               ,data = {'anchor_ele_list':[],'text_ele_list':[],"input":''}
+
+            if(page === null)
+                return;
 
             data.anchor_ele_list = buildElementList("anchor", page)
             data.text_ele_list   = buildElementList("text"  , page)
+            data.input           = page.input
 
             if(data.anchor_ele_list.length == 0 || data.text_ele_list.length == 0)
                 throw "Pi6 got $(" + page.anchorsel + ").length === 0.\n Check your selectors. Master wildeyes has spoken!"
@@ -68,6 +71,12 @@
         Mousetrap.bind('e', buildENav($input,true));
         Mousetrap.bind('E', buildENav($input,false));
     }
+    /*        if(url.match(/israblog\.nana/)) {
+            if(url.match(/\?blog=\d{3,8}/))
+                data.anchorsel = data.textsel = 'special';
+            else
+                data = {}
+                elelist = $('body').find('a.list:has(img[width="32"])').add($('iframe').contents().find('a.list:has(img[width="32"])'));*/
     function pi6process (data) {
         var anchor_ele, text_ele, openLink, openLinkNewTab, i = 1;
 
@@ -104,12 +113,19 @@
     function buildIsThisPage (url) {
         return function (page) {
             pageurl = page.dom
-            if(pageurl.indexOf('|') !== -1) {
-                pageurls = _.map(pageurl.split('|'),function(dom){ return {"dom":dom}})
-                isthis = _.find(pageurls,buildIsThisPage(url))
-                return isthis !== undefined
+            if(_.isString(pageurl)) {
+                if(pageurl.indexOf('|') !== -1) {
+                    pageurls = _.map(pageurl.split('|'),function(dom){ return {"dom":dom}})
+                    isthis = _.find(pageurls,buildIsThisPage(url))
+                    return isthis !== undefined
+                }
+                isthis = url.indexOf(pageurl) !== -1
+            } else if(isRE(page.dom)) {
+                re = new RegExp(page.dom)
+
+            } else {
+                throw "Given Page.dom:" + page.dom + " didn't match any of Pi6 available types for that object (string,/regex_string/)."
             }
-            isthis = url.indexOf(pageurl) !== -1
             return isthis
         }
     }
@@ -141,4 +157,7 @@
         }
     }
     window.pi6process = special_init;
+    function isRE (re) {
+        return re[0] == '/' && re[re.length - 1] == '/'
+    }
 })()
