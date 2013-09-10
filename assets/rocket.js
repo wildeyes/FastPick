@@ -52,5 +52,8 @@
            "dom":"user|tag"
           ,"anchorsel":".titleLink"
         }]
-    }
+    },{
+        "dom":"github"
+       ,"anchorsel":".repolist-name a"
+    }d
 ]

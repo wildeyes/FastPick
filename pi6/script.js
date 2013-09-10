@@ -56,6 +56,11 @@
             pi6process(data);
         }
     }
+    function show_rocket() {
+        chrome.storage.local.get("rocket",function (data) {
+            console.log(data);
+        })
+    }
     function process_page_object (page) {
         if(typeof page === 'string')
             return {"anchorsel":page}
@@ -184,6 +189,7 @@
         }
     }
     window.pi6process = special_init;
+    window.show_rocket = show_rocket;
     function isRE (re) {
         return re[0] == '/' && re[re.length - 1] == '/'
     }

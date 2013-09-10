@@ -3,6 +3,9 @@ var fs = require('fs')
     _  = require('underscore')
    ,rocketstring = ''
    ,rocketjson   = {}
+
+console.log('Compiling FlyingRocket!')
+
 fs.readFile('../assets/rocket.js', {"encoding":'utf-8'}, function (err, rocketstring) {
     if (err) throw err;
     rocketjson = JSON.parse(rocketstring)

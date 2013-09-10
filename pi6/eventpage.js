@@ -12,7 +12,6 @@ function update () {
         chrome.storage.local.set({"rocket":data});
     })
 }
-
 update();
 
 chrome[runtimeOrExtension].onMessage.addListener(function(message, sender, sendResponse) {

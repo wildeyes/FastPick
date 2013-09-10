@@ -18,7 +18,7 @@ If you want to add\suggest something, **dont'** hesitate to [contact me](364saga
 
 Promise I don't save any of your precious data.
 
-View the [CHANGELOG here](https://raw.github.com/wildeyes/Pi6/master/CHANGELOG.md).
+View the [CHANGELOG here](https://github.com/wildeyes/Pi6/master/CHANGELOG.md).
 
 ## How to Use
 - Keys 1-9 opens in current tab.
