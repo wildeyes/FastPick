@@ -137,12 +137,19 @@
         }
     }
     function buildElementList(type, page) {
-    elelist = null;
-        if (type == "anchor") {
-            elelist = $(page.anchorsel)
+        elelist = null;
 
-            if(page.anchorsel == "special")
-                elelist = $('body').find('a.list:has(img[width="32"])').add($('iframe').contents().find('a.list:has(img[width="32"])'));
+        if (type == "anchor") {
+            asel = page.anchorsel
+            if(_.isObject(asel)) {
+                complexsel = asel
+                for(prop in complexsel)
+                    if(complexsel.hasOwnProperty(prop))
+                        if(prop.indexOf('iframe') !== -1) {
+                            elelist = $('iframe').contents().find(complexsel[prop])
+                        }
+            } else if(_.isString(asel))
+                elelist = $(asel)
             __ancele = elelist
         } else if (type == "text")
             if (page.hasOwnProperty("textsel"))
@@ -154,22 +161,22 @@
     function buildIsThisPage (url) {
         return function (page) {
             var isthis   = false
-               ,pageurl  = page.dom
+               ,pagesel  = page.dom
                ,pageurls = null
                ,re       = null
                ,restr = null
 
-            if(isRE(pageurl)) {
-                restr = prepareRegex(pageurl)
+            if(isRE(pagesel)) {
+                restr = prepareRegex(pagesel)
                 re = new RegExp(restr)
                 isthis = url.match(re)
-            } else if(_.isString(pageurl)) {
-                if(pageurl.indexOf('|') !== -1) {
-                    pageurls = _.map(pageurl.split('|'),function(dom){ return {"dom":dom}})
-                    isthis = _.find(pageurls,buildIsThisPage(url))
-                    return isthis !== undefined
-                }
-                isthis = url.indexOf(pageurl) !== -1
+            } else if(_.isString(pagesel)) {
+                isthis = url.indexOf(pagesel) !== -1
+
+            } else if(_.isArray(pagesel)) {
+                pageurls = _.map(pagesel,function(dom){ return {"dom":dom}})
+                isthis = _.find(pageurls,buildIsThisPage(url))
+                return isthis !== undefined
             } else {
                 throw "Given Page.dom:" + page.dom + " didn't match any of Pi6 available types for that object (string,/regex_string/)."
             }

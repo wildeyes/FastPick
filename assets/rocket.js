@@ -22,12 +22,15 @@ exports.rocket = [
         "dom": "nana10"
        ,"pages":[
         {
+            "dom": /\?blog=\d{3,8}/
+           ,"anchorsel": {"iframe":"a.list:has(img[width='32'])","regular":"a.list:has(img[width='32'])"}
+        },{
             "dom": /http:\/\/israblog\.nana10\.co\.il\/?/
            ,"textsel": "b"
            ,"anchorsel": "a.GenenalHompageLinkNoBold"
         }]
     },{
-        "dom"      : "stackoverflow|serverfault|superuser|meta.stackoverflow|askubuntu|stackapps|answers.onstartups|mathoverflow"
+        "dom"      : ["stackoverflow","serverfault","superuser","meta.stackoverflow","askubuntu","stackapps","answers.onstartups","mathoverflow"]
        ,"anchorsel": ".result-link a"
        ,"input"    : "[name='q']:last"
     },{
@@ -63,5 +66,8 @@ exports.rocket = [
     },{
         "dom":"github"
        ,"anchorsel":".repolist-name a"
+    },{
+        "dom":"jquery"
+       ,"anchorsel":".entry-title a"
     }
 ]

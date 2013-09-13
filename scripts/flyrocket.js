@@ -4,25 +4,25 @@ var fs = require('fs')
   , lmd = null
   , rocketfile = '../assets/rocket.js'
   , hasntchanged = false
-fs.existsSync(lm, function (exists) {
-  if(exists) fs.readSync(lm, {encoding:"String"}, lmd)
-})
-fs.statSync(rocketfile,function(err,stats) {
-  console.log(stats)
-  if(err) throw err;
-  if(lmd !== null) {
-    if( lmd == stats.mtime)
-      console.log("Rocket hasn't changed.")
-      hasntchanged = true
-  } else
-      fs.writeFileSync(lm,stats.mtime)
-});
+// fs.existsSync(lm, function (exists) {
+//   if(exists) fs.readSync(lm, {encoding:"String"}, lmd)
+// })
+// fs.statSync(rocketfile,function(err,stats) {
+//   console.log(stats)
+//   if(err) throw err;
+//   if(lmd !== null) {
+//     if( lmd == stats.mtime)
+//       console.log("Rocket hasn't changed.")
+//       hasntchanged = true
+//   } else
+//       fs.writeFileSync(lm,stats.mtime)
+// });
 
 if(hasntchanged)
   return;
 
 console.log('Compiling FlyingRocket!')
-/*
+
 rocket = require(rocketfile).rocket
 //For testing!
 rocket = (typeof(rocket) !== 'undefined') ? rocket : {
@@ -83,4 +83,4 @@ function clone(obj) {
     }
 
     throw new Error("Unable to copy obj! Its type isn't supported.");
-}*/
+}
