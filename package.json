@@ -1,0 +1,17 @@
+{
+  "name": "Pi6"
+  "scripts": {
+    "start": "node ./bin/http-server",
+    "test": "vows --spec --isolate",
+    "ech": "predeploy This will be run before deploying the app",
+    "postdeploy": "echo This will be run after deploying the app"
+  }
+  "devDependencies": {
+    "vows"    :  "0.5.x",
+    "request" :  "2.1.x"
+  },
+  "bundledDependencies": [
+    "union",
+    "ecstatic"
+  ]
+}

@@ -4,6 +4,7 @@ var fs = require('fs')
   , lmd = null
   , rocketfile = '../assets/rocket.js'
   , hasntchanged = false
+
 // fs.existsSync(lm, function (exists) {
 //   if(exists) fs.readSync(lm, {encoding:"String"}, lmd)
 // })

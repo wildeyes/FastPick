@@ -16,6 +16,6 @@
         ]
        ,"js"                   : ["underscore.js","jquery.js", "mousetrap.js", "script.js"]
     }]
-   ,"permissions"              : ["https://raw.github.com/wildeyes/Pi6/master/data/rocket.min.json"]
+   ,"permissions"              : ["storage","https://raw.github.com/wildeyes/Pi6/master/data/rocket.min.json"]
    ,"web_accessible_resources" : ["test-rocket.min.js"]
 }
