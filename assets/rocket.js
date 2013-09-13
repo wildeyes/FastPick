@@ -1,4 +1,4 @@
-[
+exports.rocket = [
     {
         "dom": "google",
         "anchorsel": "h3.r a",
@@ -20,10 +20,18 @@
         "anchorsel": ".smallheader , #mStrips div div .text12, .whtbigheader:nth-child(2), .blkbigheader span"
     },{
         "dom": "nana10"
-       ,"textsel": "b"
-       ,"anchorsel": "a.GenenalHompageLinkNoBold"
+       ,"pages":[
+        {
+            "dom": /http:\/\/israblog\.nana10\.co\.il\/?/
+           ,"textsel": "b"
+           ,"anchorsel": "a.GenenalHompageLinkNoBold"
+        }]
     },{
-        "dom"      : "\/^http://.*\\.stackexchange\\.com\/|stackoverflow|serverfault|superuser|meta.stackoverflow|askubuntu|stackapps|answers.onstartups|mathoverflow"
+        "dom"      : "stackoverflow|serverfault|superuser|meta.stackoverflow|askubuntu|stackapps|answers.onstartups|mathoverflow"
+       ,"anchorsel": ".result-link a"
+       ,"input"    : "[name='q']:last"
+    },{
+        "dom"      : /http:\/\/.*\.stackexchange\.com/
        ,"anchorsel": ".result-link a"
        ,"input"    : "[name='q']:last"
     },{
@@ -55,5 +63,5 @@
     },{
         "dom":"github"
        ,"anchorsel":".repolist-name a"
-    }d
+    }
 ]

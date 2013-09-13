@@ -10,7 +10,7 @@ var root   = "https://raw.github.com/wildeyes/Pi6/master"
 function update () {
     $.getJSON(url, function(data) {
         chrome.storage.local.set({"rocket":data});
-    })
+    }).fail(function() { console.log( "Failed fetching URL:"+url+"\nProbably an error in the rocket.JSON." ); })
 }
 update();
 

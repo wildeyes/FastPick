@@ -1,16 +1,25 @@
 (function() {
-    var __ancele = null
+    var __ancele           = null
+       ,is_dev             = chrome.runtime.getManifest().is_dev
        ,runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension'
-       ,rocket=null
-       ,domloaded = null
-       ,numbers = '1234567890qw'
-       ,shiftsymbols = '!@#$%^&*()QW'
+       ,rocket             = null
+       ,domloaded          = null
+       ,numbers            = '1234567890qw'
+       ,shiftsymbols       = '!@#$%^&*()QW'
 
-    chrome.storage.local.get("rocket",function (data) {
-        rocket = data.rocket
-        general_init()
-    })
-    $(document).ready(function() {
+    if(is_dev) {
+        url = chrome.extension.getURL('test-rocket.min.js')
+        reporter = function() { console.log( "Failed fetching URL:"+url+"\nProbably an error in the rocket.JSON." ); };
+        $.getJSON(url, function(data) {
+            rocket = data;
+            general_init()
+        }).fail(reporter)
+    } else
+        chrome.storage.local.get("rocket",function (data) {
+            rocket = data.rocket
+            general_init()
+        })
+    $(document).ready(function(event) {
         domloaded = true;
         general_init()
     });
@@ -144,17 +153,23 @@
     }
     function buildIsThisPage (url) {
         return function (page) {
-            pageurl = page.dom
-            if(_.isString(pageurl)) {
+            var isthis   = false
+               ,pageurl  = page.dom
+               ,pageurls = null
+               ,re       = null
+               ,restr = null
+
+            if(isRE(pageurl)) {
+                restr = prepareRegex(pageurl)
+                re = new RegExp(restr)
+                isthis = url.match(re)
+            } else if(_.isString(pageurl)) {
                 if(pageurl.indexOf('|') !== -1) {
                     pageurls = _.map(pageurl.split('|'),function(dom){ return {"dom":dom}})
                     isthis = _.find(pageurls,buildIsThisPage(url))
                     return isthis !== undefined
                 }
                 isthis = url.indexOf(pageurl) !== -1
-            } else if(isRE(page.dom)) {
-                re = new RegExp(page.dom)
-
             } else {
                 throw "Given Page.dom:" + page.dom + " didn't match any of Pi6 available types for that object (string,/regex_string/)."
             }
@@ -187,6 +202,9 @@
                 $f.select()
             // This is a very weird solution, but who gives a flying whale.. it works!
         }
+    }
+    function prepareRegex(str) {
+        return str.substr(1,str.length - 2);
     }
     window.pi6process = special_init;
     window.show_rocket = show_rocket;
