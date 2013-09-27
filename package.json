@@ -1,17 +1,11 @@
 {
-  "name": "Pi6"
-  "scripts": {
-    "start": "node ./bin/http-server",
-    "test": "vows --spec --isolate",
-    "ech": "predeploy This will be run before deploying the app",
-    "postdeploy": "echo This will be run after deploying the app"
-  }
+  "name": "Pi6",
   "devDependencies": {
-    "vows"    :  "0.5.x",
-    "request" :  "2.1.x"
-  },
-  "bundledDependencies": [
-    "union",
-    "ecstatic"
-  ]
+    "crx": "*",
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "shelljs": "~0.2.6",
+    "grunt-crx": "~0.3.2"
+  }
 }

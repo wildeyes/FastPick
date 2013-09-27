@@ -1,6 +1,8 @@
 ## ChangeLog!
-v2.23.0
--
+v3.0.0
+- Rewrote + Switched to CoffeeScript :D
+- Now Using Grunt!
+- Changed Ctrl+Shift to '+' Key.
 
 v2.22.0
 - (NOPE, github doesn't count my commits that way, use that at work! but do use the releases and tags feature) Use a [successful-git-workflow-model](http://nvie.com/posts/a-successful-git-branching-model/).

@@ -32,7 +32,7 @@ View the [CHANGELOG here](https://github.com/wildeyes/Pi6/master/CHANGELOG.md).
 - [Download Crx from here](https://github.com/wildeyes/Pi6/raw/master/data/pi6.crx)
 - [Disable Instant](https://www.google.com/search?q=disable+google+instant), which basically sums to click on the preferences on the top right\left (cog icon). (it's crap anyway)
 - On windows, you may need to enable "Developers Mode" in the extensions page.
-- Drag and drop the crx file to the Extensions page ([Guide to installing chrome extensions manually (not from chrome webstore)](https://www.google.com/search?q=how+to+install+chrome+extensions+manually))
+- Drag and drop the crx file to the Extensions page ([Guide to installing chrome extensions manually (not from chrome webstore)](http://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/))
 - **Important ProTip**: If an update requires addtional permissions, you will have to re-enable the extension manually. To do that, Click on the "bars" Icon and at the bottom click on "Pi6 Requires new permissions..." and re-enable.
 
 ## Thanks

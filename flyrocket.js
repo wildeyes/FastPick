@@ -1,26 +1,6 @@
 #!/usr/bin/env node
 var fs = require('fs')
-  , lm = 'last-modified-rocket.tmp'
-  , lmd = null
-  , rocketfile = '../assets/rocket.js'
-  , hasntchanged = false
-
-// fs.existsSync(lm, function (exists) {
-//   if(exists) fs.readSync(lm, {encoding:"String"}, lmd)
-// })
-// fs.statSync(rocketfile,function(err,stats) {
-//   console.log(stats)
-//   if(err) throw err;
-//   if(lmd !== null) {
-//     if( lmd == stats.mtime)
-//       console.log("Rocket hasn't changed.")
-//       hasntchanged = true
-//   } else
-//       fs.writeFileSync(lm,stats.mtime)
-// });
-
-if(hasntchanged)
-  return;
+  , rocketfile = './data/rocket.js'
 
 console.log('Compiling FlyingRocket!')
 
@@ -44,7 +24,7 @@ rocketstring = JSON.stringify(rocket)
 console.log('Testing validity of FlyingRocket...')
 rockettest = JSON.parse(rocketstring)
 
-fs.writeFile('../data/rocket.min.json', rocketstring, function (err) {
+fs.writeFile('./data/rocket.min.json', rocketstring, function (err) {
     if (err) throw err;
     console.log('Rocket takeoff!');
 });

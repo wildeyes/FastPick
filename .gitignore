@@ -1,4 +1,3 @@
 *.sublime-workspace
 node_modules
-*.tmp
-test-rocket.min.js
+build
