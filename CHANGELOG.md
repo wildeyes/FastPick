@@ -3,6 +3,12 @@ v3.0.0
 - Rewrote + Switched to CoffeeScript :D
 - Now Using Grunt!
 - Changed Ctrl+Shift to '+' Key.
+- New Development env that is much better, faster and easier to setup.
+- Rocket: 'default' for dom value.
+    When you can't distinguish a *default* url from others, use this value.
+    NOTE: Default always returns true, don't use outside 'pages'!
+    ProTip: Fails silently if can't find elements.
+
 
 v2.22.0
 - (NOPE, github doesn't count my commits that way, use that at work! but do use the releases and tags feature) Use a [successful-git-workflow-model](http://nvie.com/posts/a-successful-git-branching-model/).

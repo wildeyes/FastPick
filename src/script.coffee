@@ -54,18 +54,21 @@ buildIsThisPage = (url) ->
         # re       = null
         # restr    = null
 
-        if isRE pagesel
+        if      isRE pagesel
             restr = prepRegEx pagesel
             re = new RegExp restr
             isthis = url.match re
-        else if typeof pagesel is 'string'
-            isthis = url.indexOf(pagesel) isnt -1
-        else if typeof pagesel is 'array'
-            pageurls = _map pagesel, (dom) -> return dom:dom
+        else if isArr pagesel
             anotherIsThisPage = buildIsThisPage url
-            isthis = true
-            for pageurl in pageurls
-                isthis = isthis and anotherIsThisPage pageurl
+            for pageurl in pagesel
+                pageurl_encoded = dom:pageurl
+                isthis = isthis or anotherIsThisPage pageurl_encoded
+                break if isthis
+        else if typeof pagesel is 'string'
+            if pagesel is 'default'
+                isthis = $(page.anchorsel).length isnt 0
+            else
+                isthis = url.indexOf(pagesel) isnt -1
         # else
             # throw "Given Page.dom: #{page.dom} didn't match any of Pi6 available types for that object (string,/regex_string/)."
 
@@ -95,7 +98,7 @@ buildENav = ($f, type) ->
     (e) ->
         do e.preventDefault
         do $f.focus
-        if type?
+        if type
             tmpval = do $f.val
             $f.val ''
             $f.val tmpval
@@ -154,7 +157,8 @@ getEles = (page) ->
         new r list.anchor[i], list.text[i]
 
 prepRegEx = (str) -> str.substr(1,str.length - 2)
-isRE = (re) ->re[0] == '/' && re[re.length - 1] == '/'
+isRE  = (re) ->re[0] == '/' && re[re.length - 1] == '/'
+isArr = (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
 _map = Array.prototype.map
 
 window.trysix = (sel) ->
@@ -163,16 +167,10 @@ window.trysix = (sel) ->
     catch error
         console.log "Pi6 got $(#{page.anchorsel}).length === 0.\n Check your selectors.\n Master Wildeyes has spoken!"
 
-do ->
-    page = window.page
-
-    chrome.storage.local.get "rocket", (data) ->
-        rocket = data.rocket
-        window.page = do get_page
-
-    init page
+chrome.storage.local.get "rocket", (data) ->
+    rocket = data.rocket
+    init window.page = do get_page
 
 $(document).ready ->
-    page = window.page
     domloaded = true;
-    init page
+    init window.page

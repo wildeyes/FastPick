@@ -1,6 +1,14 @@
 #!/usr/bin/env node
+
+//
+// NOTE: Flyrocket.js takes one argument: [0] location to save rocket.min.json
+//
+
 var fs = require('fs')
   , rocketfile = './data/rocket.js'
+  , saveto = process.argv[2]
+
+
 
 console.log('Compiling FlyingRocket!')
 
@@ -24,7 +32,7 @@ rocketstring = JSON.stringify(rocket)
 console.log('Testing validity of FlyingRocket...')
 rockettest = JSON.parse(rocketstring)
 
-fs.writeFile('./data/rocket.min.json', rocketstring, function (err) {
+fs.writeFile(saveto, rocketstring, function (err) {
     if (err) throw err;
     console.log('Rocket takeoff!');
 });

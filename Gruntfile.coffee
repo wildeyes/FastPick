@@ -8,23 +8,28 @@ module.exports = (grunt) ->
             main:
                 files:
                     'build/script.js': 'src/script.coffee'
-            dev:
+            onlydev:
                 options:
                     join: true
                 files:
                     'build/eventpage.js': ['src/eventpage_tabbing.coffee','src/eventpage_update_dev.coffee']
-            prod:
+            onlyprod:
                 options:
                     join: true
                 files:
                     'build/eventpage.js': ['src/eventpage_tabbing.coffee','src/eventpage_update_prod.coffee']
         watch:
-            main:
+            devmain:
                 files: ['src/script.coffee'],
                 tasks: ['coffee:main','reload']
-            eventpage:
+            deveventpage:
                 files: ['src/eventpage_tabbing.coffee', 'src/eventpage_update_dev.coffee'],
-                tasks: ['coffee:dev','reload']
+                tasks: ['coffee:onlydev','reload']
+        concurrent:
+            dev:
+                options:
+                    logConcurrentOutput: true
+                tasks: ['watch:devmain','watch:deveventpage']
         crx:
             compile:
                 "src": "build/",
@@ -37,17 +42,22 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-watch'
     grunt.loadNpmTasks 'grunt-contrib-coffee'
     grunt.loadNpmTasks('grunt-crx')
+    grunt.loadNpmTasks('grunt-concurrent')
 
     grunt.registerTask 'reload', 'Reload Browser=>{current page + (previously opened) chrome://extensions page}', ->
         path = '$HOME/bin/chromix/script/chromix.js' # TODO: Use a project relative path
-        shjs.exec("node #{path} with 'chrome://extensions' reload")
+        shjs.exec("node #{path} with 'chrome://extensions' reload") # TODO What's faster: This or --load-extension switch?
         shjs.exec("node #{path} reload")
 
+    grunt.registerTask 'testcrx', 'Load testing CRX', ->
+        pkg = grunt.config('pkg')
+        manifest = grunt.config('manifest')
+        crx = "#{pkg.name}-#{manifest.version}.crx"
+        shjs.exec("chromium --load-component-extension data/#{crx}")
+
     grunt.registerTask 'rocket', 'Compiles the frameworks data into JSON', ->
-        path = '$HOME/code/Pi6/flyrocket.js'  # TODO: Use a project relative path
-        shjs.exec("node #{path}")
+        path = '$HOME/code/Pi6/'  # TODO: Use a project relative path
+        shjs.exec("node #{path}/flyrocket.js #{path}/data/rocket.min.json")
 
-    grunt.registerTask 'test', ['watch:dev']
-
-    grunt.registerTask('prepublish', ['rocket','coffee:main','coffee:prod','crx']);
-    # grunt.registerTask('publish', ['jshint', 'qunit', 'concat', 'uglify']);
+    grunt.registerTask 'test', ['concurrent:dev']
+    grunt.registerTask('prepublish', ['rocket','coffee:main','coffee:onlyprod','crx']);

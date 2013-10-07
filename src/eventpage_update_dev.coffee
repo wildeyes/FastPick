@@ -1,4 +1,4 @@
-url = chrome.extension.getURL('test-rocket.min.js')
+url = chrome.extension.getURL('rocket.min.json')
 
 
 callback = (data) ->

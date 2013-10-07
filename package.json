@@ -6,6 +6,7 @@
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-watch": "~0.5.3",
     "shelljs": "~0.2.6",
-    "grunt-crx": "~0.3.2"
+    "grunt-crx": "~0.3.2",
+    "grunt-concurrent": "~0.4.0"
   }
 }

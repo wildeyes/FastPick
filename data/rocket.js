@@ -30,13 +30,27 @@ exports.rocket = [
            ,"anchorsel": "a.GenenalHompageLinkNoBold"
         }]
     },{
-        "dom"      : ["stackoverflow","serverfault","superuser","meta.stackoverflow","askubuntu","stackapps","answers.onstartups","mathoverflow"]
-       ,"anchorsel": ".result-link a"
-       ,"input"    : "[name='q']:last"
+        "dom"      : ["stackoverflow","serverfault","superuser","meta.stackoverflow","askubuntu","stackapps","answers.onstartups","mathoverflow"],
+        "pages":[{
+          "dom": /search\?q=/,
+          "anchorsel": ".result-link a",
+          "input"    : "[name='q']:last"
+        },{
+          "dom": "default",
+          "anchorsel": ".question-hyperlink",
+          "input"    : ".textbox[name='q']:last"
+        }]
     },{
-        "dom"      : /http:\/\/.*\.stackexchange\.com/
-       ,"anchorsel": ".result-link a"
-       ,"input"    : "[name='q']:last"
+        "dom"      : /http:\/\/.*\.stackexchange\.com/,
+        "pages":[{
+          "dom": /search\?q=/,
+          "anchorsel": ".result-link a",
+          "input"    : "[name='q']:last"
+        },{
+          "dom": "default",
+          "anchorsel": ".question-hyperlink",
+          "input"    : ".textbox[name='q']:last"
+        }]
     },{
         "dom": "youtube",
         "input": "#masthead-search-term",

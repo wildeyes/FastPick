@@ -1,5 +1,5 @@
 {
-    "name"                     : "Pi6"
+    "name"                     : "Pi6 Alpha"
    ,"version"                  : "3.0.0"
    ,"manifest_version"         : 2
    ,"description"              : "Search and lists keyboard shortcuts for the ADHD (Chrome Extension)"
@@ -13,5 +13,5 @@
        ,"js"                   : ["jquery.js", "mousetrap.js", "script.js"]
     }]
    ,"permissions"              : ["storage","https://raw.github.com/wildeyes/Pi6/master/data/rocket.min.json"]
-   ,"web_accessible_resources" : ["test-rocket.min.js"]
+   ,"web_accessible_resources" : ["rocket.min.json"]
 }
