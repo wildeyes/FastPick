@@ -59,5 +59,5 @@ module.exports = (grunt) ->
         path = '$HOME/code/Pi6/'  # TODO: Use a project relative path
         shjs.exec("node #{path}/flyrocket.js #{path}/data/rocket.min.json")
 
-    grunt.registerTask 'test', ['concurrent:dev']
+    grunt.registerTask 'dev', ['concurrent:dev']
     grunt.registerTask('prepublish', ['rocket','coffee:main','coffee:onlyprod','crx']);

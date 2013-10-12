@@ -1,4 +1,7 @@
 ## ChangeLog!
+v1.0.0
+- Rewind to 1 because Pi6 just got published in chrome-webstore :D
+
 v3.0.0
 - Rewrote + Switched to CoffeeScript :D
 - Now Using Grunt!
