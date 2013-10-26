@@ -10,7 +10,7 @@ module.exports = (grunt) ->
                     bare: true
                     join: true
                 files:
-                    'build/script.js': ['rocket.coffee','src/script.coffee']
+                    'build/script.js': ['src/rocket.coffee','src/script.coffee']
             eventpage:
                 options:
                     bare: true
@@ -18,7 +18,7 @@ module.exports = (grunt) ->
                     'build/eventpage.js': ['src/eventpage_tabbing.coffee']
         watch:
             devmain:
-                files: ['rocket.coffee','src/script.coffee'],
+                files: ['src/rocket.coffee','src/script.coffee'],
                 tasks: ['coffee:script','reload']
             deveventpage:
                 files: ['src/eventpage_tabbing.coffee', 'src/eventpage_update_dev.coffee'],
@@ -43,7 +43,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-concurrent'
 
     grunt.registerTask 'reload', 'Reload Browser=>{current page + (previously opened) chrome://extensions page}', ->
-        server    = 'node $HOME/bin/chromix/script/server.js'
+        server    = 'node $HOME/bin/chromix/script/server.jsd'
         chromix = 'node $HOME/bin/chromix/script/chromix.js'
         shjs.exec "#{chromix} with 'chrome://extensions' reload"
         shjs.exec "#{chromix} reload"
@@ -53,4 +53,4 @@ module.exports = (grunt) ->
         crx = "#{pkg.name}-#{manifest.version}.crx"
         shjs.exec "chromium --load-component-extension data/#{crx}"
     grunt.registerTask 'dev', ['concurrent:dev']
-    grunt.registerTask('prepublish', ['rocket','coffee:main','coffee:onlyprod','crx']);
+    grunt.registerTask('prepublish', ['src/rocket','coffee:main','coffee:onlyprod','crx']);

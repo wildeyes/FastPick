@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "description": "Shortcuts for ~Search & Lists~ by and for the ADHD (Chrome Extension)",
     "homepage_url": "https://github.com/wildeyes/Pi6",
-    "update_url": "https://raw.github.com/wildeyes/Pi6/master/data/updates.xml",
+    "update_url": "https://raw.github.com/wildeyes/Pi6/master/updates.xml",
     "background": {"scripts": ["eventpage.js"], "persistent": true },
-    "content_scripts": [{"matches": ["<all_urls>"], "js": ["jquery.js", "mousetrap.js", "script.js"] }],
+    "content_scripts": [{"matches": ["<all_urls>"], "js": ["jquery.js", "mousetrap.js", "script.js"] }]
 }

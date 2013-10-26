@@ -1,36 +1,38 @@
-class r
-    symbols     : '1234567890q',
-    shiftsymbols: '!@#$%^&*()Q'
-    eles: []
+symb = '01234567890q'
+shmb = '0!@#$%^&*()Q'
+$anchors = []
+$texts = []
 
-    key: (shift=off) -> if not shift then @symbols[@id - 1] else @shiftsymbols[@id - 1]
-    constructor: (anchorelement, textelement) ->
-        [@ele, @etx] = [anchorelement, textelement]
-        @eles.push(this)
-        @id = @eles.length
+$.fn.anchorp = () ->
+    n = 0
+    this.each ->
+        $this = $ this
+        n += 1
+        char = symb[n]
+        shar = shmb[n]
+        href = $this.attr "href"
+        # if bool is on
+        Mousetrap.bind char, buildLinkOpener href, "inline"
+        Mousetrap.bind shar, buildLinkOpener href, "newtab"
+        Mousetrap.bind "= #{char}", buildLinkOpener href, "inline+newtab"
+        # else
+        #     Mousetrap.unbind char
+        #     Mousetrap.unbind shar
+        #     Mousetrap.unbind "+ "+char
 
-    text: (led) ->
-        if led is on
-            char = do @key
-            @etx.innerHTML = "[#{char}] " + @etx.innerHTML
-        else if led is off
-            tx = @etx.innerHTML
-            tx = tx.substring(4,tx.length)
+$.fn.textp = (bool=on) ->
+    n = 0
+    this.each ->
+        $this = $ this
+        n += 1
+        char = symb[n]
+        shar = shmb[n]
 
-    bind: (led) ->
-        if led is on
-            key = do @key
-            Mousetrap.bind key, buildLinkOpener @ele.href, "inline"
-            Mousetrap.bind @key(on), buildLinkOpener @ele.href, "newtab"
-            Mousetrap.bind "= "+key , buildLinkOpener @ele.href, "inline+newtab"
-        else if led is off
-            Mousetrap.unbind key
-            Mousetrap.unbind @key(on)
-            Mousetrap.unbind "+ "+key
-
-    setup: (led=on) ->
-        @text led
-        @bind led
+        if bool is on
+            $this.html "[#{char}] " + $this.html()
+        else
+            tx = $this.html()
+            $this.html tx.substring(4,tx.length)
 
 bindnav = (inputsel) ->
     $i = $(inputsel);
@@ -47,9 +49,6 @@ buildIsThisPage = (url) ->
     (page) ->
         isthis   = false
         pagesel  = page.dom
-        # pageurls = null
-        # re       = null
-        # restr    = null
 
         if      isRE pagesel
             restr = prepRegEx pagesel
@@ -111,45 +110,37 @@ init = (option) ->
         page = anchorsel:option
     else if typeof option is 'object'
         page = option
-    # else
-        # page = do get_page
-    return "No Page" if not page
+    else
+        page = do get_page
+    # return "No Page" if not page
 
     eles = getEles page
 
     bindnav page.input
 
     if eles.length is 0
-        throw "Seems as if Pi6 haven't been able to start on this page\n. $(${page.anchorsel}).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
+        throw "Seems as if Pi6 haven't been able to start on this page\n. If $(${page.anchorsel}).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
 
     do Mousetrap.unbind
 
-    for ele in eles
-        do ele.setup
+    $anchors.anchorp()
+    $texts.textp()
 
 getEles = (page) ->
-    list =
-        anchor: []
-        text:   []
 
     asel = page.anchorsel
     if typeof asel is 'object'
         complexsel = asel
         for own key, val of complexsel
             if key is 'iframe'
-                list.anchor = $('iframe').contents().find(val)
+                $anchors = $('iframe').contents().find(val)
     else if typeof asel is 'string'
-        list.anchor = $ asel
+        $anchors = $ asel
 
     if page.hasOwnProperty "textsel"
-            list.text = $ page.textsel
+            $texts = $ page.textsel
         else
-            list.text = list.anchor
-
-    l = if list.anchor.length < r.prototype.symbols.length then list.anchor.length else r.prototype.symbols.length
-
-    for i in [0..l-1] #maybe.. list.anchor.length :D ?
-        new r list.anchor[i], list.text[i]
+            $texts = $anchors
 
 prepRegEx = (str) -> str.substr(1,str.length - 2)
 isRE  = (re) ->re[0] == '/' && re[re.length - 1] == '/'
