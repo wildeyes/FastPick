@@ -10,14 +10,8 @@
     "save_on_focus_lost": true
   },
   "build_systems": [{
-    // "name":"Nothing",
-    // "cmd":["date"],
-    // "shell":true,
-    // "variants": [{
       "name":"Compile rocket.js data to json",
-      // "cmd":["node","$project_path/flyrocket.js"],
       "cmd":["node ${project_path}/flyrocket.js ${project_path}/build/rocket.min.json"],
       "shell":true
-    // }]
   }]
 }

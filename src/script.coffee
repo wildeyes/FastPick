@@ -1,6 +1,3 @@
-rocket             = null
-domloaded          = null
-
 class r
     symbols     : '1234567890q',
     shiftsymbols: '!@#$%^&*()Q'
@@ -107,30 +104,28 @@ buildENav = ($f, type) ->
         # This is a very weird solution, but who gives a flying whale.. it works!
 
 init = (option) ->
-    if rocket isnt null and domloaded is true
+    Mousetrap.bind 'j', -> scrollBy 0,  100
+    Mousetrap.bind 'k', -> scrollBy 0, -100
 
-        Mousetrap.bind 'j', -> scrollBy 0,  100
-        Mousetrap.bind 'k', -> scrollBy 0, -100
+    if typeof option is 'string'
+        page = anchorsel:option
+    else if typeof option is 'object'
+        page = option
+    # else
+        # page = do get_page
+    return "No Page" if not page
 
-        if typeof option is 'string'
-            page = anchorsel:option
-        else if typeof option is 'object'
-            page = option
-        # else
-            # page = do get_page
-        return "No Page" if not page
+    eles = getEles page
 
-        eles = getEles page
+    bindnav page.input
 
-        bindnav page.input
+    if eles.length is 0
+        throw "Seems as if Pi6 haven't been able to start on this page\n. $(${page.anchorsel}).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
 
-        if eles.length is 0
-            throw "Seems as if Pi6 haven't been able to start on this page\n. $(${page.anchorsel}).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
+    do Mousetrap.unbind
 
-        do Mousetrap.unbind
-
-        for ele in eles
-            do ele.setup
+    for ele in eles
+        do ele.setup
 
 getEles = (page) ->
     list =
@@ -167,10 +162,5 @@ window.trysix = (sel) ->
     catch error
         console.log "Pi6 got $(#{page.anchorsel}).length === 0.\n Check your selectors.\n Master Wildeyes has spoken!"
 
-chrome.storage.local.get "rocket", (data) ->
-    rocket = data.rocket
-    init window.page = do get_page
-
 $(document).ready ->
-    domloaded = true;
     init window.page
