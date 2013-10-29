@@ -42,8 +42,11 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-crx'
     grunt.loadNpmTasks 'grunt-concurrent'
 
+    grunt.registerTask 'work', 'Setup everything to develop', ['server','dev']
+    grunt.registerTask 'dev', ['concurrent:dev']
+    grunt.registerTask 'server', 'Setup Chromix Server', -> shjs.exec 'terminator -e "node $HOME/bin/chromix/script/server.js"'
     grunt.registerTask 'reload', 'Reload Browser=>{current page + (previously opened) chrome://extensions page}', ->
-        server    = 'node $HOME/bin/chromix/script/server.jsd'
+        server    = 'node $HOME/bin/chromix/script/server.js'
         chromix = 'node $HOME/bin/chromix/script/chromix.js'
         shjs.exec "#{chromix} with 'chrome://extensions' reload"
         shjs.exec "#{chromix} reload"
@@ -52,5 +55,6 @@ module.exports = (grunt) ->
         manifest = grunt.config('manifest')
         crx = "#{pkg.name}-#{manifest.version}.crx"
         shjs.exec "chromium --load-component-extension data/#{crx}"
-    grunt.registerTask 'dev', ['concurrent:dev']
+
+
     grunt.registerTask('prepublish', ['src/rocket','coffee:main','coffee:onlyprod','crx']);

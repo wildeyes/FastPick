@@ -6,33 +6,36 @@ $texts = []
 $.fn.anchorp = () ->
     n = 0
     this.each ->
-        $this = $ this
-        n += 1
-        char = symb[n]
-        shar = shmb[n]
-        href = $this.attr "href"
-        # if bool is on
-        Mousetrap.bind char, buildLinkOpener href, "inline"
-        Mousetrap.bind shar, buildLinkOpener href, "newtab"
-        Mousetrap.bind "= #{char}", buildLinkOpener href, "inline+newtab"
-        # else
-        #     Mousetrap.unbind char
-        #     Mousetrap.unbind shar
-        #     Mousetrap.unbind "+ "+char
+        if n < 10
+            $this = $ this
+            n += 1
+            char = symb[n]
+            shar = shmb[n]
+            href = $this.attr "href"
+            # if bool is on
+            Mousetrap.bind char, buildLinkOpener href, "inline"
+            Mousetrap.bind shar, buildLinkOpener href, "newtab"
+            Mousetrap.bind "- #{char}", buildLinkOpener href, "inline+newtab"
+            Mousetrap.bind "= #{char}", buildLinkOpener href, "inline+newtab"
+            # else
+            #     Mousetrap.unbind char
+            #     Mousetrap.unbind shar
+            #     Mousetrap.unbind "+ "+char
 
 $.fn.textp = (bool=on) ->
     n = 0
     this.each ->
-        $this = $ this
-        n += 1
-        char = symb[n]
-        shar = shmb[n]
+        if n < 10
+            $this = $ this
+            n += 1
+            char = symb[n]
+            shar = shmb[n]
 
-        if bool is on
-            $this.html "[#{char}] " + $this.html()
-        else
-            tx = $this.html()
-            $this.html tx.substring(4,tx.length)
+            if bool is on
+                $this.html "[#{char}] " + $this.html()
+            else
+                tx = $this.html()
+                $this.html tx.substring(4,tx.length)
 
 bindnav = (inputsel) ->
     $i = $(inputsel);
@@ -51,9 +54,7 @@ buildIsThisPage = (url) ->
         pagesel  = page.dom
 
         if      isRE pagesel
-            restr = prepRegEx pagesel
-            re = new RegExp restr
-            isthis = url.match re
+            isthis = url.match pagesel
         else if isArr pagesel
             anotherIsThisPage = buildIsThisPage url
             for pageurl in pagesel
@@ -143,7 +144,9 @@ getEles = (page) ->
             $texts = $anchors
 
 prepRegEx = (str) -> str.substr(1,str.length - 2)
-isRE  = (re) ->re[0] == '/' && re[re.length - 1] == '/'
+isRE  = (re) ->
+    str = String(re)
+    str[0] == '/' && str[str.length - 1] == '/'
 isArr = (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
 _map = Array.prototype.map
 
