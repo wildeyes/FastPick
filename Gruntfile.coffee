@@ -1,9 +1,9 @@
-shjs = require 'shelljs'
+require 'shelljs/global'
 
 module.exports = (grunt) ->
     grunt.initConfig
         pkg: grunt.file.readJSON 'package.json'
-        manifest: grunt.file.readJSON('manifest.json'),
+        manifest: grunt.file.readJSON('assets/manifest.json'),
         coffee:
             script:
                 options:
@@ -42,19 +42,23 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-crx'
     grunt.loadNpmTasks 'grunt-concurrent'
 
+    grunt.registerTask 'init', ['init-dev','coffee:script','coffee:eventpage']
+    grunt.registerTask 'init-dev', 'Run init script', ->
+        mkdir '-p', 'build'
+        exec 'ln assets/* build/'
     grunt.registerTask 'work', 'Setup everything to develop', ['server','dev']
     grunt.registerTask 'dev', ['concurrent:dev']
-    grunt.registerTask 'server', 'Setup Chromix Server', -> shjs.exec 'terminator -e "node $HOME/bin/chromix/script/server.js"'
-    grunt.registerTask 'reload', 'Reload Browser=>{current page + (previously opened) chrome://extensions page}', ->
+    grunt.registerTask 'server', 'Setup Chromix Server', ->
+        exec 'terminator -e "node $HOME/bin/chromix/script/server.js" &', async:on
+    grunt.registerTask 'reload', 'Reload Browser=>{current page + (previously opened) chrome://page extensions}', ->
         server    = 'node $HOME/bin/chromix/script/server.js'
         chromix = 'node $HOME/bin/chromix/script/chromix.js'
-        shjs.exec "#{chromix} with 'chrome://extensions' reload"
-        shjs.exec "#{chromix} reload"
+        exec "#{chromix} with 'chrome://extensions' reload"
+        exec "#{chromix} reload"
     grunt.registerTask 'testcrx', 'Load testing CRX', ->
         pkg = grunt.config('pkg')
         manifest = grunt.config('manifest')
         crx = "#{pkg.name}-#{manifest.version}.crx"
-        shjs.exec "chromium --load-component-extension data/#{crx}"
-
+        exec "chromium --load-component-extension data/#{crx}"
 
     grunt.registerTask('prepublish', ['src/rocket','coffee:main','coffee:onlyprod','crx']);

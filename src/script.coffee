@@ -1,5 +1,9 @@
+#utils
+log=console.log
+# vars
 symb = '01234567890q'
 shmb = '0!@#$%^&*()Q'
+keybuffer = []
 $anchors = []
 $texts = []
 
@@ -15,13 +19,9 @@ $.fn.anchorp = () ->
             # if bool is on
             Mousetrap.bind char, buildLinkOpener href, "inline"
             Mousetrap.bind shar, buildLinkOpener href, "newtab"
-            Mousetrap.bind "- #{char}", buildLinkOpener href, "inline+newtab"
-            Mousetrap.bind "= #{char}", buildLinkOpener href, "inline+newtab"
-            # else
-            #     Mousetrap.unbind char
-            #     Mousetrap.unbind shar
-            #     Mousetrap.unbind "+ "+char
-
+            # # bindcomplex "- #{char}", buildLinkOpener href, "inline+newtab"
+            # # bindcomplex "= #{char}", buildLinkOpener href, "inline+newtab"
+            # bindcomplex null
 $.fn.textp = (bool=on) ->
     n = 0
     this.each ->
@@ -47,6 +47,14 @@ buildLinkOpener = (url, mode) ->
 
     return ->
         chrome[runtimeOrExtension].sendMessage url:url, mode:mode
+        false
+
+bindcomplex = (callback, keys...) ->
+    for key in keys
+        document.addEventListener(key,add_to_buffer,true)
+
+add_to_buffer = (e) ->
+    log e
 
 buildIsThisPage = (url) ->
     (page) ->
