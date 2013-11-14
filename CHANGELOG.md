@@ -2,6 +2,7 @@
 v1.0.0
 - Removed Dynamic-Fetching of RocketJSON (Now stored with binary CRX).
 - Removed scripts and reordered everything
+-
 
 v3.0.0
 - Rewrote + Switched to CoffeeScript :D

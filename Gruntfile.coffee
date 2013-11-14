@@ -45,8 +45,10 @@ module.exports = (grunt) ->
     grunt.registerTask 'init', ['init-dev','coffee:script','coffee:eventpage']
     grunt.registerTask 'init-dev', 'Run init script', ->
         mkdir '-p', 'build'
-        exec 'ln assets/* build/'
-    grunt.registerTask 'work', 'Setup everything to develop', ['server','dev']
+        exec 'ln assets/{jquery,mousetrap}.js build/'
+        exec 'ln assets/manifest.json build/'
+
+    grunt.registerTask 'default', 'Setup everything to develop', ['server','dev']
     grunt.registerTask 'dev', ['concurrent:dev']
     grunt.registerTask 'server', 'Setup Chromix Server', ->
         exec 'terminator -e "node $HOME/bin/chromix/script/server.js" &', async:on

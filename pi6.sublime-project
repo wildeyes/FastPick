@@ -1,13 +1,4 @@
 {
-	"folders": [{
-      "path": "~/code/Pi6",
-      // "folder_exclude_patterns": ["node_modules","build"]
-      "folder_exclude_patterns": ["node_modules"]
-  }],
-  "settings": {
-    "tab_size": 4,
-    "detect_indentation": true,
-    "remember_open_files": true,
-    "save_on_focus_lost": true
-  }
+  "folders": [{"path": "~/code/Pi6", "folder_exclude_patterns": ["node_modules"] }],
+  "settings": {"remember_open_files": true }
 }
