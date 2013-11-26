@@ -10,7 +10,7 @@ module.exports = (grunt) ->
                     bare: true
                     join: true
                 files:
-                    'build/script.js': ['src/rocket.coffee','src/script.coffee']
+                    'build/script.js': ['assets/database.coffee','src/script.coffee']
             eventpage:
                 options:
                     bare: true
@@ -18,7 +18,7 @@ module.exports = (grunt) ->
                     'build/eventpage.js': ['src/eventpage_tabbing.coffee']
         watch:
             devmain:
-                files: ['src/rocket.coffee','src/script.coffee'],
+                files: ['assets/database.coffee','src/script.coffee'],
                 tasks: ['coffee:script','reload']
             deveventpage:
                 files: ['src/eventpage_tabbing.coffee', 'src/eventpage_update_dev.coffee'],

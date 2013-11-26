@@ -2,7 +2,7 @@
     "name": "Pi6 Alpha",
     "version": "1.0.0",
     "manifest_version": 2,
-    "description": "Shortcuts for ~Search & Lists~ by and for the ADHD (Chrome Extension)",
+    "description": "Better Search. Period.",
     "homepage_url": "https://github.com/wildeyes/Pi6",
     "update_url": "https://raw.github.com/wildeyes/Pi6/master/updates.xml",
     "background": {"scripts": ["eventpage.js"], "persistent": true },

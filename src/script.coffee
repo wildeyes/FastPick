@@ -5,17 +5,27 @@ bindkey = Mousetrap.bind
 # vars
 symb = '1234567890q'
 shmb = '!@#$%^&*()Q'
-keybuffer = []
 
 Pi6 =
-  list: null
-  page: null
+  list: []
+  page: {}
 
-stop = () -> false
 bindnav = (inputsel) ->
+  inputsel = inpusel or page.inputsel if page.inputsel? else "input[type='text']"
   $i = $(inputsel);
   bindkey 'e', buildENav $i, true
   bindkey 'E', buildENav $i, false
+buildENav = ($f, type) ->
+  (e) ->
+    do e.preventDefault
+    do $f.focus
+    if type
+      tmpval = do $f.val
+      $f.val ''
+      $f.val tmpval
+    else
+      do $f.select
+    # This is a very weird solution, but who gives a flying whale.. it works!
 
 buildLinkOpener = (url, mode) ->
   runtimeOrExtension = if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
@@ -30,23 +40,21 @@ buildLinkOpener = (url, mode) ->
 buildIsThisPage = (url) ->
   (page) ->
     isthis   = false
-    pagesel  = page.dom
+    page_selector  = page.domain
 
-    if      isRE pagesel
-      isthis = url.match pagesel
-    else if isArr pagesel
+    if      isRE page_selector
+      isthis = url.match page_selector
+    else if isArr page_selector
       anotherIsThisPage = buildIsThisPage url
-      for pageurl in pagesel
+      for pageurl in page_selector
         pageurl_encoded = dom:pageurl
         isthis = isthis or anotherIsThisPage pageurl_encoded
         break if isthis
-    else if typeof pagesel is 'string'
-      if pagesel is 'default'
+    else if typeof page_selector is 'string'
+      if page_selector is 'default'
         isthis = $(page.anchorsel).length isnt 0
       else
-        isthis = url.indexOf(pagesel) isnt -1
-    # else
-      # throw "Given Page.dom: #{page.dom} didn't match any of Pi6 available types for that object (string,/regex_string/)."
+        isthis = url.indexOf(page_selector) isnt -1
 
     return isthis
 
@@ -56,7 +64,7 @@ get_page = ->
 
   isThisPage = buildIsThisPage url
 
-  for maybethis in rocket
+  for maybethis in database
     if isThisPage maybethis
       page = maybethis
       break;
@@ -65,26 +73,11 @@ get_page = ->
     if page.pages?
       for page in page.pages
         if isThisPage page
-          page
-    else page
+          return page
+    else return page
   else null
 
-buildENav = ($f, type) ->
-  (e) ->
-    do e.preventDefault
-    do $f.focus
-    if type
-      tmpval = do $f.val
-      $f.val ''
-      $f.val tmpval
-    else
-      do $f.select
-    # This is a very weird solution, but who gives a flying whale.. it works!
-
 init = (option) ->
-  bindkey 'j', -> scrollBy 0,  100
-  bindkey 'k', -> scrollBy 0, -100
-
 
   if typeof option is 'string'
     page = anchorsel:option
@@ -92,15 +85,15 @@ init = (option) ->
     page = option
   else
     page = do get_page
-  # return "No Page" if not page
+  return false if not page
 
   Pi6.page = page
   eles = getEles page
+go = ->
+  do bindnav
 
-  bindnav page.input
-
-  if eles.length is 0
-    throw "Seems as if Pi6 haven't been able to start on this page\n. If $( #{page.anchorsel} ).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
+  if Pi6.list.length is 0
+    throw "Seems as if Pi6 haven't been able to start on this page\n. If $( #{Pi6.page.anchorsel} ).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
 
   do Mousetrap.unbind
   do Pi6.list.arm
@@ -130,7 +123,7 @@ getEles = (page) ->
 $.fn.enablevisuals = (n, activate=true) ->
   char = symb[n]
   if activate
-    this.html "[#{char}] " + this.html()
+    this.html format char, this.html()
   else
     tx = this.html()
     this.html tx.substring(4,tx.length)
@@ -139,13 +132,14 @@ $.fn.enablevisuals = (n, activate=true) ->
 # TODO: add activate=true and derivative functionality (deactivation)
 $.fn.arm = () ->
   this.each () ->
-    n    = $(this).data "Pi6-Index"
+    $this = $ this
+    n    = $this.data "Pi6-Index"
     char = symb[n]
     shar = shmb[n]
     url  = this.href
-    type = 'keypress'
-
-    if char in ['0',')']# Pecularities
+    type = 'keypress
+'
+    if char in ['0',')'] # Peculiarities
       type = 'keydown'
 
     this.txt()
@@ -155,11 +149,25 @@ $.fn.arm = () ->
     bindkey "- #{char}", buildLinkOpener url, "inline+newtab"
     bindkey "= #{char}", buildLinkOpener url, "inline+newtab"
 
+$(document).ready () ->
+  if init()
+    go()
+    $(document).bind "DOMNodeRemoved", (e) ->
+      if Pi6.list.length is 0
+        go()
+      else
+        for ele in Pi6.list
+          # debugger
+          for parent in ele.parents()
+            if e.target is parent
+              # The element has been removed - remove it from the list
+              i = Pi6.list.indexOf ele
+              Pi6.list.splice i, 1
+
+# Helper Functions
+format = (char,html) -> "#{char}. " + html
 prepRegEx = (str) -> str.substr(1,str.length - 2)
 isRE  = (re) ->
   str = String(re)
   str[0] == '/' && str[str.length - 1] == '/'
 isArr = (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
-_map = Array.prototype.map
-
-$(document).ready init
