@@ -20,9 +20,10 @@ module.exports = (grunt) ->
             devmain:
                 files: ['assets/database.coffee','src/script.coffee'],
                 tasks: ['coffee:script','reload']
-            deveventpage:
-                files: ['src/eventpage_tabbing.coffee', 'src/eventpage_update_dev.coffee'],
-                tasks: ['coffee:eventpage','reload']
+            # the event page raaaaarely changes.
+            # deveventpage:
+            #     files: ['src/eventpage_tabbing.coffee', 'src/eventpage_update_dev.coffee'],
+            #     tasks: ['coffee:eventpage','reload']
         concurrent:
             dev:
                 options:

@@ -11,7 +11,7 @@ Pi6 =
   page: {}
 
 bindnav = (inputsel) ->
-  inputsel = inpusel or page.inputsel if page.inputsel? else "input[type='text']"
+  inputsel = inputsel or if Pi6.page.inputsel? then Pi6.page.inputsel else "input[type='text']"
   $i = $(inputsel);
   bindkey 'e', buildENav $i, true
   bindkey 'E', buildENav $i, false
@@ -42,14 +42,15 @@ buildIsThisPage = (url) ->
     isthis   = false
     page_selector  = page.domain
 
-    if      isRE page_selector
-      isthis = url.match page_selector
-    else if isArr page_selector
+    # Check for array first! (isRE converts arrays to string, so it may be passed arrays)
+    if      isArr page_selector
       anotherIsThisPage = buildIsThisPage url
       for pageurl in page_selector
-        pageurl_encoded = dom:pageurl
+        pageurl_encoded = domain:pageurl # TODO: Clean this hack
         isthis = isthis or anotherIsThisPage pageurl_encoded
         break if isthis
+    else if isRE page_selector
+      isthis = url.match page_selector
     else if typeof page_selector is 'string'
       if page_selector is 'default'
         isthis = $(page.anchorsel).length isnt 0
