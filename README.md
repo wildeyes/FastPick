@@ -1,29 +1,32 @@
-## Pi6 Chrome Extension: Better Search
+## Pi6 (Alpha) Chrome Extension: Better Search
 
 > How much time you spend searching with Google? Youtube? Wikipedia?
 > To search, you type in your query... **and move your hand to the mouse to pick your selection**.
 > Pi6 eliminates that unnecessary movement.
 > Be a man, man, use keyboard shortcuts that save you time.
 
-**Here will be in the near future a screencast featuring... me!**
+**Here will be in the near future a screencast featuring Pi6 and... me!**
 
-Pi6 is an Extension for Chrome that makes searching and navigating lists easy. Really. This is not just Apple-speak.
+Pi6 is an Extension for Chrome that makes searching and navigating lists easy. This is not just Apple-speak.
 
 ## How?
 It just adds numbers to search results, and then you can click the numbers on your keyboard to select the search results.
 
-## Why?
+## what for?
 
 I knew I had to share this extension the moment I tried to use shortcuts for a site I haven't made shortcuts for, a site I never seen before and *got angry that my extension didn't work properly*.
 
+It helps out browsing faster. And it's addicting. Really.
+
 If you want to add\suggest something, **dont'** hesitate to [contact me](364saga@gmail.com).
 
-Promise I don't save any of your precious data.
-
 ## How to Use
+
+ProTip: Turn off Google Instant. It's not compatible with Pi6... yet.
+
 - Keys 1-9 opens in current tab.
 - Shift + 1-9 opens in new tab.
-- Ctrl+Shift + 1-9 opens in new tab and **switches to it**.
+- Plus key + 1-9 opens in new tab and **switches to it**.
 - Key e focuses on the searchbox.
 - Shift+E does a "Select All" focus on the searchbox.
 - Keys j to go down, k to go up.
@@ -31,6 +34,8 @@ Promise I don't save any of your precious data.
 ## Adding Pi6-shortcuts to your own sites
 
 ### The Database file
+
+**More information coming soon**.
 
 Pi6 enables easy adding of new sites by keeping the data and the extension logic decoupled. As a result; adding Pi6 shortcuts to more new sites SUPER easy.
 The database is a JS array of objects, "entries", each containing a single site (or group), take a look at it to get the idea of what's possible.

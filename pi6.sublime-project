@@ -1,7 +1,0 @@
-{
-  "folders": [{"path": "~/code/Pi6", "folder_exclude_patterns": [
-    "node_modules"
-    // "build"
-  ] }],
-  "settings": {"remember_open_files": true }
-}

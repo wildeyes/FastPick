@@ -1,3 +1,6 @@
-*.sublime-workspace
+*.sublime*
 node_modules
+bower_components
 build
+COMMIT_MSG
+tmp

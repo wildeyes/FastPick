@@ -1,10 +1,10 @@
 {
-    "name": "Pi6 Alpha",
+    "name": "Pi6 `Alpha",
     "version": "1.0.0",
     "manifest_version": 2,
     "description": "Better Search. Period.",
     "homepage_url": "https://github.com/wildeyes/Pi6",
-    "update_url": "https://raw.github.com/wildeyes/Pi6/master/updates.xml",
-    "background": {"scripts": ["eventpage.js"], "persistent": true },
-    "content_scripts": [{"matches": ["<all_urls>"], "js": ["jquery.js", "mousetrap.js", "script.js"] }]
+    "background": {"scripts": ["eventpage.js"], "persistent": false },
+    "content_scripts": [{"matches": ["<all_urls>"], "js": ["script.js"] }],
+    "web_accessible_resources": [""]
 }

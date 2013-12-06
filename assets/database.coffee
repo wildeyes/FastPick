@@ -1,5 +1,6 @@
 database = [
   domain: "google"
+  exclude: /https?:\/\/plus.google.*/
   anchorsel: "h3.r a"
 ,
   domain: "thepiratebay"
@@ -52,11 +53,9 @@ database = [
   ]
 ,
   domain: "youtube"
-  inputsel: "#masthead-search-term"
   pages: [
     domain: "watch"
-    anchorsel: "li.video-list-item.related-list-item a"
-    anchorsel: "li.video-list-item.related-list-item a"
+    anchorsel: "#watch-related .title"
   ,
     domain: "results"
     anchorsel: "li.yt-uix-tile h3 a"

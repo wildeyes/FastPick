@@ -1,5 +1,4 @@
 #utils
-Mousetrap = mousetrap || Mousetrap || null
 log = console.log
 bindkey = Mousetrap.bind
 # vars
@@ -57,6 +56,9 @@ buildIsThisPage = (url) ->
       else
         isthis = url.indexOf(page_selector) isnt -1
 
+    if isthis and page.exclude? and url.match page.exclude # Supports only regex excluding
+      isthis = false
+
     return isthis
 
 get_page = ->
@@ -96,7 +98,7 @@ go = ->
   if Pi6.list.length is 0
     throw "Seems as if Pi6 haven't been able to start on this page\n. If $( #{Pi6.page.anchorsel} ).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
 
-  do Mousetrap.unbind
+  # do Mousetrap.unbind
   do Pi6.list.arm
 
 getEles = (page) ->
