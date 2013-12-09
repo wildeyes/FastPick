@@ -1,12 +1,10 @@
 module.exports = (grunt) ->
   require('load-grunt-tasks')(grunt)
   require('time-grunt')(grunt)
-  path =
-    build: 'build'
 
   grunt.registerTask 'init', ['mkdir:init','manifest:dev','copy:init','coffee:script','coffee:eventpage']
   grunt.registerTask 'default', "watch"# ['concurrent:dev']
-  grunt.registerTask 'package', "", ['prepackage','copy:package','uglifyjs']
+  grunt.registerTask 'package', "", ['prepackage','copy:manifset','uglifyjs']
 
   grunt.initConfig
     pkg      : grunt.file.readJSON 'package.json'
@@ -16,11 +14,11 @@ module.exports = (grunt) ->
         bare: true
         join: true
       script:
-        files: {'#{path.build}/script.js': 'src/script.coffee'}
+        files: {'build/script.js': 'src/script.coffee'}
       database:
-        files: {'#{path.build}/database.js': 'assets/database.coffee'}
+        files: {'build/database.js': 'assets/database.coffee'}
       eventpage:
-        files: {'#{path.build}/eventpage.js': 'src/eventpage_tabbing.coffee'}
+        files: {'build/eventpage.js': 'src/eventpage_tabbing.coffee'}
     watch:
       script:
         files: ['src/script.coffee']
@@ -34,34 +32,23 @@ module.exports = (grunt) ->
     copy:
       init:
         expand: true
-        src: ['bower_components/jquery/jquery.min.js', 'bower_components/mousetrap/mousetrap.min.js'] # Manifest is copied in it's own task
-        dest: '#{path.build}/'
+        src: ['bower_components/jquery/jquery.min.js', 'bower_components/mousetrap/mousetrap.min.js']
+        dest: 'build/'
         flatten: true
-      packge:
+      manifest:
         expand: true
         src: ['assets/manifest.json'] # Manifest is copied in it's own task
-        dest: '#{path.build}/'
+        dest: 'build/'
         flatten: true
-    bower: # Doesn't work yet
-      install:
+    compress:
+      package:
         options:
-          targetDir: './lib',
-          layout: 'byType',
-          install: true,
-          verbose: false,
-          cleanTargetDir: false,
-          cleanBowerDir: false,
-          bowerOptions: {}
-    crx:
-      compile:
-        "src"        : "#{path.build}/"
-        "dest"       : "<%= crxfile %>"
-        "baseURL"    : "https://github.com/wildeyes/Pi6"
-        "exclude"    : [ ".git" ]
-        "privateKey" : "../pems/Pi6.pem"
-        "maxBuffer"  : 3000 * 1024
-    crxfile:"package/<%= pkg.name %>.crx"
-
+          mode:'zip'
+          archive: "builds/<%=manifest.name%>-<%= manifest.version %>.zip"
+        files: [
+          expand:true
+          src:'build/**'
+        ]
   #http://stackoverflow.com/questions/17052301/updating-file-references-in-a-json-file-via-a-grunt-task
   grunt.registerTask 'prepackage', ->
     # require 'shelljs/global'

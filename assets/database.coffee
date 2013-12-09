@@ -3,6 +3,12 @@ database = [
   exclude: /https?:\/\/plus.google.*/
   anchorsel: "h3.r a"
 ,
+  domain: "linkedin"
+  anchorsel: ".title"
+,
+  domain: "heroku"
+  anchorsel: ".ruled a"
+,
   domain: "thepiratebay"
   anchorsel: ".detLink"
 ,
