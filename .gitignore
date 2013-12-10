@@ -3,5 +3,5 @@ node_modules
 bower_components
 build
 COMMIT_MSG
-tmpbuilds
+tmp
 builds
