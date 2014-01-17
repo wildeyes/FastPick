@@ -6,6 +6,6 @@
     "description": "Keyboard shortcuts for search and more.",
     "homepage_url": "https://github.com/wildeyes/Pi6",
     "background": {"scripts": ["eventpage.js"], "persistent": false },
-    "content_scripts": [{"matches": ["<all_urls>"], "js": ["main.js"] }],
+    "content_scripts": [{"matches": ["<all_urls>"], "js": ["zepto.min.js", "mousetrap.min.js", "database.js" , "script.js"] }],
     "web_accessible_resources": [""]
 }

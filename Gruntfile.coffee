@@ -4,7 +4,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build', ['copy:init','coffee']
   grunt.registerTask 'default', "watch"
-  grunt.registerTask 'publish', "", ['build','copy:manifest','uglify','compress'] #,'clean']
+  grunt.registerTask 'publish', "", ['build','uglify','compress'] #,'clean']
 
   grunt.initConfig
     manifest : grunt.file.readJSON 'assets/manifest.json'
@@ -32,13 +32,8 @@ module.exports = (grunt) ->
       init:
         expand: true
         flatten: true
-        src: ['bower_components/jquery/jquery.min.js', 'bower_components/mousetrap/mousetrap.min.js']
+        src: ['assets/manifest.json', 'bower_components/mousetrap/mousetrap.min.js']
         dest: 'build'
-      manifest:
-        expand: true
-        src: ['assets/manifest.json']
-        dest: 'build'
-        flatten: true
     compress:
       package:
         options:
@@ -48,3 +43,6 @@ module.exports = (grunt) ->
           expand:true
           src:'tmp/**'
         ]
+
+  # Zepto Modules used: MODULES="zepto event data ..." ./make dist
+  #

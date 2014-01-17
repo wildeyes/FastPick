@@ -9,12 +9,12 @@ Pi6 =
   list: []
   page: {}
 
-bindnav = (inputsel) ->
+bind_navigation_keys = (inputsel) ->
   inputsel = inputsel or if Pi6.page.inputsel? then Pi6.page.inputsel else "input[type='text']"
   $i = $(inputsel);
-  bindkey 'e', buildENav $i, true
-  bindkey 'E', buildENav $i, false
-buildENav = ($f, type) ->
+  bindkey 'e', gen_e_key_bind $i, true
+  bindkey 'E', gen_e_key_bind $i, false
+gen_e_key_bind = ($f, type) ->
   (e) ->
     do e.preventDefault
     do $f.focus
@@ -26,7 +26,7 @@ buildENav = ($f, type) ->
       do $f.select
     # This is a very weird solution, but who gives a flying whale.. it works!
 
-buildLinkOpener = (url, mode) ->
+genLinkOpener = (url, mode) ->
   runtimeOrExtension = if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
 
   return (e) ->
@@ -36,17 +36,17 @@ buildLinkOpener = (url, mode) ->
     chrome[runtimeOrExtension].sendMessage url:url, mode:mode
     false
 
-buildIsThisPage = (url) ->
+gen_is_this_page = (url) ->
   (page) ->
     isthis   = false
     page_selector  = page.domain
 
     # Check for array first! (isRE converts arrays to string, so it may be passed arrays)
     if      isArr page_selector
-      anotherIsThisPage = buildIsThisPage url
+      another_is_this_page = gen_is_this_page url
       for pageurl in page_selector
         pageurl_encoded = domain:pageurl # TODO: Clean this hack
-        isthis = isthis or anotherIsThisPage pageurl_encoded
+        isthis = isthis or another_is_this_page pageurl_encoded
         break if isthis
     else if isRE page_selector
       isthis = url.match page_selector
@@ -65,17 +65,17 @@ get_page = ->
   url = location.href
   page = null
 
-  isThisPage = buildIsThisPage url
+  is_this_page = gen_is_this_page url
 
   for maybethis in database
-    if isThisPage maybethis
+    if is_this_page maybethis
       page = maybethis
       break;
 
   if page?
     if page.pages?
       for page in page.pages
-        if isThisPage page
+        if is_this_page page
           return page
     else return page
   else null
@@ -93,7 +93,7 @@ init = (option) ->
   Pi6.page = page
   eles = getEles page
 go = ->
-  do bindnav
+  do bind_navigation_keys
 
   if Pi6.list.length is 0
     throw "Seems as if Pi6 haven't been able to start on this page\n. If $( #{Pi6.page.anchorsel} ).length === 0 and you're seeing stuff on the screen, then it is a bug. Post an issue on https://github.com/wildeyes/Pi6/issues !"
@@ -147,10 +147,10 @@ $.fn.arm = () ->
 
     this.txt()
 
-    bindkey char, buildLinkOpener(url, "inline"), type
-    bindkey shar, buildLinkOpener(url, "newtab"), type
-    bindkey "- #{char}", buildLinkOpener url, "inline+newtab"
-    bindkey "= #{char}", buildLinkOpener url, "inline+newtab"
+    bindkey char, genLinkOpener(url, "inline"), type
+    bindkey shar, genLinkOpener(url, "newtab"), type
+    bindkey "- #{char}", genLinkOpener url, "inline+newtab"
+    bindkey "= #{char}", genLinkOpener url, "inline+newtab"
 
 $(document).ready () ->
   if init()
