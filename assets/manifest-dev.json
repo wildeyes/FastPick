@@ -1,4 +1,0 @@
-{
-  "content_scripts": [{"matches": ["<all_urls>"], "js": ["jquery.min.js", "mousetrap.min.js", "database.js" , "script.js"] }],
-  "web_accessible_resources": [""]
-}

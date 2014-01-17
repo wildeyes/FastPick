@@ -1,10 +1,10 @@
-database = [
+general = [
   domain: "google"
   exclude: /https?:\/\/plus.google.*/
   anchorsel: "h3.r a"
 ,
-  domain: "linkedin"
-  anchorsel: ".title"
+  domain: /https?:\/\/www.linkedin.com\/vsearch\/.*/
+  anchorsel: "a.title"
 ,
   domain: "heroku"
   anchorsel: ".ruled a"
@@ -95,3 +95,10 @@ database = [
   domain: /https+:\/\/www.archlinux.*\/packages.*/
   anchorsel: "td a"
 ]
+
+dev = [
+  domain: /https?:\/\/developer.mozilla.org\/.*\/search?q=/
+  anchorsel: "h4 a"
+]
+
+database = [].concat(general, dev);
