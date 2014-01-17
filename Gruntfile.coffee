@@ -1,48 +1,47 @@
 module.exports = (grunt) ->
-  require('load-grunt-tasks')(grunt)
-  require('time-grunt')(grunt)
+  require("load-grunt-tasks")(grunt)
+  require("time-grunt")(grunt)
 
-  grunt.registerTask 'build', ['copy:init','coffee']
-  grunt.registerTask 'default', "watch"
-  grunt.registerTask 'publish', "", ['build','uglify','compress'] #,'clean']
+  grunt.registerTask "build", ["copy:init","coffee"]
+  grunt.registerTask "default", "watch"
+  grunt.registerTask "publish", "", ["build","compress"] #,"clean"]
 
   grunt.initConfig
-    manifest : grunt.file.readJSON 'assets/manifest.json'
+    manifest : grunt.file.readJSON "assets/manifest.json"
     coffee:
       options:
         bare: true
         join: true
       script:
-        files: {'build/script.js': 'src/script.coffee'}
+        files: {"build/script.js": "src/script.coffee"}
       database:
-        files: {'build/database.js': 'assets/database.coffee'}
+        files: {"build/database.js": "assets/database.coffee"}
       eventpage:
-        files: {'build/eventpage.js': 'src/eventpage_tabbing.coffee'}
+        files: {"build/eventpage.js": "src/eventpage_tabbing.coffee"}
     watch:
       script:
-        files: ['src/script.coffee']
-        tasks: ['coffee:script']
+        files: ["src/script.coffee"]
+        tasks: ["coffee:script"]
       database:
-        files: ['src/database.coffee']
-        tasks: ['coffee:database']
+        files: ["src/database.coffee"]
+        tasks: ["coffee:database"]
       eventpage:
-        files: ['src/eventpage.coffee']
-        tasks: ['coffee:eventpage']
+        files: ["src/eventpage.coffee"]
+        tasks: ["coffee:eventpage"]
     copy:
       init:
         expand: true
         flatten: true
-        src: ['assets/manifest.json', 'bower_components/mousetrap/mousetrap.min.js']
-        dest: 'build'
+        src: ["assets/manifest.json", "bower_components/mousetrap/mousetrap.min.js"]
+        dest: "build"
     compress:
       package:
         options:
-          mode:'zip'
+          mode:"zip"
           archive: "builds/<%=manifest.name%>-<%= manifest.version %>.zip"
         files: [
           expand:true
-          src:'tmp/**'
+          src:"tmp/**"
         ]
 
-  # Zepto Modules used: MODULES="zepto event data ..." ./make dist
-  #
+  # Zepto Modules in zepto.min.js: MODULES="zepto"
