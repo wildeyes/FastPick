@@ -32,7 +32,12 @@ module.exports = (grunt) ->
       init:
         expand: true
         flatten: true
-        src: ["assets/manifest.json", "bower_components/mousetrap/mousetrap.min.js"]
+        src: [
+           "assets/manifest.json"
+           "node_modules/mousetrap/mousetrap.min.js"
+           "node_modules/jquery/dist/jquery.min.js"
+           "assets/coffee-script.js"
+        ]
         dest: "build"
     compress:
       package:
@@ -43,5 +48,3 @@ module.exports = (grunt) ->
           expand:true
           src:"tmp/**"
         ]
-
-  # Zepto Modules in zepto.min.js: MODULES="zepto"

@@ -1,11 +1,10 @@
 {
-    "name": "Pi6 Alpha",
-    "short_name": "Pi6",
-    "version": "0.1.2",
+    "name": "Fast Pick",
+    "short_name": "Fast Pick",
+    "version": "1.0.0",
     "manifest_version": 2,
-    "description": "Keyboard shortcuts for search and more.",
+    "description": "Fast Pick provides keyboard shortcuts for search.",
     "homepage_url": "https://github.com/wildeyes/Pi6",
     "background": {"scripts": ["eventpage.js"], "persistent": false },
-    "content_scripts": [{"matches": ["<all_urls>"], "js": ["zepto.min.js", "mousetrap.min.js", "database.js" , "script.js"] }],
-    "web_accessible_resources": [""]
+    "content_scripts": [{"matches": ["<all_urls>"], "js": ["jquery.min.js", "mousetrap.min.js", "database.js" , "script.js"] }]
 }

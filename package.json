@@ -1,9 +1,5 @@
 {
   "name": "Pi6",
-  "scripts": {
-    "preinstall": "npm install && bower install && grunt init",
-    "start": "grunt"
-  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.7.0",
