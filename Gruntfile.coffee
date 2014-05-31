@@ -34,9 +34,8 @@ module.exports = (grunt) ->
         flatten: true
         src: [
            "assets/manifest.json"
-           "node_modules/mousetrap/mousetrap.min.js"
-           "node_modules/jquery/dist/jquery.min.js"
-           "assets/coffee-script.js"
+           "libs/mousetrap.min.js" # TODO: fetch this from https://raw.githubusercontent.com/wildeyes/mousetrap/master/mousetrap.min.js
+           "libs/zepto.min.js"
         ]
         dest: "build"
     compress:
