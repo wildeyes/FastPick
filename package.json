@@ -1,15 +1,7 @@
 {
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-bower-task": "~0.3.4",
-    "grunt-bump": "0.0.13",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-compress": "~0.5.3",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-watch": "~0.5.3",
-    "load-grunt-tasks": "~0.2.0",
-    "time-grunt": "~0.2.3"
+    "gulp": "^3.6.2",
+    "gulp-coffee": "^1.4.3",
+    "gulp-util": "^2.2.14"
   }
 }
