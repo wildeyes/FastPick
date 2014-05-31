@@ -2,14 +2,14 @@ runtimeOrExtension = if chrome.runtime and chrome.runtime.sendMessage then 'runt
 
 chrome[runtimeOrExtension].onMessage.addListener (message, sender, sendResponse) ->
     ntab = "url": message.url
-    isNewtab = message.mode.indexOf("newtab") isnt -1
-    isInline = message.mode.indexOf("inline") isnt -1
-    if isNewtab and isInline
+    mode = message.mode
+
+    if mode.indexOf("newtabswitch") isnt -1
         ntab.active = true
         chrome.tabs.create ntab
-     else if isInline
+    else if mode.indexOf("inline") isnt -1
         ntab.active = true
         chrome.tabs.update ntab
-     else if isNewtab
+    else if mode.indexOf("newtab") isnt -1
         ntab.active = false
         chrome.tabs.create ntab

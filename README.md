@@ -1,4 +1,5 @@
-## Fast Pick - shortcuts for search
+
+## Fast Pick - Keyboard shortcuts for search
 
 > How much time you spend searching in Google? Youtube? Wikipedia?
 > To search, you type in your query... **and move your hand to the mouse to pick your selection**.
@@ -12,15 +13,13 @@ It helps out browsing faster. And it's addicting. Really.
 
 **Installation instructions:**
 
-*Install Fast Pick Now from the* [Chrome Web Store][javascript:(function() { alert(" not uploaded yet! ") })()].
+*Install Fast Pick Now from the* [Chrome Web Store](javascript:(function() { alert(" not uploaded yet! ") })()).
 
 The Help \ Options page can be reached via the button on the address bar \ Omnibar.
 
 Installation from source is just some scrolling away!
 
 ## How to Use (Keyboard bindings)
-
-ProTip: Turn off Google Instant. It's not compatible with Pi6... yet.
 
 - Keys 1-9 open the search result in the current tab.
 - Shift + 1-9 open the search result in a new tab.
@@ -33,15 +32,16 @@ ProTip: Turn off Google Instant. It's not compatible with Pi6... yet.
 
 Fast Pick is built with Coffeescript and Grunt.
 
-1. Install [nodejs][http://nodejs.org/]. This also installs NPM.
-2. `git clone https://github.com/wildeyes/fastpick && cd fastpick`
-3. `npm install -g grunt-cli` - install grunt.
-4. `npm install` - install project dependencies (mousetrap, jquery and various grunt tasks).
-5. `grunt build`
-5. Navigate to `chrome://extensions`.
-6. Activate Developer Mode.
-7. Click on "Load Unpacked Extension...".
-8. Select the `Fast Pick` directory.
+1. Install [nodejs](http://nodejs.org/). This also installs NPM.
+2. Install [Grunt](http://gruntjs.com/installing-grunt).
+3. Install [CoffeeScript](http://coffeescript.org/#installation).
+4. From within Fast Pick's directory, run:
+5. `npm install` - install project dependencies (mousetrap, jquery and various grunt tasks).
+6. `grunt build` - to compile coffeescripts and copy dependencies.
+7. Navigate to `chrome://extensions`.
+8. Activate Developer Mode.
+9. Click on "Load Unpacked Extension...".
+10. Select the `Fast Pick` directory.
 
 Use `grunt` (executes coffeescript watches) for development with Coffeescript.
 
@@ -56,9 +56,8 @@ The database is a JS array of "entries", each containing a single site (or group
 Example Entry:
 ```coffeescript
 entry=
-
-domain: "google" # the basename of URL
-  anchorsel: "h3.r a" # The anchors selector
+    domain: "google" # the basename of URL
+        anchorsel: "h3.r a" # The anchors selector
 ```
 
 A More complex Entry:
