@@ -109,7 +109,8 @@ for i in [0...fastpick.identifiers.length]
 
 metadata = do getPageMetadata
 if metadata isnt null
-  window.onload = -> 
+  $ document
+   .ready ->
     
     bind_navigation_keys metadata
 
@@ -123,7 +124,7 @@ if metadata isnt null
 
     fastpick.links = $(elements.anchor).map -> @href
 
-    for ele in elements.text
+    for ele in elements.text.slice(0,fastpick.identifiers.length)
       $ele = $(ele)
       text = $ele.text()
       char = do getNextIdentifier

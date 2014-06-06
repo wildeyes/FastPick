@@ -12,10 +12,8 @@ sources = ['src/*','assets/database.coffee']
 gulp.task 'build', ['copy:libs','coffee']
 
 gulp.task 'default', ->
-  #gulp.start('build')
-  gulp.watch './*', 'build'
-
-gulp.task 'publish', -> "hello"
+  gulp.start('build')
+  gulp.watch(sources, ['coffee'])
 
 gulp.task 'copy:libs', ->
   gulp.src assets
