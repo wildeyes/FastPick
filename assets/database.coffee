@@ -3,6 +3,9 @@ general = [
   exclude: /https?:\/\/plus.google.*/
   anchorsel: "h3.r a"
 ,
+  domain: "twitter"
+  anchorsel: ".js-display-url"
+,
   domain: /https?:\/\/www.linkedin.com\/vsearch\/.*/
   anchorsel: "a.title"
 ,
@@ -10,13 +13,13 @@ general = [
   anchorsel: ".ruled a"
 ,
   domain: "thepiratebay"
-  anchorsel: ".detLink"
+  anchorsel: "#searchResult td:nth-child(2) a"
 ,
   domain: "quora"
-  anchorsel: ".question_link"
+  anchorsel: "a.question_link"
 ,
   domain: "cheatography"
-  anchorsel: "#body_shadow strong a"
+  anchorsel: "#body_wide_shadow strong a"
 ,
   domain: "readthedocs"
   anchorsel: "#id_search_result a"
@@ -38,24 +41,28 @@ general = [
 ,
   domain: ["stackoverflow", "serverfault", "superuser", "meta.stackoverflow", "askubuntu", "stackapps", "answers.onstartups", "mathoverflow"]
   pages: [
-    domain: /search\?q=/
+    domain: /search/
     anchorsel: ".result-link a"
-    inputsel: "[name='q']:last"
+    inputsel: "input:last-child"
+  ,
+    domain: /questions\/\d+\//
+    anchorsel: "#sidebar a.question-hyperlink"
   ,
     domain: "default"
     anchorsel: ".question-hyperlink"
-    inputsel: ".textbox[name='q']:last"
   ]
 ,
-  domain: /https+:\/\/.*\.stackexchange\.com/
+  domain: /https?:\/\/.*\.stackexchange\.com/
   pages: [
-    domain: /search\?q=/
+    domain: /search/
     anchorsel: ".result-link a"
-    inputsel: "[name='q']:last"
+    inputsel: "input:last-child"
+  ,
+    domain: /questions\/\d+\//
+    anchorsel: "#sidebar a.question-hyperlink"
   ,
     domain: "default"
     anchorsel: ".question-hyperlink"
-    inputsel: ".textbox[name='q']:last"
   ]
 ,
   domain: "youtube"
@@ -73,15 +80,21 @@ general = [
 ,
   domain: "diigo"
   pages: [
-    domain: "buzz"
-    anchorsel: ".Titleinner a"
-  ,
-    domain: "user|tag"
+    domain: /buzz/
     anchorsel: ".titleLink"
+  ,
+    domain: /user|tag/
+    anchorsel: ".Titleinner a"
   ]
 ,
   domain: "github"
-  anchorsel: ".repolist-name a"
+  pages: [
+    domain: /issues/
+    anchorsel: "h4 a.js-navigation-open"
+  ,
+    domain: "default"
+    anchorsel: ".repolist-name a"
+  ]
 ,
   domain: "jquery"
   anchorsel: ".entry-title a"
@@ -97,7 +110,7 @@ general = [
 ]
 
 dev = [
-  domain: /https?:\/\/developer.mozilla.org\/.*\/search?q=/
+  domain: /https?:\/\/developer\.mozilla\.org\/.*\/search\?q=.*/
   anchorsel: "h4 a"
 ]
 

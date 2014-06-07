@@ -20,7 +20,7 @@ utils =
   bindkey : Mousetrap.bind
 
 bind_navigation_keys = (metadata) ->
-  inputsel = inputsel or if metadata.inputsel? then metadata.inputsel else "input[type='text']"
+  inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
   $i = $(inputsel);
   utils.bindkey 'e', gen_e_key_bind $i, true
   utils.bindkey 'E', gen_e_key_bind $i, false
@@ -79,7 +79,7 @@ getPageMetadata = ->
         if is_this_page page
           return page
     else return page
-  else null
+  null
 
 getElementsByMetadata = (metadata) ->
   asel = metadata.anchorsel
@@ -111,21 +111,23 @@ metadata = do getPageMetadata
 if metadata isnt null
   $ document
    .ready ->
-    
-    bind_navigation_keys metadata
+    try
+      bind_navigation_keys metadata
 
-    # TODO: will using a combination of array.map and zip will be of equal speed to this?
-    identifierIndex = -1
-    getNextIdentifier = -> 
-      identifierIndex = identifierIndex + 1
-      fastpick.identifiers[identifierIndex]
-    
-    elements = getElementsByMetadata(metadata)
+      # TODO: will using a combination of array.map and zip will be of equal speed to this?
+      identifierIndex = -1
+      getNextIdentifier = -> 
+        identifierIndex = identifierIndex + 1
+        fastpick.identifiers[identifierIndex]
+      
+      elements = getElementsByMetadata(metadata)
 
-    fastpick.links = $(elements.anchor).map -> @href
+      fastpick.links = $(elements.anchor).map -> @href
 
-    for ele in elements.text.slice(0,fastpick.identifiers.length)
-      $ele = $(ele)
-      text = $ele.text()
-      char = do getNextIdentifier
-      $ele.text("#{char}. #{text}")
+      for ele in elements.text.slice(0,fastpick.identifiers.length)
+        $ele = $(ele)
+        text = $ele.text()
+        char = do getNextIdentifier
+        $ele.text("#{char}. #{text}")
+    catch e
+      console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
