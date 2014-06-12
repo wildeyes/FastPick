@@ -1,4 +1,4 @@
-general = [
+database = [
   domain: "google"
   exclude: /https?:\/\/plus.google.*/
   anchorsel: "h3.r a"
@@ -6,14 +6,11 @@ general = [
   domain: "twitter"
   anchorsel: ".js-display-url"
 ,
-  domain: /https?:\/\/www.linkedin.com\/vsearch\/.*/
-  anchorsel: "a.title"
-,
   domain: "heroku"
   anchorsel: ".ruled a"
 ,
   domain: "thepiratebay"
-  anchorsel: "#searchResult td:nth-child(2) a"
+  anchorsel: ".detLink"
 ,
   domain: "quora"
   anchorsel: "a.question_link"
@@ -24,35 +21,7 @@ general = [
   domain: "readthedocs"
   anchorsel: "#id_search_result a"
 ,
-  domain: "ynet"
-  anchorsel: ".smallheader , #mStrips div div .text12, .whtbigheader:nth-child(2), .blkbigheader span"
-,
-  domain: "nana10"
-  pages: [
-    domain: /\?blog=\d{3,8}/
-    anchorsel:
-      iframe: "a.list:has(img[width='32'])"
-      regular: "a.list:has(img[width='32'])"
-  ,
-    domain: /http:\/\/israblog\.nana10\.co\.il\/?/
-    textsel: "b"
-    anchorsel: "a.GenenalHompageLinkNoBold"
-  ]
-,
   domain: ["stackoverflow", "serverfault", "superuser", "meta.stackoverflow", "askubuntu", "stackapps", "answers.onstartups", "mathoverflow"]
-  pages: [
-    domain: /search/
-    anchorsel: ".result-link a"
-    inputsel: "input:last-child"
-  ,
-    domain: /questions\/\d+\//
-    anchorsel: "#sidebar a.question-hyperlink"
-  ,
-    domain: "default"
-    anchorsel: ".question-hyperlink"
-  ]
-,
-  domain: /https?:\/\/.*\.stackexchange\.com/
   pages: [
     domain: /search/
     anchorsel: ".result-link a"
@@ -99,6 +68,9 @@ general = [
   domain: "jquery"
   anchorsel: ".entry-title a"
 ,
+  domain: "startpage"
+  anchorsel: "h3 a"
+,
   domain: /https+:\/\/aur.archlinux.*/
   anchorsel: "td:nth-child(3) a"
 ,
@@ -107,11 +79,52 @@ general = [
 ,
   domain: /https+:\/\/www.archlinux.*\/packages.*/
   anchorsel: "td a"
-]
-
-dev = [
+,
   domain: /https?:\/\/developer\.mozilla\.org\/.*\/search\?q=.*/
   anchorsel: "h4 a"
-]
+,
+  domain: /https?:\/\/www.linkedin.com\/vsearch\/.*/
+  anchorsel: "a.title"
+,
+  domain: "ynet"
+  anchorsel: ".smallheader , #mStrips div div .text12, .whtbigheader:nth-child(2), .blkbigheader span"
+,
+  domain: "nana10"
+  pages: [
+    domain: /\?blog=\d{3,8}/
+    anchorsel:
+      iframe: "a.list:has(img[width='32'])"
+      regular: "a.list:has(img[width='32'])"
+  ,
+    domain: /http:\/\/israblog\.nana10\.co\.il\/?/
+    textsel: "b"
+    anchorsel: "a.GenenalHompageLinkNoBold"
+  ]
+,
+  domain: /https?:\/\/.*\.stackexchange\.com/
+  pages: [
+    domain: /search/
+    anchorsel: ".result-link a"
+    inputsel: "input:last-child"
+  ,
+    domain: /questions\/\d+\//
+    anchorsel: "#sidebar a.question-hyperlink"
+  ,
+    domain: "default"
+    anchorsel: ".question-hyperlink"
 
-database = [].concat(general, dev);
+  ]
+,
+  domain: "duckduckgo"
+  anchorsel: ".result__a"
+,
+  domain: "bing"
+  anchorsel: "h3 a"
+,
+  domain: "amazon"
+  pages: [
+    domain: /search/
+    anchorsel: "h3 .bold"
+  ]
+
+]

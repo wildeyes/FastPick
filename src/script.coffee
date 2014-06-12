@@ -21,20 +21,20 @@ utils =
 
 bind_navigation_keys = (metadata) ->
   inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
-  $i = $(inputsel);
-  utils.bindkey 'e', gen_e_key_bind $i, true
-  utils.bindkey 'E', gen_e_key_bind $i, false
+  inputDOMElement = document.querySelector(inputsel);
+  utils.bindkey 'e', gen_e_key_bind inputDOMElement, true
+  utils.bindkey 'E', gen_e_key_bind inputDOMElement, false
 
-gen_e_key_bind = ($f, type) ->
+gen_e_key_bind = (inputDOMElement, type) ->
   (e) ->
-    do e.preventDefault
-    do $f.focus
+    e.preventDefault()
+    inputDOMElement.focus()
     if type
-      tmpval = do $f.val
-      $f.val ''
-      $f.val tmpval
+      tmpval = inputDO\MElement.value
+      inputDOMElement.value = ''
+      inputDOMElement.value = tmpval
     else
-      do $f.select
+      inputDOMElement.select()
     # This is a very weird solution, but who gives a flying whale.. it works!
 
 gen_is_this_page = (url) ->

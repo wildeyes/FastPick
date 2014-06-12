@@ -6,27 +6,22 @@
 > With Fast Pick, you just click the number associated with the link you want.
 > Be a man, man, use keyboard shortcuts that save you time.
 
-Inspired by [Vimium][http://vimium.github.io/], Fast Pick provides keyboard shortcuts for search.
-Fast Pick adds numbers to search results so you can press the appropriate number on you keyboard to select the search result you need.
+Fast Pick provides keyboard shortcuts for search.
+The chorme extension adds numbers to search results so you can press the appropriate number on you keyboard to select the search result you need.
 
-It helps out browsing faster. And it's addicting. Really.
+Inspired by [Vimium](http://vimium.github.io/).
+
+You'll browse faster. And it's intuitive. Really. You won't realize it's there until you're on your friend's computer.
 
 **Installation instructions:**
 
-*Install Fast Pick Now from the* [Chrome Web Store](javascript:(function() { alert(" not uploaded yet! ") })()).
+*Install Fast Pick Now from the* [Chrome Web Store](https://chrome.google.com/webstore/detail/fast-pick/pfkmjbobiocpkpidpljgpdneoeknmehk).
 
 The Help \ Options page can be reached via the button on the address bar \ Omnibar.
 
 Installation from source is just some scrolling away!
 
-## How to Use (Keyboard bindings)
 
-- Keys 1-9 open the search result in the current tab.
-- Shift + 1-9 open the search result in a new tab.
-- Plus key + 1-9 open the search result in a new tab and **switches to it**.
-- Key e puts cursor focus on the search box \ input.
-- Shift+E does a "Select All" focus on the search box.
-- Keys j to scroll down, k to scroll up.
 
 ## Installation from source
 
@@ -62,7 +57,7 @@ entry=
 
 A More complex Entry:
 ```coffeescript
-complex_entry=
+complex_entry =
   domain: ["stackoverflow", "serverfault", "superuser", "meta.stackoverflow", "askubuntu", "stackapps", "answers.onstartups", "mathoverflow"] # Match one of those basenames
   pages: [ # In which, there are certain pages
     domain: /search\?q=/ # Match URL to this regex and apply this entry if it's a match
