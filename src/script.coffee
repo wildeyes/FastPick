@@ -30,7 +30,7 @@ gen_e_key_bind = (inputDOMElement, type) ->
     e.preventDefault()
     inputDOMElement.focus()
     if type
-      tmpval = inputDO\MElement.value
+      tmpval = inputDOMElement.value
       inputDOMElement.value = ''
       inputDOMElement.value = tmpval
     else
