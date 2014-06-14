@@ -1,4 +1,7 @@
+$ = document.querySelectors
+
 fastpick =
+  numberingFromCSS : false
   runtimeOrExtension : if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
   identifiers : '1234567890'
   shiftedIdentifiers : '!@#$%^&*()'
@@ -83,13 +86,14 @@ getPageMetadata = ->
 
 getElementsByMetadata = (metadata) ->
   asel = metadata.anchorsel
-  if typeof asel is 'object'
-    complexsel = asel
-    for own key, val of complexsel
-      if key is 'iframe'
-        anchorElements = $('iframe').contents().find(val)
-  else if typeof asel is 'string'
-    anchorElements = $ asel
+  # There's no db entry containing an iframe yet
+  # if typeof asel is 'object'
+  #   complexsel = asel
+  #   for own key, val of complexsel
+  #     if key is 'iframe'
+  #       anchorElements = $('iframe').contents().find(val)
+  # else if typeof asel is 'string'
+  anchorElements = $ asel
 
   if metadata.hasOwnProperty "textsel"
     textElements = $ metadata.textsel
@@ -97,6 +101,33 @@ getElementsByMetadata = (metadata) ->
     textElements = anchorElements
 
   {text:textElements,anchor:anchorElements}
+
+
+metadata = do getPageMetadata
+
+# if fastpick.numberingFromCSS
+#   textsel = if metadata.textsel? then metadata.textsel else metadata.anchorsel
+#   ((css) ->
+#     # createStyleTag from CSS
+#     head = document.head || document.getElementsByTagName("head")[0]
+#     style = document.createElement("style")
+#     style.type = "text/css"
+#     if style.styleSheet
+#       style.styleSheet.cssText = css
+#     else 
+#       style.appendChild(document.createTextNode(css))
+#     head.appendChild(style))("
+
+# #{textsel}:nth-child(n+9)::before {
+#   counter-reset: level1 -1;
+#   counter-increment: level1;
+#   content: counter(level1) \". \";
+# }
+# #{textsel}::before {
+# content: counter(level1) \". \";
+# counter-increment: level1;}
+
+#     ")
 
 
 for i in [0...fastpick.identifiers.length]
@@ -107,11 +138,9 @@ for i in [0...fastpick.identifiers.length]
   utils.bindkey fastpick.shiftedIdentifiers[i], fastpick.openNewTab.bind(fastpick), type
   utils.bindkey "= #{char}", fastpick.openNewTabSwitch.bind(fastpick), type
 
-metadata = do getPageMetadata
 if metadata isnt null
-  $ document
-   .ready ->
-    try
+  document.addEventListener "DOMContentLoaded", ->
+    try 
       bind_navigation_keys metadata
 
       # TODO: will using a combination of array.map and zip will be of equal speed to this?
@@ -122,12 +151,16 @@ if metadata isnt null
       
       elements = getElementsByMetadata(metadata)
 
-      fastpick.links = $(elements.anchor).map -> @href
+      # Populate array with links that will later be called
+      # by the mousetrap keybindings (that were binded early on)
+      fastpick.links = elements.anchor.map -> @href
 
-      for ele in elements.text.slice(0,fastpick.identifiers.length)
-        $ele = $(ele)
+      # if not fastpick.numberingFromCSS
+      elements.text.each (index, value) -> return unless index < fastpick.identifiers.length
+        $ele = $( this )
         text = $ele.text()
         char = do getNextIdentifier
         $ele.text("#{char}. #{text}")
+
     catch e
       console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
