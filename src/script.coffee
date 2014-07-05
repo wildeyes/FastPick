@@ -1,16 +1,66 @@
-
 fastpick =
+  parseHTML : (str) ->
+    tmp = document.implementation.createHTMLDocument()
+    tmp.body.innerHTML = str
+    tmp
+  httpGet : (theUrl, cb) ->
+    req = new XMLHttpRequest()
+    req.open "GET", theUrl, false
+    req.onreadystatechange = (progEvent) ->
+      req = progEvent.target
+      if req.readyState is 4 and req.status is 200 then cb(req.responseText)
+    req.send null
+
   numberingFromCSS : false
   runtimeOrExtension : if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
   identifiers : '1234567890'
   shiftedIdentifiers : '!@#$%^&*()'
   openUrl : (url, mode) ->
-    chrome[this.runtimeOrExtension].sendMessage url:url, mode:mode
+    chrome[@runtimeOrExtension].sendMessage url:url, mode:mode
   links: []
   openInline : (KBEvent, identifier) -> 
-    this.openUrl this.links[this.identifiers.indexOf(identifier)], "inline"
-  openNewTab : (KBEvent, identifier) -> this.openUrl this.links[this.shiftedIdentifiers.indexOf(identifier)], "newtab"
-  openNewTabSwitch : (KBEvent, identifier) -> this.openUrl this.links[this.identifiers.indexOf(identifier.substring(2))], "newtabswitch"
+    @openUrl @links[@identifiers.indexOf(identifier)], "inline"
+  openNewTab : (KBEvent, identifier) -> @openUrl @links[@shiftedIdentifiers.indexOf(identifier)], "newtab"
+  openNewTabSwitch : (KBEvent, identifier) -> @openUrl @links[@identifiers.indexOf(identifier.substring(2))], "newtabswitch"
+  openAction : (KBEvent, identifier) -> 
+    resultURL = @links[@identifiers.indexOf(identifier.substring(2))]
+    @httpGet resultURL, (stHtml) =>
+      debugger
+      DOMNewDoc = @parseHTML stHtml
+      eleAnchor = DOMNewDoc.querySelector metadata.openactionsel
+      window.location.href = eleAnchor.href
+  setupKeyboardShortcuts : ->
+    for i in [0...@identifiers.length]
+      char = @identifiers[i]
+      type = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
+
+      utils.bindkey char, @openInline.bind(this), type
+      utils.bindkey @shiftedIdentifiers[i], @openNewTab.bind(this), type
+      utils.bindkey "= #{char}", @openNewTabSwitch.bind(this), type
+      utils.bindkey "- #{char}", @openAction.bind(this), type
+  
+  start : (anchorselOverride) ->
+    identifierIndex = 0
+    try
+      bind_navigation_keys metadata
+      elements = getElementsByMetadata(metadata)
+
+      # Populate array with links that will later be called
+      # by the mousetrap keybindings (that were binded early on)
+      @links =
+        if anchorselOverride? then $(anchorselOverride).map -> @href
+        else elements.anchor.map -> @href
+
+      # if not @numberingFromCSS
+      elements.text.each (index, ele) =>
+        return unless index < @identifiers.length
+        $ele = $( ele )
+        text = $ele.text()
+        char = @identifiers[identifierIndex++]
+        $ele.text("#{char}. #{text}")
+
+    catch e
+      console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
 
 # Helper Functions
 utils =
@@ -128,45 +178,7 @@ metadata = do getPageMetadata
 
 #     ")
 
-setupKeyboardShortcuts = ->
-  for i in [0...fastpick.identifiers.length]
-    char = fastpick.identifiers[i]
-    type = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
-
-    utils.bindkey char, fastpick.openInline.bind(fastpick), type
-    utils.bindkey fastpick.shiftedIdentifiers[i], fastpick.openNewTab.bind(fastpick), type
-    utils.bindkey "= #{char}", fastpick.openNewTabSwitch.bind(fastpick), type
-
-startFastPick = (anchorselOverride) ->
-  try
-    bind_navigation_keys metadata
-
-    # TODO: will using a combination of array.map and zip will be of equal speed to this?
-    identifierIndex = -1
-    getNextIdentifier = -> 
-      identifierIndex = identifierIndex + 1
-      fastpick.identifiers[identifierIndex]
-    
-    elements = getElementsByMetadata(metadata)
-
-    # Populate array with links that will later be called
-    # by the mousetrap keybindings (that were binded early on)
-    fastpick.links =
-      if anchorselOverride? then $(anchorselOverride).map -> @href
-      else elements.anchor.map -> @href
-
-    # if not fastpick.numberingFromCSS
-    elements.text.each (index, value) -> 
-      return unless index < fastpick.identifiers.length
-      $ele = $( this )
-      text = $ele.text()
-      char = do getNextIdentifier
-      $ele.text("#{char}. #{text}")
-
-  catch e
-    console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
-
 if metadata isnt null
-  setupKeyboardShortcuts()
+  fastpick.setupKeyboardShortcuts()
   $ document
-   .ready -> startFastPick()
+   .ready -> fastpick.start()

@@ -11,6 +11,7 @@ database = [
 ,
   domain: "thepiratebay"
   anchorsel: ".detLink"
+  openactionsel: ".download a"
 ,
   domain: "quora"
   anchorsel: "a.question_link"
