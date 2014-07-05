@@ -1,4 +1,3 @@
-$ = document.querySelectors
 
 fastpick =
   numberingFromCSS : false
@@ -129,38 +128,45 @@ metadata = do getPageMetadata
 
 #     ")
 
+setupKeyboardShortcuts = ->
+  for i in [0...fastpick.identifiers.length]
+    char = fastpick.identifiers[i]
+    type = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
 
-for i in [0...fastpick.identifiers.length]
-  char = fastpick.identifiers[i]
-  type = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
+    utils.bindkey char, fastpick.openInline.bind(fastpick), type
+    utils.bindkey fastpick.shiftedIdentifiers[i], fastpick.openNewTab.bind(fastpick), type
+    utils.bindkey "= #{char}", fastpick.openNewTabSwitch.bind(fastpick), type
 
-  utils.bindkey char, fastpick.openInline.bind(fastpick), type
-  utils.bindkey fastpick.shiftedIdentifiers[i], fastpick.openNewTab.bind(fastpick), type
-  utils.bindkey "= #{char}", fastpick.openNewTabSwitch.bind(fastpick), type
+startFastPick = (anchorselOverride) ->
+  try
+    bind_navigation_keys metadata
+
+    # TODO: will using a combination of array.map and zip will be of equal speed to this?
+    identifierIndex = -1
+    getNextIdentifier = -> 
+      identifierIndex = identifierIndex + 1
+      fastpick.identifiers[identifierIndex]
+    
+    elements = getElementsByMetadata(metadata)
+
+    # Populate array with links that will later be called
+    # by the mousetrap keybindings (that were binded early on)
+    fastpick.links =
+      if anchorselOverride? then $(anchorselOverride).map -> @href
+      else elements.anchor.map -> @href
+
+    # if not fastpick.numberingFromCSS
+    elements.text.each (index, value) -> 
+      return unless index < fastpick.identifiers.length
+      $ele = $( this )
+      text = $ele.text()
+      char = do getNextIdentifier
+      $ele.text("#{char}. #{text}")
+
+  catch e
+    console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
 
 if metadata isnt null
-  document.addEventListener "DOMContentLoaded", ->
-    try 
-      bind_navigation_keys metadata
-
-      # TODO: will using a combination of array.map and zip will be of equal speed to this?
-      identifierIndex = -1
-      getNextIdentifier = -> 
-        identifierIndex = identifierIndex + 1
-        fastpick.identifiers[identifierIndex]
-      
-      elements = getElementsByMetadata(metadata)
-
-      # Populate array with links that will later be called
-      # by the mousetrap keybindings (that were binded early on)
-      fastpick.links = elements.anchor.map -> @href
-
-      # if not fastpick.numberingFromCSS
-      elements.text.each (index, value) -> return unless index < fastpick.identifiers.length
-        $ele = $( this )
-        text = $ele.text()
-        char = do getNextIdentifier
-        $ele.text("#{char}. #{text}")
-
-    catch e
-      console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
+  setupKeyboardShortcuts()
+  $ document
+   .ready -> startFastPick()

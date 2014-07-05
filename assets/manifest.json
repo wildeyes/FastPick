@@ -1,7 +1,7 @@
 {
     "name": "Fast Pick",
     "short_name": "Fast Pick",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "manifest_version": 2,
     "description": "Fast Pick provides keyboard shortcuts for search.",
     "homepage_url": "https://github.com/wildeyes/FastPick",
@@ -11,6 +11,6 @@
     },
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["mousetrap.min.js", "database.js", "script.js"]
+        "js": ["zepto.min.js", "mousetrap.min.js", "database.js", "script.js"]
     }]
 }

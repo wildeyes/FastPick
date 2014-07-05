@@ -86,21 +86,6 @@ database = [
   domain: /https?:\/\/www.linkedin.com\/vsearch\/.*/
   anchorsel: "a.title"
 ,
-  domain: "ynet"
-  anchorsel: ".smallheader , #mStrips div div .text12, .whtbigheader:nth-child(2), .blkbigheader span"
-,
-  domain: "nana10"
-  pages: [
-    domain: /\?blog=\d{3,8}/
-    anchorsel:
-      iframe: "a.list:has(img[width='32'])"
-      regular: "a.list:has(img[width='32'])"
-  ,
-    domain: /http:\/\/israblog\.nana10\.co\.il\/?/
-    textsel: "b"
-    anchorsel: "a.GenenalHompageLinkNoBold"
-  ]
-,
   domain: /https?:\/\/.*\.stackexchange\.com/
   pages: [
     domain: /search/
@@ -126,5 +111,45 @@ database = [
     domain: /search/
     anchorsel: "h3 .bold"
   ]
-
+,
+  domain: "alternativeto"
+  anchorsel: ".app-title a"
+,
+  #############################
+  ### Israeli News Websites ###
+  #############################
+  domain: "ynet"
+  anchorsel: ".smallheader , #mStrips div div .text12, .whtbigheader:nth-child(2), .blkbigheader span"
+,
+  domain: "mako"
+  anchorsel: "h5 a , .h3 a"
+,
+  domain: "nana10"
+  pages: [
+    domain: /news/
+    anchorsel: "#UL .BlackArial12pxBold , #t1497 .BlackArial14pxBold, .WhiteArial12pxBold .WhiteArial12pxBold, #SmallHeadline_1491_4152575 .WhiteArial12pxBold, #MainBigHeadline_1491_4166410 .WhiteArial16pxBold"
+  ,
+    domain: /http:\/\/israblog\.nana10\.co\.il\/?/
+    textsel: "b"
+    anchorsel: "a.GenenalHompageLinkNoBold"
+  # ,
+  #   domain: /\?blog=\d{3,8}/
+  #   anchorsel:
+  #     iframe: "a.list:has(img[width='32'])"
+  #     regular: "a.list:has(img[width='32'])"
+  ]
+,
+  domain: "nrg"
+  anchorsel: ".wrapTxt a , h2 a, h1 a"
+  ####
+  # News
+  ####
+  domain: ["roadandtrack", "jezebel", "jalopnik", "amnh", "cink", "gizmodo", "kotaku", "lifehacker", "gizmodo", "jezebel", "jalopnik", "io9", "deadspin", "gawker", "gizmodo"]
+  pages: [
+    domain: /-\d+/
+    anchorsel: ".column a"
+  ,
+    domain: "default"
+    anchorsel: ".entry-title a"
+  ]
 ]
