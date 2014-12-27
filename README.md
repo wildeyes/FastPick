@@ -1,4 +1,3 @@
-
 ## Fast Pick - Keyboard shortcuts for search
 
 > How much time you spend searching in Google? Youtube? Wikipedia?
@@ -13,60 +12,9 @@ Inspired by [Vimium](http://vimium.github.io/).
 
 You'll browse faster. And it's intuitive. Really. You won't realize it's there until you're on your friend's computer.
 
-**Installation instructions:**
-
 *Install Fast Pick Now from the* [Chrome Web Store](https://chrome.google.com/webstore/detail/fast-pick/pfkmjbobiocpkpidpljgpdneoeknmehk).
 
-The Help \ Options page can be reached via the button on the address bar \ Omnibar.
-
-Installation from source is just some scrolling away!
-
-
-
-## Installation from source
-
-Fast Pick is built with Coffeescript and Grunt.
-
-1. Install [nodejs](http://nodejs.org/). This also installs NPM.
-2. Install [Grunt](http://gruntjs.com/installing-grunt).
-3. Install [CoffeeScript](http://coffeescript.org/#installation).
-4. From within Fast Pick's directory, run:
-5. `npm install` - install project dependencies (mousetrap, jquery and various grunt tasks).
-6. `grunt build` - to compile coffeescripts and copy dependencies.
-7. Navigate to `chrome://extensions`.
-8. Activate Developer Mode.
-9. Click on "Load Unpacked Extension...".
-10. Select the `Fast Pick` directory.
-
-Use `grunt` (executes coffeescript watches) for development with Coffeescript.
-
-## Add shortcuts to sites - The Database file
-
-The process of adding shortcuts to sites is a manual one.
-You do it by adding a selector that includes all anchor elements of the search results and an optional selector for the element that contains the text of the search result to add the number to, if it's not the same one as the anchor element.
-The database is a JS array of "entries", each containing a single site (or group), take a look at it to get an idea of what's possible.
-
-**More information coming soon**.
-
-Example Entry:
-```coffeescript
-entry=
-    domain: "google" # the basename of URL
-        anchorsel: "h3.r a" # The anchors selector
-```
-
-A More complex Entry:
-```coffeescript
-complex_entry =
-  domain: ["stackoverflow", "serverfault", "superuser", "meta.stackoverflow", "askubuntu", "stackapps", "answers.onstartups", "mathoverflow"] # Match one of those basenames
-  pages: [ # In which, there are certain pages
-    domain: /search\?q=/ # Match URL to this regex and apply this entry if it's a match
-    anchorsel: ".result-link a"
-    input: "[name='q']:last"
-  , #Otherwise keep going
-    domain: "default" # If the last entry (or the first, but you should keep it to the last) domain == "default", it will act as a switch-clause default.
-    anchorsel: ".question-hyperlink"
-    input: ".textbox[name='q']:last"
-  ]
-```
-To easily find the selectors I need in a page, I use [SelectorGadget](http://selectorgadget.com/).
+ - The Help \ Options page can be reached via the button on the address bar \ Omnibar.
+ - FastPick is developed using NPM from NodeJS, CoffeeScript (`npm i -g coffescript`), and gulp (`npm i -g gulp`).
+   Git clone the project, and run `npm start`.
+ - [New shortcuts](SHORTCUTS.md).
