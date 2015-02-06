@@ -1,4 +1,4 @@
-database = [
+[
   domain: "google"
   exclude: /https?:\/\/plus.google.*/
   anchorsel: "h3.r a"
@@ -60,7 +60,7 @@ database = [
   domain: "github"
   pages: [
     domain: /issues/
-    anchorsel: ".js-navigation-open"
+    anchorsel: "h4 a.js-navigation-open"
   ,
     domain: "default"
     anchorsel: ".repolist-name a"

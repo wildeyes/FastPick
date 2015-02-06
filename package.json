@@ -1,22 +1,23 @@
 {
-  "name": "Fast Pick",
-  "version": "1.0.4",
+  "name": "FastPick",
+  "version": "1.1.4",
   "description": "Keyboard Shortcuts for search in browser (Extension).",
-  "main": "Gulpfile.js",
   "scripts": {
     "test": "npm test-single-run",
     "test-single-run": "karma start karma.conf.js --single-run",
     "protractor": "protractor e2e-tests/protractor.conf.js",
-    "start": "gulp ",
+    "start": "gulp",
     "prestart": "npm install",
     "pretest": "npm install"
   },
-"devDependencies": {
+  "devDependencies": {
+    "coffee-script": "~1.7.0",
+    "cson": "^1.6.2",
     "gulp": "^3.6.2",
     "gulp-coffee": "^1.4.3",
-    "gulp-util": "^2.2.14",
-    "coffee-script": "~1.7.0"
-},
+    "gulp-cson": "0.0.1",
+    "gulp-util": "^2.2.14"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/wildeyes/FastPick/"
