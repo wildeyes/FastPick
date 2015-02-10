@@ -31,7 +31,7 @@ class FastPick
   start : (customAnchorSelector) ->
     identifierIndex = 0
     try
-      bind_navigation_keys metadata
+      bindNavigationKeys metadata
       [anchorEles, textEles] = getElementsByMetadata(metadata)
 
       # Populate array with links that will later be called
@@ -57,7 +57,7 @@ utils =
   isArray : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
   bindkey : Mousetrap.bind.bind Mousetrap
 
-bind_navigation_keys = (metadata) ->
+bindNavigationKeys = (metadata) ->
   inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
   inputDOMElement = document.querySelector(inputsel);
   bindNavKey = (inputDOMElement, type) ->
@@ -74,25 +74,25 @@ bind_navigation_keys = (metadata) ->
   utils.bindkey 'e', bindNavKey inputDOMElement, true
   utils.bindkey 'E', bindNavKey inputDOMElement, false
 
-gen_is_this_page = (url) ->
+genIsThisPage = (url) ->
   (page) ->
     isthis   = false
-    page_selector  = page.domain
+    pageSelector  = page.domain
 
     # Check for array first! (utils.isRegex converts arrays to string, so it may be passed arrays)
-    if      utils.isArray page_selector
-      another_is_this_page = gen_is_this_page url
-      for pageurl in page_selector
-        pageurl_encoded = domain:pageurl # TODO: Clean this hack
-        isthis = isthis or another_is_this_page pageurl_encoded
+    if      utils.isArray pageSelector
+      anotherIsThisPage = genIsThisPage url
+      for pageurl in pageSelector
+        pageurlEncoded = domain:pageurl # TODO: Clean this hack
+        isthis = isthis or anotherIsThisPage pageurlEncoded
         break if isthis
-    else if utils.isRegex page_selector
-      isthis = url.match page_selector
-    else if typeof page_selector is 'string'
-      if page_selector is 'default'
+    else if utils.isRegex pageSelector
+      isthis = url.match pageSelector
+    else if typeof pageSelector is 'string'
+      if pageSelector is 'default'
         isthis = $$(page.anchorsel).length isnt 0
       else
-        isthis = url.indexOf(page_selector) isnt -1
+        isthis = url.indexOf(pageSelector) isnt -1
 
     if isthis and page.exclude? and url.match page.exclude # Supports only regex excluding
       isthis = false
@@ -103,17 +103,17 @@ getPageMetadata = ->
   url = location.href
   page = null
 
-  is_this_page = gen_is_this_page url
+  isThisPage = genIsThisPage url
 
   for maybethis in database
-    if is_this_page maybethis
+    if isThisPage maybethis
       page = maybethis
       break;
 
   if page?
     if page.pages?
       for page in page.pages
-        if is_this_page page
+        if isThisPage page
           return page
     else return page
   null
