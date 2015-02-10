@@ -18,3 +18,5 @@ You'll browse faster. And it's intuitive. Really. You won't realize it's there u
  - FastPick is developed using NPM from NodeJS, CoffeeScript (`npm i -g coffescript`), and gulp (`npm i -g gulp`).
    Git clone the project, and run `npm start`.
  - [New shortcuts](SHORTCUTS.md).
+
+[Contribute](CONTRIBUTING.md)?
