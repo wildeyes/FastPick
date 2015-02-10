@@ -12,4 +12,5 @@ install FastPick from source:
 
 ## Development tips
 
+ 1. `npm i -g gulp`.
  1. Run `gulp` to watch for changes to coffee files, and have the .js files automatically regenerated
