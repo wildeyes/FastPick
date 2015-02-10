@@ -1,44 +1,28 @@
-fastpick =
-  parseHTML : (str) ->
-    tmp = document.implementation.createHTMLDocument()
-    tmp.body.innerHTML = str
-    tmp
-  httpGet : (theUrl, cb) ->
-    req = new XMLHttpRequest()
-    req.open "GET", theUrl, false
-    req.onreadystatechange = (progEvent) ->
-      req = progEvent.target
-      if req.readyState is 4 and req.status is 200 then cb(req.responseText)
-    req.send null
-
+class FastPick
   numberingFromCSS : false
   runtimeOrExtension : if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
   identifiers : '1234567890'
   shiftedIdentifiers : '!@#$%^&*()'
+  links: []
+
   openUrl : (url, mode) ->
     chrome[@runtimeOrExtension].sendMessage url:url, mode:mode
-  links: []
-  openInline : (KBEvent, identifier) -> 
+  openInline : (KBEvent, identifier) =>
     @openUrl @links[@identifiers.indexOf(identifier)], "inline"
-  openNewTab : (KBEvent, identifier) -> @openUrl @links[@shiftedIdentifiers.indexOf(identifier)], "newtab"
-  openNewTabSwitch : (KBEvent, identifier) -> @openUrl @links[@identifiers.indexOf(identifier.substring(2))], "newtabswitch"
-  openAction : (KBEvent, identifier) -> 
-    resultURL = @links[@identifiers.indexOf(identifier.substring(2))]
-    @httpGet resultURL, (stHtml) =>
-      debugger
-      DOMNewDoc = @parseHTML stHtml
-      eleAnchor = DOMNewDoc.querySelector metadata.openactionsel
-      window.location.href = eleAnchor.href
+  openNewTab : (KBEvent, identifier) =>
+    @openUrl @links[@shiftedIdentifiers.indexOf(identifier)], "newtab"
+  openNewTabSwitch : (KBEvent, identifier) =>
+    @openUrl @links[@identifiers.indexOf identifier.substring 2], "newtabswitch"
   setupKeyboardShortcuts : ->
     for i in [0...@identifiers.length]
       char = @identifiers[i]
       type = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
 
-      utils.bindkey char, @openInline.bind(this), type
-      utils.bindkey @shiftedIdentifiers[i], @openNewTab.bind(this), type
-      utils.bindkey "= #{char}", @openNewTabSwitch.bind(this), type
-      utils.bindkey "- #{char}", @openAction.bind(this), type
-  
+      utils.bindkey char, @openInline, type
+      utils.bindkey @shiftedIdentifiers[i], @openNewTab, type
+      utils.bindkey "= #{char}", @openNewTabSwitch, type
+      utils.bindkey "- #{char}", @openAction, type
+    return
   start : (anchorselOverride) ->
     identifierIndex = 0
     try
@@ -69,15 +53,12 @@ utils =
     str = re.toString()
     str[0] == '/' && str[str.length - 1] == '/'
   isArr : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
-  bindkey : Mousetrap.bind
+  bindkey : Mousetrap.bind.bind Mousetrap
 
 bind_navigation_keys = (metadata) ->
   inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
   inputDOMElement = document.querySelector(inputsel);
-  utils.bindkey 'e', gen_e_key_bind inputDOMElement, true
-  utils.bindkey 'E', gen_e_key_bind inputDOMElement, false
-
-gen_e_key_bind = (inputDOMElement, type) ->
+  bindNavKey = (inputDOMElement, type) ->
   (e) ->
     e.preventDefault()
     inputDOMElement.focus()
@@ -88,6 +69,8 @@ gen_e_key_bind = (inputDOMElement, type) ->
     else
       inputDOMElement.select()
     # This is a very weird solution, but who gives a flying whale.. it works!
+  utils.bindkey 'e', bindNavKey inputDOMElement, true
+  utils.bindkey 'E', bindNavKey inputDOMElement, false
 
 gen_is_this_page = (url) ->
   (page) ->
@@ -151,9 +134,6 @@ getElementsByMetadata = (metadata) ->
 
   {text:textElements,anchor:anchorElements}
 
-
-metadata = do getPageMetadata
-
 # if fastpick.numberingFromCSS
 #   textsel = if metadata.textsel? then metadata.textsel else metadata.anchorsel
 #   ((css) ->
@@ -163,7 +143,7 @@ metadata = do getPageMetadata
 #     style.type = "text/css"
 #     if style.styleSheet
 #       style.styleSheet.cssText = css
-#     else 
+#     else
 #       style.appendChild(document.createTextNode(css))
 #     head.appendChild(style))("
 
@@ -178,7 +158,9 @@ metadata = do getPageMetadata
 
 #     ")
 
+metadata = getPageMetadata()
+fastpick = new FastPick
+
 if metadata isnt null
   fastpick.setupKeyboardShortcuts()
-  $ document
-   .ready -> fastpick.start()
+  document.onreadystatechange = -> fastpick.start()

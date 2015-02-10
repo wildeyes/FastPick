@@ -9,6 +9,7 @@ Fast Pick provides keyboard shortcuts for search.
 The chorme extension adds numbers to search results so you can press the appropriate number on you keyboard to select the search result you need.
 
 Inspired by [Vimium](http://vimium.github.io/).
+*NOTE*: If using the latest vimium, you have to exclude `1234567890+` from all all websites.
 
 You'll browse faster. And it's intuitive. Really. You won't realize it's there until you're on your friend's computer.
 
