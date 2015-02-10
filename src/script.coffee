@@ -2,6 +2,13 @@ NodeList.prototype.map = Array.prototype.map;
 NodeList.prototype.forEach = Array.prototype.forEach;
 $$ = document.querySelectorAll.bind(document)
 $ = document.querySelector.bind(document)
+utils =
+  prepRegEx : (str) -> str.substr(1,str.length - 2)
+  isRegex  : (re) ->
+    str = re.toString()
+    str[0] == '/' && str[str.length - 1] == '/'
+  isArray : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
+  bindkey : Mousetrap.bind.bind Mousetrap
 
 class FastPick
   numberingFromCSS : false
@@ -18,20 +25,35 @@ class FastPick
     @openUrl @links[@shiftedIdentifiers.indexOf(identifier)], "newtab"
   openNewTabSwitch : (KBEvent, identifier) =>
     @openUrl @links[@identifiers.indexOf identifier.substring 2], "newtabswitch"
+  bindNavigationKeys = (metadata) ->
+    inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
+    inputDOMElement = document.querySelector(inputsel);
+    bindNavKey = (inputDOMElement, type) ->
+    (e) ->
+      e.preventDefault()
+      inputDOMElement.focus()
+      if type
+        tmpval = inputDOMElement.value
+        inputDOMElement.value = ''
+        inputDOMElement.value = tmpval
+      else
+        inputDOMElement.select() # weird solution
+    utils.bindkey 'e', bindNavKey inputDOMElement, true
+    utils.bindkey 'E', bindNavKey inputDOMElement, false
   setupKeyboardShortcuts : ->
     for i in [0...@identifiers.length]
       char = @identifiers[i]
-      type = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
+      kbType = if char is '0' then 'keydown' else 'keypress' # zero char works only with keydown - probably chrome quirks
 
-      utils.bindkey char, @openInline, type
-      utils.bindkey @shiftedIdentifiers[i], @openNewTab, type
-      utils.bindkey "= #{char}", @openNewTabSwitch, type
-      utils.bindkey "- #{char}", @openAction, type
+      utils.bindkey char, @openInline, kbType
+      utils.bindkey @shiftedIdentifiers[i], @openNewTab, kbType
+      utils.bindkey "= #{char}", @openNewTabSwitch, kbType
+      utils.bindkey "- #{char}", @openAction, kbType
     return this
   start : (customAnchorSelector) ->
     identifierIndex = 0
     try
-      bindNavigationKeys metadata
+      @bindNavigationKeys metadata
       [anchorEles, textEles] = getElementsByMetadata(metadata)
 
       # Populate array with links that will later be called
@@ -47,32 +69,6 @@ class FastPick
 
     catch e
       console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
-
-# Helper Functions
-utils =
-  prepRegEx : (str) -> str.substr(1,str.length - 2)
-  isRegex  : (re) ->
-    str = re.toString()
-    str[0] == '/' && str[str.length - 1] == '/'
-  isArray : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
-  bindkey : Mousetrap.bind.bind Mousetrap
-
-bindNavigationKeys = (metadata) ->
-  inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
-  inputDOMElement = document.querySelector(inputsel);
-  bindNavKey = (inputDOMElement, type) ->
-  (e) ->
-    e.preventDefault()
-    inputDOMElement.focus()
-    if type
-      tmpval = inputDOMElement.value
-      inputDOMElement.value = ''
-      inputDOMElement.value = tmpval
-    else
-      inputDOMElement.select()
-    # This is a very weird solution, but who gives a flying whale.. it works!
-  utils.bindkey 'e', bindNavKey inputDOMElement, true
-  utils.bindkey 'E', bindNavKey inputDOMElement, false
 
 genIsThisPage = (url) ->
   (page) ->
@@ -120,13 +116,6 @@ getPageMetadata = ->
 
 getElementsByMetadata = (metadata) ->
   anchorSelector = metadata.anchorsel
-  # There's no db entry containing an iframe yet
-  # if typeof anchorSelector is 'object'
-  #   complexsel = anchorSelector
-  #   for own key, val of complexsel
-  #     if key is 'iframe'
-  #       anchorElements = $('iframe').contents().find(val)
-  # else if typeof anchorSelector is 'string'
   anchorElements = $$ anchorSelector
 
   if metadata.hasOwnProperty "textsel"
