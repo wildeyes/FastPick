@@ -1,3 +1,8 @@
+NodeList.prototype.map = Array.prototype.map;
+NodeList.prototype.forEach = Array.prototype.forEach;
+$$ = document.querySelectorAll.bind(document)
+$ = document.querySelector.bind(document)
+
 class FastPick
   numberingFromCSS : false
   runtimeOrExtension : if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
@@ -22,26 +27,23 @@ class FastPick
       utils.bindkey @shiftedIdentifiers[i], @openNewTab, type
       utils.bindkey "= #{char}", @openNewTabSwitch, type
       utils.bindkey "- #{char}", @openAction, type
-    return
-  start : (anchorselOverride) ->
+    return this
+  start : (customAnchorSelector) ->
     identifierIndex = 0
     try
       bind_navigation_keys metadata
-      elements = getElementsByMetadata(metadata)
+      [anchorEles, textEles] = getElementsByMetadata(metadata)
 
       # Populate array with links that will later be called
       # by the mousetrap keybindings (that were binded early on)
       @links =
-        if anchorselOverride? then $(anchorselOverride).map -> @href
-        else elements.anchor.map -> @href
+        if customAnchorSelector? then $$(customAnchorSelector).map -> @href
+        else anchorEles.map -> @href
 
-      # if not @numberingFromCSS
-      elements.text.each (index, ele) =>
+      textEles.forEach (ele, index) =>
         return unless index < @identifiers.length
-        $ele = $( ele )
-        text = $ele.text()
         char = @identifiers[identifierIndex++]
-        $ele.text("#{char}. #{text}")
+        ele.textContent = "#{char}. #{ele.textContent}"
 
     catch e
       console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
@@ -49,10 +51,10 @@ class FastPick
 # Helper Functions
 utils =
   prepRegEx : (str) -> str.substr(1,str.length - 2)
-  isRE  : (re) ->
+  isRegex  : (re) ->
     str = re.toString()
     str[0] == '/' && str[str.length - 1] == '/'
-  isArr : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
+  isArray : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
   bindkey : Mousetrap.bind.bind Mousetrap
 
 bind_navigation_keys = (metadata) ->
@@ -77,18 +79,18 @@ gen_is_this_page = (url) ->
     isthis   = false
     page_selector  = page.domain
 
-    # Check for array first! (utils.isRE converts arrays to string, so it may be passed arrays)
-    if      utils.isArr page_selector
+    # Check for array first! (utils.isRegex converts arrays to string, so it may be passed arrays)
+    if      utils.isArray page_selector
       another_is_this_page = gen_is_this_page url
       for pageurl in page_selector
         pageurl_encoded = domain:pageurl # TODO: Clean this hack
         isthis = isthis or another_is_this_page pageurl_encoded
         break if isthis
-    else if utils.isRE page_selector
+    else if utils.isRegex page_selector
       isthis = url.match page_selector
     else if typeof page_selector is 'string'
       if page_selector is 'default'
-        isthis = $(page.anchorsel).length isnt 0
+        isthis = $$(page.anchorsel).length isnt 0
       else
         isthis = url.indexOf(page_selector) isnt -1
 
@@ -117,22 +119,22 @@ getPageMetadata = ->
   null
 
 getElementsByMetadata = (metadata) ->
-  asel = metadata.anchorsel
+  anchorSelector = metadata.anchorsel
   # There's no db entry containing an iframe yet
-  # if typeof asel is 'object'
-  #   complexsel = asel
+  # if typeof anchorSelector is 'object'
+  #   complexsel = anchorSelector
   #   for own key, val of complexsel
   #     if key is 'iframe'
   #       anchorElements = $('iframe').contents().find(val)
-  # else if typeof asel is 'string'
-  anchorElements = $ asel
+  # else if typeof anchorSelector is 'string'
+  anchorElements = $$ anchorSelector
 
   if metadata.hasOwnProperty "textsel"
-    textElements = $ metadata.textsel
+    textElements = $$ metadata.textsel
   else
     textElements = anchorElements
 
-  {text:textElements,anchor:anchorElements}
+  [textElements, anchorElements]
 
 # if fastpick.numberingFromCSS
 #   textsel = if metadata.textsel? then metadata.textsel else metadata.anchorsel
@@ -159,8 +161,9 @@ getElementsByMetadata = (metadata) ->
 #     ")
 
 metadata = getPageMetadata()
-fastpick = new FastPick
 
 if metadata isnt null
+  fastpick = new FastPick
+
   fastpick.setupKeyboardShortcuts()
   document.onreadystatechange = -> fastpick.start()
