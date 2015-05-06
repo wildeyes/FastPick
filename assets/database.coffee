@@ -129,15 +129,6 @@ database = [
   pages: [
     domain: /news/
     anchorsel: "#UL .BlackArial12pxBold , #t1497 .BlackArial14pxBold, .WhiteArial12pxBold .WhiteArial12pxBold, #SmallHeadline_1491_4152575 .WhiteArial12pxBold, #MainBigHeadline_1491_4166410 .WhiteArial16pxBold"
-  ,
-    domain: /http:\/\/israblog\.nana10\.co\.il\/?/
-    textsel: "b"
-    anchorsel: "a.GenenalHompageLinkNoBold"
-  # ,
-  #   domain: /\?blog=\d{3,8}/
-  #   anchorsel:
-  #     iframe: "a.list:has(img[width='32'])"
-  #     regular: "a.list:has(img[width='32'])"
   ]
 ,
   domain: "nrg"

@@ -1,29 +1,21 @@
-$$ = document.querySelectorAll.bind(document)
-$ = document.querySelector.bind(document)
-
-utils =
-  prepRegEx : (str) -> str.substr(1,str.length - 2)
-  isRegex  : (re) ->
-    str = re.toString()
-    str[0] == '/' && str[str.length - 1] == '/'
-  isArray : (arr) -> Object.prototype.toString.call( arr ) is '[object Array]'
-  bindkey : Mousetrap.bind.bind Mousetrap
-
 class FastPick
   numberingFromCSS : false
   runtimeOrExtension : if chrome.runtime and chrome.runtime.sendMessage then 'runtime' else 'extension'
   identifiers : '1234567890'
   shiftedIdentifiers : '!@#$%^&*()'
   links: []
+  actionMain : true
 
+  getActiveList : (identifier) =>
   openUrl : (url, mode) ->
     chrome[@runtimeOrExtension].sendMessage url:url, mode:mode
-  openInline : (KBEvent, identifier) =>
-    @openUrl @anchorEles[@identifiers.indexOf(identifier)], "inline"
-  openNewTab : (KBEvent, identifier) =>
-    @openUrl @anchorEles[@shiftedIdentifiers.indexOf(identifier)], "newtab"
-  openNewTabSwitch : (KBEvent, identifier) =>
-    @openUrl @links[@identifiers.indexOf identifier.substring 2], "newtabswitch"
+  openInline : (KBEvent, keyCombo) =>
+    @openUrl (@getActiveList @identifiers.indexOf keyCombo), "inline"
+  openNewTab : (KBEvent, keyCombo) =>
+    @openUrl (@getActiveList @identifiers.indexOf keyCombo), "newtab"
+  openNewTabSwitch : (KBEvent, keyCombo) =>
+    @openUrl (@getActiveList @identifiers.indexOf keyCombo.substring 2), "newtabswitch"
+  toggleAction : => @actionMain ^= true
   bindNavigationKeys : (metadata) ->
     inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
     inputDOMElement = document.querySelector(inputsel);
@@ -47,7 +39,7 @@ class FastPick
       utils.bindkey char, @openInline, kbType
       utils.bindkey @shiftedIdentifiers[i], @openNewTab, kbType
       utils.bindkey "= #{char}", @openNewTabSwitch, kbType
-      utils.bindkey "- #{char}", @openAction, kbType
+      utils.bindkey "- #{char}", @toggleAction, kbType
     return this
   start : (customAnchorSelector) ->
     identifierIndex = 0
@@ -75,61 +67,8 @@ class FastPick
     catch e
       console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
 
-genIsThisPage = (url) ->
-  (page) ->
-    isthis   = false
-    pageSelector  = page.domain
-
-    # Check for array first! (utils.isRegex converts arrays to string, so it may be passed arrays)
-    if      utils.isArray pageSelector
-      anotherIsThisPage = genIsThisPage url
-      for pageurl in pageSelector
-        pageurlEncoded = domain:pageurl # TODO: Clean this hack
-        isthis = isthis or anotherIsThisPage pageurlEncoded
-        break if isthis
-    else if utils.isRegex pageSelector
-      isthis = url.match pageSelector
-    else if typeof pageSelector is 'string'
-      if pageSelector is 'default'
-        isthis = $$(page.anchorsel).length isnt 0
-      else
-        isthis = url.indexOf(pageSelector) isnt -1
-
-    if isthis and page.exclude? and url.match page.exclude # Supports only regex excluding
-      isthis = false
-
-    return isthis
-
-getPageMetadata = ->
-  url = location.href
-  page = null
-
-  isThisPage = genIsThisPage url
-
-  for maybethis in database
-    if isThisPage maybethis
-      page = maybethis
-      break;
-
-  if page?
-    if page.pages?
-      for page in page.pages
-        if isThisPage page
-          return page
-    else return page
-  null
-
-getElementsByMetadata = (metadata) ->
-  anchorSelector = metadata.anchorsel
-  anchorElements = $$ anchorSelector
-
-  if metadata.hasOwnProperty "textsel"
-    textElements = $$ metadata.textsel
-  else
-    textElements = anchorElements
-
-  [textElements, anchorElements]
-
+# Experimental; tried doing the visual numbering via CSS,
+# didn't quite workout.
 # if fastpick.numberingFromCSS
 #   textsel = if metadata.textsel? then metadata.textsel else metadata.anchorsel
 #   ((css) ->
