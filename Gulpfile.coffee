@@ -1,5 +1,4 @@
 gulp = require 'gulp'
-gutil = require 'gulp-util'
 coffee = require 'gulp-coffee'
 
 assets = [
@@ -21,6 +20,7 @@ gulp.task 'libs', ->
     .pipe gulp.dest 'build'
 
 gulp.task 'coffee', ->
+  cs = coffee bare: true
   gulp.src sources
-    .pipe coffee(bare: true).on 'error', gutil.log
+    .pipe(coffee(bare: true).on 'error', (err) -> console.error err)
     .pipe gulp.dest 'build'
