@@ -1,11 +1,11 @@
 gulp = require 'gulp'
 coffee = require 'gulp-coffee'
 
-assets = [
+libs = [
   'libs/common.js'
-  'assets/manifest.json'
   'libs/mousetrap.min.js'
   'libs/zepto.min.js'
+  'assets/manifest.json'
 ]
 sources = ['src/*','assets/database.coffee']
 
@@ -13,10 +13,11 @@ gulp.task 'build', ['libs','coffee']
 
 gulp.task 'default', ->
   gulp.start('build')
+  gulp.watch(libs, ['libs'])
   gulp.watch(sources, ['coffee'])
 
 gulp.task 'libs', ->
-  gulp.src assets
+  gulp.src libs
     .pipe gulp.dest 'build'
 
 gulp.task 'coffee', ->
