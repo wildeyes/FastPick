@@ -1,6 +1,6 @@
 {
   "name": "FastPick",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Keyboard Shortcuts for search in browser (Extension).",
   "scripts": {
     "test": "npm test-single-run",
