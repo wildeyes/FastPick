@@ -1,7 +1,6 @@
-NodeList.prototype.map = Array.prototype.map;
-NodeList.prototype.forEach = Array.prototype.forEach;
 $$ = document.querySelectorAll.bind(document)
 $ = document.querySelector.bind(document)
+
 utils =
   prepRegEx : (str) -> str.substr(1,str.length - 2)
   isRegex  : (re) ->
@@ -20,12 +19,12 @@ class FastPick
   openUrl : (url, mode) ->
     chrome[@runtimeOrExtension].sendMessage url:url, mode:mode
   openInline : (KBEvent, identifier) =>
-    @openUrl @links[@identifiers.indexOf(identifier)], "inline"
+    @openUrl @anchorEles[@identifiers.indexOf(identifier)], "inline"
   openNewTab : (KBEvent, identifier) =>
-    @openUrl @links[@shiftedIdentifiers.indexOf(identifier)], "newtab"
+    @openUrl @anchorEles[@shiftedIdentifiers.indexOf(identifier)], "newtab"
   openNewTabSwitch : (KBEvent, identifier) =>
     @openUrl @links[@identifiers.indexOf identifier.substring 2], "newtabswitch"
-  bindNavigationKeys = (metadata) ->
+  bindNavigationKeys : (metadata) ->
     inputsel = if metadata.inputsel? then metadata.inputsel else "input[type='text']"
     inputDOMElement = document.querySelector(inputsel);
     bindNavKey = (inputDOMElement, type) ->
@@ -54,18 +53,24 @@ class FastPick
     identifierIndex = 0
     try
       @bindNavigationKeys metadata
-      [anchorEles, textEles] = getElementsByMetadata(metadata)
+      [__anchorEles, _textEles] = getElementsByMetadata(metadata)
 
       # Populate array with links that will later be called
       # by the mousetrap keybindings (that were binded early on)
-      @links =
-        if customAnchorSelector? then $$(customAnchorSelector).map -> @href
-        else anchorEles.map -> @href
+      if customAnchorSelector?
+        _anchorEles = Array.prototype.slice.call $$(customAnchorSelector)
+      else
+        _anchorEles = Array.prototype.slice.call __anchorEles
 
-      textEles.forEach (ele, index) =>
-        return unless index < @identifiers.length
-        char = @identifiers[identifierIndex++]
-        ele.textContent = "#{char}. #{ele.textContent}"
+      @textEles = Array.prototype.slice.call _textEles
+      @anchorEles = _anchorEles.map (a) -> a.href
+
+      # Generate numbering to DOM
+      if metadata.noNumbering isnt true
+        @textEles.forEach (ele, index) =>
+          return unless index < @identifiers.length
+          char = @identifiers[identifierIndex++]
+          ele.textContent = "#{char}. #{ele.textContent}"
 
     catch e
       console.error "FastPick: Hey! I just erred! this is awkward. Could you please report this issue with the following information to https://github.com/wildeyes/fastpick/issues ?", e.stack
@@ -155,4 +160,4 @@ if metadata isnt null
   fastpick = new FastPick
 
   fastpick.setupKeyboardShortcuts()
-  document.onreadystatechange = -> fastpick.start()
+  Zepto(document).ready () -> fastpick.start()

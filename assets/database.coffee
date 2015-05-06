@@ -153,4 +153,8 @@ database = [
     domain: "default"
     anchorsel: ".entry-title a"
   ]
+,
+  domain: /https?:\/\/news\.ycombinator\.com\/.*/
+  anchorsel: ".title a"
+  noNumbering: true
 ]
