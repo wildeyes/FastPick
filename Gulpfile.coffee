@@ -7,7 +7,7 @@ libs = [
   'libs/zepto.min.js'
   'assets/manifest.json'
 ]
-sources = ['src/*','assets/database.coffee']
+sources = ['assets/database.coffee']
 
 gulp.task 'build', ['libs','coffee']
 
@@ -19,7 +19,7 @@ gulp.task 'default', ->
 gulp.task 'libs', ->
   gulp.src libs
     .pipe gulp.dest 'build'
-
+()
 gulp.task 'coffee', ->
   cs = coffee bare: true
   gulp.src sources
