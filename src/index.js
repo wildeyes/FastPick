@@ -18,11 +18,9 @@ FastPick = (function() {
 
   FastPick.prototype.shiftedIdentifiers = '!@#$%^&*()';
 
-  FastPick.prototype.links = [];
-
   FastPick.prototype.actionMain = true;
 
-  FastPick.prototype.getActiveList = function(identifier) {};
+  FastPick.prototype.getActiveList = function(identifier) { return this.anchorEles };
 
   FastPick.prototype.openUrl = function(url, mode) {
     return chrome[this.runtimeOrExtension].sendMessage({
@@ -32,15 +30,15 @@ FastPick = (function() {
   };
 
   FastPick.prototype.openInline = function(KBEvent, keyCombo) {
-    return this.openUrl(this.getActiveList(this.identifiers.indexOf(keyCombo)), "inline");
+    return this.openUrl(this.anchorEles[this.identifiers.indexOf(keyCombo)], "inline");
   };
 
   FastPick.prototype.openNewTab = function(KBEvent, keyCombo) {
-    return this.openUrl(this.getActiveList(this.identifiers.indexOf(keyCombo)), "newtab");
+    return this.openUrl(this.anchorEles[this.shiftedIdentifiers.indexOf(keyCombo)], "newtab");
   };
 
   FastPick.prototype.openNewTabSwitch = function(KBEvent, keyCombo) {
-    return this.openUrl(this.getActiveList(this.identifiers.indexOf(keyCombo.substring(2))), "newtabswitch");
+    return this.openUrl(this.anchorEles[this.identifiers.indexOf(keyCombo.substring(2))], "newtabswitch");
   };
 
   FastPick.prototype.toggleAction = function() {

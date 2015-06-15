@@ -5,10 +5,7 @@
   "scripts": {
     "test": "npm test-single-run",
     "test-single-run": "karma start karma.conf.js --single-run",
-    "protractor": "protractor e2e-tests/protractor.conf.js",
-    "start": "gulp build",
-    "prestart": "npm install",
-    "pretest": "npm install"
+    "protractor": "protractor e2e-tests/protractor.conf.js"
   },
   "devDependencies": {
     "coffee-script": "^1.9.2",
